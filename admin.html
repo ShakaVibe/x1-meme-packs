@@ -207,7 +207,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:var(--font-body)
       <!-- RPC STRIP -->
       <div class="rpc-strip">
         <span class="rpc-label">X1 RPC</span>
-        <input class="rpc-input" id="rpcEndpoint" type="url" placeholder="https://rpc.x1.xyz" value="https://rpc.x1.xyz"/>
+        <input class="rpc-input" id="rpcEndpoint" type="url" placeholder="https://rpc.mainnet.x1.xyz" value="https://rpc.mainnet.x1.xyz"/>
         <span class="rpc-status checking" id="rpcStatus">Not tested</span>
         <button class="topbar-btn btn-view" style="font-size:.78rem;padding:.35rem .8rem" onclick="testRpc()">Test RPC</button>
       </div>
@@ -307,7 +307,7 @@ function changePassword(){
 }
 
 // ── RPC HELPERS ──
-function getRpc(){ return document.getElementById('rpcEndpoint').value.trim() || 'https://rpc.x1.xyz'; }
+function getRpc(){ return document.getElementById('rpcEndpoint').value.trim() || 'https://rpc.mainnet.x1.xyz'; }
 
 async function rpcCall(method, params){
   const res = await fetch(getRpc(), {
@@ -324,12 +324,12 @@ async function testRpc(){
   const el = document.getElementById('rpcStatus');
   el.className='rpc-status checking'; el.textContent='Testing…';
   try{
-    await rpcCall('getHealth',[]);
+    await rpcCall('getSlot',[]);
     el.className='rpc-status ok'; el.textContent='✓ Connected';
     showToast('success','RPC connected!');
   } catch(e){
     el.className='rpc-status err'; el.textContent='✕ Failed';
-    showToast('error','RPC unreachable: ' + e.message);
+    showToast('error','RPC failed — check URL and try again.');
   }
 }
 
