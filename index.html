@@ -4,1200 +4,384 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>X1 Meme Packs — Bridge. Earn. Collect.</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg: #07070f;
-  --bg2: #0d0d1a;
-  --bg3: #111124;
-  --gold: #f5c842;
-  --gold2: #e8a820;
-  --cyan: #00e5ff;
-  --pink: #ff2d78;
-  --green: #00ff88;
-  --white: #f0eee8;
-  --muted: #7a7a9a;
-  --border: rgba(245,200,66,0.15);
-  --border2: rgba(0,229,255,0.15);
-  --radius: 12px;
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body: 'Barlow', sans-serif;
-  --font-cond: 'Barlow Condensed', sans-serif;
+  --bg:#0a1020; --bg2:#0d1528; --bg-card:#111d32; --bg-card-hover:#162440;
+  --x1-blue:#4da6ff; --x1-cyan:#00d4ff; --x1-gold:#f0b90b; --x1-purple:#a855f7;
+  --x1-gradient:linear-gradient(135deg,#4da6ff 0%,#00d4ff 100%);
+  --gold:#f5c842; --pink:#ff2d78; --green:#00ff88;
+  --text-primary:#ffffff; --text-secondary:#8a8f98; --text-dim:#5a5f68;
+  --border:#1e3050; --border-light:#2a3f5f;
+  --border-gold:rgba(240,185,11,0.25); --border-blue:rgba(77,166,255,0.2);
+  --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-xl:16px;
+  --font-display:'Bebas Neue',sans-serif; --font-body:'Space Grotesk',sans-serif;
+  --font-cond:'Barlow Condensed',sans-serif; --font-mono:'JetBrains Mono',monospace;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--white);
-  font-family: var(--font-body);
-  overflow-x: hidden;
-}
+*{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text-primary);font-family:var(--font-body);overflow-x:hidden}
 
-/* ===== NAV ===== */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 3rem;
-  background: rgba(7,7,15,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-}
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  letter-spacing: 0.05em;
-  color: var(--white);
-}
-.nav-logo span { color: var(--gold); }
-.nav-links { display: flex; gap: 2.5rem; list-style: none; }
-.nav-links a {
-  font-family: var(--font-cond);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--gold); }
-.nav-cta {
-  font-family: var(--font-cond);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--bg);
-  background: var(--gold);
-  border: none;
-  padding: 0.6rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-  text-decoration: none;
-}
-.nav-cta:hover { background: #fff; transform: translateY(-1px); }
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(10,16,32,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img.x1-mark{height:36px;width:36px;border-radius:8px;object-fit:cover}
+.nav-logo-div{width:1px;height:22px;background:var(--border-light)}
+.nav-logo-text{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.06em;color:var(--text-primary)}
+.nav-logo-text .m{color:var(--gold)} .nav-logo-text .p{color:var(--x1-cyan)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.88rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--x1-cyan)}
+.nav-cta{font-size:.88rem;font-weight:600;color:#0a1020;background:var(--x1-gradient);border:none;padding:.55rem 1.4rem;border-radius:var(--radius-md);cursor:pointer;text-decoration:none;box-shadow:0 0 20px rgba(77,166,255,.3);transition:opacity .2s,transform .15s}
+.nav-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-/* ===== HERO ===== */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 8rem 2rem 4rem;
-  position: relative;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(245,200,66,0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0,229,255,0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(255,45,120,0.05) 0%, transparent 60%);
-  animation: bgPulse 8s ease-in-out infinite alternate;
-}
-@keyframes bgPulse {
-  0% { opacity: 0.7; }
-  100% { opacity: 1; }
-}
-.hero-grid {
-  position: absolute; inset: 0; opacity: 0.035;
-  background-image:
-    linear-gradient(rgba(245,200,66,0.5) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245,200,66,0.5) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-.hero-badge {
-  font-family: var(--font-cond);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  background: rgba(245,200,66,0.1);
-  border: 1px solid rgba(245,200,66,0.3);
-  padding: 0.4rem 1.2rem;
-  border-radius: 100px;
-  display: inline-block;
-  margin-bottom: 2rem;
-  position: relative;
-  animation: fadeUp 0.6s ease both;
-}
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(4rem, 11vw, 9rem);
-  line-height: 0.92;
-  letter-spacing: 0.02em;
-  color: var(--white);
-  position: relative;
-  animation: fadeUp 0.7s 0.1s ease both;
-}
-.hero-title .gold { color: var(--gold); }
-.hero-title .cyan { color: var(--cyan); }
-.hero-sub {
-  font-family: var(--font-cond);
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  font-weight: 400;
-  color: var(--muted);
-  max-width: 560px;
-  line-height: 1.5;
-  margin: 1.5rem auto 2.5rem;
-  position: relative;
-  animation: fadeUp 0.7s 0.2s ease both;
-}
-.hero-sub strong { color: var(--white); font-weight: 600; }
-.hero-actions {
-  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
-  position: relative;
-  animation: fadeUp 0.7s 0.3s ease both;
-}
-.btn-primary {
-  font-family: var(--font-cond);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--bg);
-  background: var(--gold);
-  border: none;
-  padding: 1rem 2.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-  box-shadow: 0 0 30px rgba(245,200,66,0.3);
-}
-.btn-primary:hover {
-  background: #fff;
-  box-shadow: 0 0 50px rgba(245,200,66,0.5);
-  transform: translateY(-2px);
-}
-.btn-secondary {
-  font-family: var(--font-cond);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--white);
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 1rem 2.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.2s;
-}
-.btn-secondary:hover {
-  border-color: var(--cyan);
-  color: var(--cyan);
-  transform: translateY(-2px);
-}
-.hero-stats {
-  display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
-  margin-top: 4rem;
-  position: relative;
-  animation: fadeUp 0.7s 0.4s ease both;
-}
-.hero-stat { text-align: center; }
-.hero-stat-num {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  color: var(--gold);
-  display: block;
-}
-.hero-stat-label {
-  font-family: var(--font-cond);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-@keyframes fadeUp {
-  from { opacity:0; transform: translateY(20px); }
-  to { opacity:1; transform: translateY(0); }
-}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 10%,rgba(77,166,255,.12) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 15% 85%,rgba(0,212,255,.08) 0%,transparent 55%),radial-gradient(ellipse 55% 45% at 85% 70%,rgba(240,185,11,.07) 0%,transparent 55%);animation:bgPulse 9s ease-in-out infinite alternate}
+@keyframes bgPulse{0%{opacity:.7}100%{opacity:1}}
+.hero-grid{position:absolute;inset:0;opacity:.028;background-image:linear-gradient(rgba(77,166,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(77,166,255,.6) 1px,transparent 1px);background-size:60px 60px}
+.hero-powered{display:inline-flex;align-items:center;gap:10px;font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--x1-cyan);background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);padding:.4rem 1.2rem .4rem .7rem;border-radius:100px;margin-bottom:1.8rem;position:relative;animation:fadeUp .6s ease both}
+.hero-powered img{height:26px;width:26px;border-radius:6px;object-fit:cover}
+.hero-title{font-family:var(--font-display);font-size:clamp(4rem,11vw,9rem);line-height:.92;letter-spacing:.02em;color:var(--text-primary);position:relative;animation:fadeUp .7s .1s ease both}
+.hero-title .gold{color:var(--gold)} .hero-title .blue{color:var(--x1-cyan)}
+.hero-sub{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--text-secondary);max-width:560px;line-height:1.65;margin:1.5rem auto 2.5rem;position:relative;animation:fadeUp .7s .2s ease both}
+.hero-sub strong{color:var(--text-primary);font-weight:600}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;animation:fadeUp .7s .3s ease both}
+.btn-primary{font-size:.95rem;font-weight:700;letter-spacing:.04em;color:#0a1020;background:var(--x1-gradient);border:none;padding:.9rem 2.2rem;border-radius:var(--radius-md);cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s;box-shadow:0 0 30px rgba(77,166,255,.35)}
+.btn-primary:hover{opacity:.9;box-shadow:0 0 50px rgba(77,166,255,.5);transform:translateY(-2px)}
+.btn-secondary{font-size:.95rem;font-weight:600;color:var(--text-primary);background:transparent;border:1px solid var(--border-light);padding:.9rem 2.2rem;border-radius:var(--radius-md);cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-secondary:hover{border-color:var(--x1-cyan);color:var(--x1-cyan);transform:translateY(-2px)}
+.hero-chain-row{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-top:2.5rem;position:relative;animation:fadeUp .7s .4s ease both}
+.chain-pill{display:flex;align-items:center;gap:8px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:.5rem 1rem;font-size:.82rem;font-weight:500;color:var(--text-secondary)}
+.chain-pill img{height:22px;width:22px;border-radius:5px;object-fit:cover}
+.chain-dot{width:8px;height:8px;border-radius:50%;background:var(--x1-cyan);box-shadow:0 0 8px rgba(0,212,255,.6)}
+.chain-arrow{color:var(--x1-blue);font-size:1.2rem}
+.hero-stats{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-top:3rem;position:relative;animation:fadeUp .7s .5s ease both}
+.hero-stat{text-align:center}
+.hero-stat-num{font-family:var(--font-display);font-size:2.5rem;color:var(--x1-cyan);display:block}
+.hero-stat-label{font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* ===== TICKER TAPE ===== */
-.ticker {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 0.9rem 0;
-  overflow: hidden;
-  position: relative;
-}
-.ticker::before, .ticker::after {
-  content: '';
-  position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
-  pointer-events: none;
-}
-.ticker::before {
-  left: 0;
-  background: linear-gradient(90deg, var(--bg2), transparent);
-}
-.ticker::after {
-  right: 0;
-  background: linear-gradient(-90deg, var(--bg2), transparent);
-}
-.ticker-track {
-  display: flex; gap: 0;
-  animation: tickerScroll 35s linear infinite;
-  width: max-content;
-}
-.ticker-track:hover { animation-play-state: paused; }
-@keyframes tickerScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.ticker-item {
-  display: flex; align-items: center; gap: 0.6rem;
-  padding: 0 2.5rem;
-  border-right: 1px solid var(--border);
-  white-space: nowrap;
-}
-.ticker-icon {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-.ticker-name {
-  font-family: var(--font-cond);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--white);
-}
-.ticker-label {
-  font-family: var(--font-cond);
-  font-size: 0.75rem;
-  color: var(--gold);
-  background: rgba(245,200,66,0.12);
-  padding: 0.15rem 0.5rem;
-  border-radius: 100px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-}
+.ticker{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.85rem 0;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--bg2),transparent)}
+.ticker-track{display:flex;animation:tickerScroll 35s linear infinite;width:max-content}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:flex;align-items:center;gap:.6rem;padding:0 2rem;border-right:1px solid var(--border);white-space:nowrap}
+.ticker-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.85rem;flex-shrink:0}
+.ticker-name{font-size:.88rem;font-weight:600;color:var(--text-primary)}
+.ticker-badge{font-family:var(--font-mono);font-size:.68rem;color:var(--x1-cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:.12rem .5rem;border-radius:100px}
 
-/* ===== SECTIONS SHARED ===== */
-section {
-  padding: 6rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.section-label {
-  font-family: var(--font-cond);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 1rem;
-  display: block;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  line-height: 1.0;
-  letter-spacing: 0.03em;
-  color: var(--white);
-  margin-bottom: 1.2rem;
-}
-.section-sub {
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: var(--muted);
-  max-width: 540px;
-  line-height: 1.65;
-}
+.x1-brand-bar{background:linear-gradient(90deg,rgba(77,166,255,.04),rgba(0,212,255,.07),rgba(77,166,255,.04));border-bottom:1px solid var(--border);padding:1.1rem 2rem}
+.x1-brand-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.x1-brand-item{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:500;color:var(--text-secondary)}
+.x1-brand-item img{height:24px;width:24px;border-radius:5px;object-fit:cover}
+.x1-brand-item .val{color:var(--x1-cyan);font-weight:600;font-family:var(--font-mono);font-size:.8rem}
+.x1-brand-sep{width:1px;height:24px;background:var(--border)}
 
-/* ===== HOW IT WORKS ===== */
-.how-wrapper { padding: 6rem 2rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.how-inner { max-width: 1200px; margin: 0 auto; }
-.how-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
-  margin-top: 3.5rem;
-}
-.how-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 2.2rem;
-  position: relative;
-  transition: border-color 0.3s, transform 0.2s;
-}
-.how-card:hover {
-  border-color: rgba(245,200,66,0.4);
-  transform: translateY(-4px);
-}
-.how-num {
-  font-family: var(--font-display);
-  font-size: 5rem;
-  line-height: 1;
-  color: rgba(245,200,66,0.12);
-  position: absolute;
-  top: 1rem; right: 1.5rem;
-}
-.how-icon {
-  width: 52px; height: 52px;
-  border-radius: 12px;
-  background: rgba(245,200,66,0.1);
-  border: 1px solid rgba(245,200,66,0.2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-.how-card h3 {
-  font-family: var(--font-cond);
-  font-size: 1.3rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--white);
-  margin-bottom: 0.7rem;
-}
-.how-card p {
-  font-size: 0.95rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-.how-card p strong { color: var(--gold); font-weight: 600; }
-.how-connector {
-  display: flex; align-items: center; justify-content: center;
-  color: var(--gold); font-size: 1.5rem; padding-top: 2rem;
-}
+section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
+.section-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--x1-cyan);margin-bottom:.8rem;display:block}
+.section-title{font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);line-height:1;letter-spacing:.03em;color:var(--text-primary);margin-bottom:1rem}
+.section-sub{font-size:1rem;color:var(--text-secondary);max-width:540px;line-height:1.7}
 
-/* ===== PACK TIERS ===== */
-.packs-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.2rem;
-  margin-top: 3.5rem;
-}
-.pack-card {
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-.pack-card:hover { transform: translateY(-8px); }
-.pack-card::before {
-  content: '';
-  position: absolute; inset: 0;
-  opacity: 0.06;
-  background: repeating-linear-gradient(
-    45deg,
-    rgba(255,255,255,0.5) 0px, rgba(255,255,255,0.5) 1px,
-    transparent 1px, transparent 16px
-  );
-}
-/* Bronze */
-.pack-bronze {
-  background: linear-gradient(145deg, #1a1208, #251a0a);
-  border: 1px solid rgba(176,106,55,0.4);
-}
-.pack-bronze:hover { box-shadow: 0 20px 60px rgba(176,106,55,0.2); }
-.pack-bronze .pack-tier-badge { background: rgba(176,106,55,0.2); color: #cd7f32; border-color: rgba(176,106,55,0.4); }
-.pack-bronze .pack-mult { color: #cd7f32; }
-/* Silver */
-.pack-silver {
-  background: linear-gradient(145deg, #131318, #1c1c24);
-  border: 1px solid rgba(180,180,200,0.35);
-}
-.pack-silver:hover { box-shadow: 0 20px 60px rgba(180,180,200,0.15); }
-.pack-silver .pack-tier-badge { background: rgba(180,180,200,0.15); color: #c0c0d8; border-color: rgba(180,180,200,0.3); }
-.pack-silver .pack-mult { color: #c0c0d8; }
-/* Gold */
-.pack-gold {
-  background: linear-gradient(145deg, #1a1500, #23200a);
-  border: 1px solid rgba(245,200,66,0.4);
-}
-.pack-gold:hover { box-shadow: 0 20px 60px rgba(245,200,66,0.2); }
-.pack-gold .pack-tier-badge { background: rgba(245,200,66,0.15); color: var(--gold); border-color: rgba(245,200,66,0.35); }
-.pack-gold .pack-mult { color: var(--gold); }
-/* Diamond */
-.pack-diamond {
-  background: linear-gradient(145deg, #050e1a, #0a1628);
-  border: 1px solid rgba(0,229,255,0.35);
-}
-.pack-diamond:hover { box-shadow: 0 20px 60px rgba(0,229,255,0.15); }
-.pack-diamond .pack-tier-badge { background: rgba(0,229,255,0.1); color: var(--cyan); border-color: rgba(0,229,255,0.3); }
-.pack-diamond .pack-mult { color: var(--cyan); }
-/* Legendary */
-.pack-legendary {
-  background: linear-gradient(145deg, #1a0510, #25071a);
-  border: 1px solid rgba(255,45,120,0.4);
-  position: relative;
-}
-.pack-legendary:hover { box-shadow: 0 20px 60px rgba(255,45,120,0.25); }
-.pack-legendary .pack-tier-badge { background: rgba(255,45,120,0.15); color: var(--pink); border-color: rgba(255,45,120,0.35); }
-.pack-legendary .pack-mult { color: var(--pink); }
-.pack-legendary .pack-hot-badge {
-  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-  background: var(--pink); color: #fff;
-  font-family: var(--font-cond);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  padding: 0.2rem 0.8rem;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-.pack-emoji { font-size: 2.8rem; display: block; margin-bottom: 1rem; }
-.pack-title {
-  font-family: var(--font-display);
-  font-size: 1.7rem;
-  letter-spacing: 0.04em;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-}
-.pack-tier-badge {
-  display: inline-block;
-  font-family: var(--font-cond);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border: 1px solid;
-  padding: 0.2rem 0.7rem;
-  border-radius: 100px;
-  margin-bottom: 1.2rem;
-}
-.pack-range {
-  font-family: var(--font-cond);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--white);
-  opacity: 0.9;
-  margin-bottom: 0.3rem;
-}
-.pack-mult {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  display: block;
-  margin-bottom: 0.2rem;
-}
-.pack-mult-label {
-  font-family: var(--font-cond);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.pack-divider {
-  height: 1px;
-  background: rgba(255,255,255,0.07);
-  margin: 1.2rem 0;
-}
-.pack-feature {
-  font-family: var(--font-cond);
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.8;
-}
+.how-wrapper{padding:6rem 2rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.how-inner{max-width:1200px;margin:0 auto}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:3.5rem}
+.how-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:2rem;position:relative;transition:border-color .3s,transform .2s}
+.how-card:hover{border-color:var(--border-light);transform:translateY(-4px)}
+.how-num{font-family:var(--font-display);font-size:5rem;line-height:1;color:rgba(77,166,255,.07);position:absolute;top:1rem;right:1.5rem}
+.how-icon{width:48px;height:48px;border-radius:var(--radius-md);background:rgba(77,166,255,.08);border:1px solid var(--border-blue);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.3rem}
+.how-card h3{font-size:1.1rem;font-weight:700;color:var(--text-primary);margin-bottom:.6rem}
+.how-card p{font-size:.92rem;color:var(--text-secondary);line-height:1.7}
+.how-card p strong{color:var(--x1-cyan);font-weight:600}
 
-/* ===== UPGRADE RULE ===== */
-.upgrade-banner {
-  background: var(--bg2);
-  border: 1px solid rgba(0,229,255,0.2);
-  border-radius: var(--radius);
-  padding: 2rem 2.5rem;
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-  margin-top: 2rem;
-  flex-wrap: wrap;
-}
-.upgrade-icon { font-size: 2.5rem; flex-shrink: 0; }
-.upgrade-text h4 {
-  font-family: var(--font-cond);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--cyan);
-  margin-bottom: 0.4rem;
-}
-.upgrade-text p {
-  font-size: 0.95rem;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.upgrade-text p strong { color: var(--white); font-weight: 600; }
+.packs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:3.5rem}
+.pack-card{border-radius:var(--radius-xl);padding:2rem 1.4rem;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid var(--border)}
+.pack-card:hover{transform:translateY(-8px)}
+.pack-card::before{content:'';position:absolute;inset:0;opacity:.04;background:repeating-linear-gradient(45deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.5) 1px,transparent 1px,transparent 16px)}
+.pack-bronze{background:linear-gradient(145deg,#120e08,#1c1508);border-color:rgba(176,106,55,.35)}
+.pack-bronze:hover{box-shadow:0 20px 60px rgba(176,106,55,.18)}
+.pack-bronze .pack-tier-badge{background:rgba(176,106,55,.15);color:#cd7f32;border-color:rgba(176,106,55,.35)}
+.pack-bronze .pack-mult{color:#cd7f32}
+.pack-silver{background:linear-gradient(145deg,#111520,#191f2e);border-color:rgba(160,175,200,.25)}
+.pack-silver:hover{box-shadow:0 20px 60px rgba(160,175,200,.12)}
+.pack-silver .pack-tier-badge{background:rgba(160,175,200,.12);color:#b0b8c8;border-color:rgba(160,175,200,.25)}
+.pack-silver .pack-mult{color:#b0b8c8}
+.pack-gold{background:linear-gradient(145deg,#14110a,#1e1a08);border-color:rgba(240,185,11,.35)}
+.pack-gold:hover{box-shadow:0 20px 60px rgba(240,185,11,.18)}
+.pack-gold .pack-tier-badge{background:rgba(240,185,11,.12);color:var(--x1-gold);border-color:rgba(240,185,11,.3)}
+.pack-gold .pack-mult{color:var(--x1-gold)}
+.pack-diamond{background:linear-gradient(145deg,#060e1c,#0a1528);border-color:rgba(77,166,255,.3)}
+.pack-diamond:hover{box-shadow:0 20px 60px rgba(77,166,255,.18)}
+.pack-diamond .pack-tier-badge{background:rgba(77,166,255,.1);color:var(--x1-blue);border-color:rgba(77,166,255,.25)}
+.pack-diamond .pack-mult{color:var(--x1-blue)}
+.pack-legendary{background:linear-gradient(145deg,#080e1f,#0d1530);border-color:rgba(0,212,255,.35)}
+.pack-legendary:hover{box-shadow:0 20px 60px rgba(0,212,255,.2)}
+.pack-legendary .pack-tier-badge{background:rgba(0,212,255,.1);color:var(--x1-cyan);border-color:rgba(0,212,255,.3)}
+.pack-legendary .pack-mult{color:var(--x1-cyan)}
+.pack-legendary .pack-hot{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--x1-gradient);color:#0a1020;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .9rem;border-radius:100px;white-space:nowrap}
+.pack-emoji{font-size:2.6rem;display:block;margin-bottom:.9rem}
+.pack-title{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.05em;color:var(--text-primary);margin-bottom:.4rem}
+.pack-tier-badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid;padding:.18rem .65rem;border-radius:100px;margin-bottom:1rem}
+.pack-range{font-family:var(--font-mono);font-size:.88rem;font-weight:500;color:var(--text-primary);opacity:.85;margin-bottom:.4rem}
+.pack-mult{font-family:var(--font-display);font-size:2.4rem;display:block;margin-bottom:.15rem}
+.pack-mult-label{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary)}
+.pack-divider{height:1px;background:rgba(255,255,255,.06);margin:1.1rem 0}
+.pack-feature{font-size:.82rem;color:var(--text-secondary);line-height:1.85}
+.upgrade-banner{background:var(--bg-card);border:1px solid var(--border-blue);border-radius:var(--radius-lg);padding:1.8rem 2rem;display:flex;gap:1.5rem;align-items:center;margin-top:1.5rem;flex-wrap:wrap}
+.upgrade-icon{font-size:2.2rem;flex-shrink:0}
+.upgrade-text h4{font-size:1rem;font-weight:700;color:var(--x1-cyan);margin-bottom:.4rem}
+.upgrade-text p{font-size:.92rem;color:var(--text-secondary);line-height:1.65}
+.upgrade-text p strong{color:var(--text-primary);font-weight:600}
 
-/* ===== TOKEN SHOWCASE ===== */
-.tokens-wrapper { padding: 6rem 2rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.tokens-inner { max-width: 1200px; margin: 0 auto; }
-.tokens-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
-  margin-top: 3rem;
-}
-.token-card {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  text-align: center;
-  transition: border-color 0.3s, transform 0.2s;
-  cursor: pointer;
-}
-.token-card:hover {
-  border-color: rgba(245,200,66,0.4);
-  transform: translateY(-4px);
-}
-.token-logo {
-  width: 64px; height: 64px;
-  border-radius: 50%;
-  margin: 0 auto 1rem;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  color: var(--bg);
-  font-weight: 900;
-}
-.token-name {
-  font-family: var(--font-cond);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--white);
-  margin-bottom: 0.2rem;
-}
-.token-sym {
-  font-family: var(--font-cond);
-  font-size: 0.75rem;
-  color: var(--muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.token-badge {
-  margin-top: 0.8rem;
-  display: inline-block;
-  font-family: var(--font-cond);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: rgba(0,255,136,0.1);
-  color: var(--green);
-  border: 1px solid rgba(0,255,136,0.2);
-  padding: 0.2rem 0.7rem;
-  border-radius: 100px;
-}
+.x1-features{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4rem 2rem}
+.x1-features-inner{max-width:1200px;margin:0 auto}
+.x1-features-title{text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:2.5rem;display:flex;align-items:center;justify-content:center;gap:10px}
+.x1-features-title img{height:26px;width:26px;border-radius:6px;object-fit:cover}
+.x1-features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem}
+.x1-feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;transition:border-color .2s}
+.x1-feature-card:hover{border-color:var(--border-light)}
+.x1-feature-icon{font-size:1.5rem;margin-bottom:.8rem;display:block}
+.x1-feature-val{font-family:var(--font-display);font-size:1.8rem;color:var(--x1-cyan);display:block;margin-bottom:.1rem}
+.x1-feature-label{font-size:.82rem;font-weight:500;color:var(--text-secondary)}
 
-/* ===== BRIDGE GUIDE ===== */
-.bridge-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-top: 3.5rem;
-  align-items: start;
-}
-@media (max-width: 768px) { .bridge-grid { grid-template-columns: 1fr; } }
-.bridge-steps { display: flex; flex-direction: column; gap: 0; }
-.bridge-step {
-  display: flex; gap: 1.2rem;
-  padding-bottom: 2rem;
-  position: relative;
-}
-.bridge-step:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  left: 20px; top: 44px; bottom: 0; width: 1px;
-  background: linear-gradient(to bottom, rgba(245,200,66,0.4), rgba(245,200,66,0.05));
-}
-.step-num-wrap {
-  flex-shrink: 0;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: rgba(245,200,66,0.12);
-  border: 1px solid rgba(245,200,66,0.3);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--gold);
-  z-index: 1;
-}
-.step-content h4 {
-  font-family: var(--font-cond);
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--white);
-  margin-bottom: 0.4rem;
-  padding-top: 0.4rem;
-}
-.step-content p {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-.step-content p a { color: var(--gold); text-decoration: none; }
-.step-content p a:hover { text-decoration: underline; }
-.step-content .step-note {
-  margin-top: 0.6rem;
-  background: rgba(0,229,255,0.06);
-  border: 1px solid rgba(0,229,255,0.15);
-  border-radius: 8px;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.82rem;
-  color: var(--cyan);
-}
-.bridge-visual {
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  position: sticky;
-  top: 100px;
-}
-.bridge-visual-title {
-  font-family: var(--font-cond);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-.bridge-flow {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-.bridge-chain {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  padding: 1rem 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.bridge-chain-name {
-  font-family: var(--font-cond);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--white);
-}
-.bridge-chain-detail {
-  font-family: var(--font-cond);
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-top: 0.15rem;
-}
-.bridge-chain-logo {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-}
-.bridge-arrow-wrap {
-  display: flex; align-items: center; justify-content: center;
-  gap: 0.5rem;
-  padding: 0.3rem 0;
-}
-.bridge-arrow-line {
-  flex: 1; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.bridge-arrow-icon {
-  font-size: 1.2rem; color: var(--gold);
-}
-.bridge-arrow-label {
-  font-family: var(--font-cond);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  text-align: center;
-  display: block;
-}
-.bridge-reward {
-  background: rgba(245,200,66,0.08);
-  border: 1px solid rgba(245,200,66,0.2);
-  border-radius: 10px;
-  padding: 1rem 1.2rem;
-  text-align: center;
-  margin-top: 0.5rem;
-}
-.bridge-reward-label {
-  font-family: var(--font-cond);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 0.3rem;
-}
-.bridge-reward-desc {
-  font-family: var(--font-cond);
-  font-size: 0.85rem;
-  color: var(--white);
-}
+.tokens-wrapper{padding:6rem 2rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tokens-inner{max-width:1200px;margin:0 auto}
+.tokens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1rem;margin-top:3rem}
+.token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;transition:border-color .3s,transform .2s;cursor:pointer}
+.token-card:hover{border-color:var(--border-light);transform:translateY(-4px)}
+.token-logo{width:60px;height:60px;border-radius:50%;margin:0 auto .9rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.2rem}
+.token-name{font-size:.92rem;font-weight:600;color:var(--text-primary);margin-bottom:.2rem}
+.token-sym{font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase}
+.token-badge{margin-top:.7rem;display:inline-block;font-size:.64rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:rgba(0,212,255,.08);color:var(--x1-cyan);border:1px solid rgba(0,212,255,.18);padding:.18rem .6rem;border-radius:100px}
 
-/* ===== CTA BANNER ===== */
-.cta-banner {
-  padding: 5rem 2rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.cta-banner::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 100% at 50% 50%, rgba(245,200,66,0.07) 0%, transparent 70%);
-}
-.cta-banner h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  letter-spacing: 0.03em;
-  color: var(--white);
-  position: relative;
-  margin-bottom: 1rem;
-}
-.cta-banner h2 span { color: var(--gold); }
-.cta-banner p {
-  font-family: var(--font-cond);
-  font-size: 1.1rem;
-  color: var(--muted);
-  max-width: 500px;
-  margin: 0 auto 2.5rem;
-  position: relative;
-  line-height: 1.6;
-}
-.cta-banner .btn-primary { position: relative; font-size: 1.1rem; padding: 1.1rem 3rem; }
+.bridge-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3.5rem;align-items:start}
+.bridge-steps{display:flex;flex-direction:column}
+.bridge-step{display:flex;gap:1.2rem;padding-bottom:2rem;position:relative}
+.bridge-step:not(:last-child)::after{content:'';position:absolute;left:19px;top:42px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--border-blue),rgba(77,166,255,.03))}
+.step-num{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:rgba(77,166,255,.08);border:1px solid var(--border-blue);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:.9rem;color:var(--x1-blue);z-index:1}
+.step-content h4{font-size:1rem;font-weight:700;color:var(--text-primary);margin-bottom:.35rem;padding-top:.4rem}
+.step-content p{font-size:.88rem;color:var(--text-secondary);line-height:1.7}
+.step-content a{color:var(--x1-cyan);text-decoration:none}
+.step-note{margin-top:.6rem;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:var(--radius-md);padding:.55rem .9rem;font-size:.8rem;color:var(--x1-cyan)}
+.bridge-visual{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.8rem;position:sticky;top:80px}
+.bridge-visual-title{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:1.4rem;text-align:center}
+.bridge-flow{display:flex;flex-direction:column;gap:.7rem}
+.bridge-chain{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-md);padding:1rem 1.1rem;display:flex;align-items:center;justify-content:space-between}
+.bridge-chain-name{font-size:.88rem;font-weight:600;color:var(--text-primary)}
+.bridge-chain-detail{font-family:var(--font-mono);font-size:.7rem;color:var(--text-secondary);margin-top:.12rem}
+.bridge-arrow-wrap{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.2rem 0}
+.bridge-arrow-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--x1-blue),transparent)}
+.bridge-arrow-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--x1-blue);text-align:center;display:block}
+.bridge-reward{background:rgba(77,166,255,.06);border:1px solid var(--border-blue);border-radius:var(--radius-md);padding:1rem 1.1rem;text-align:center;margin-top:.3rem}
+.bridge-reward-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--x1-cyan);margin-bottom:.25rem}
+.bridge-reward-desc{font-size:.85rem;color:var(--text-primary)}
 
-/* ===== FOOTER ===== */
-footer {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  padding: 3rem 2rem;
-}
-.footer-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 1.5rem;
-}
-.footer-logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  letter-spacing: 0.05em;
-  color: var(--white);
-}
-.footer-logo span { color: var(--gold); }
-.footer-links {
-  display: flex; gap: 2rem; list-style: none; flex-wrap: wrap;
-}
-.footer-links a {
-  font-family: var(--font-cond);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--gold); }
-.footer-copy {
-  font-family: var(--font-cond);
-  font-size: 0.8rem;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-  text-align: center;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
-  max-width: 1200px;
-  margin-left: auto; margin-right: auto;
-}
+.cta-banner{padding:6rem 2rem;text-align:center;position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 100% at 50% 50%,rgba(77,166,255,.07) 0%,transparent 70%)}
+.cta-banner h2{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);letter-spacing:.03em;color:var(--text-primary);position:relative;margin-bottom:1rem}
+.cta-banner h2 span{color:var(--x1-cyan)}
+.cta-banner p{font-size:1rem;color:var(--text-secondary);max-width:500px;margin:0 auto 2.5rem;position:relative;line-height:1.7}
+.cta-banner .btn-primary{position:relative;font-size:1rem;padding:1rem 2.8rem}
 
-/* ===== FULL-WIDTH SECTIONS ===== */
-.full-width { max-width: 100% !important; padding-left: 0; padding-right: 0; }
-.fw-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  .hero-stats { gap: 1.5rem; }
-  .packs-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 480px) {
-  .packs-grid { grid-template-columns: 1fr; }
-}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem}
+.footer-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.footer-logo img{height:30px;width:30px;border-radius:7px;object-fit:cover}
+.footer-logo-div{width:1px;height:20px;background:var(--border-light)}
+.footer-logo-text{font-family:var(--font-display);font-size:1.3rem;letter-spacing:.06em;color:var(--text-primary)}
+.footer-logo-text .m{color:var(--gold)} .footer-logo-text .p{color:var(--x1-cyan)}
+.footer-links{display:flex;gap:2rem;list-style:none;flex-wrap:wrap}
+.footer-links a{font-size:.83rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--x1-cyan)}
+.footer-copy{font-size:.76rem;color:var(--text-dim);text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:1200px;margin-left:auto;margin-right:auto}
+.footer-x1{display:inline-flex;align-items:center;gap:6px;margin-top:.8rem;font-size:.74rem;font-weight:500;color:var(--text-secondary)}
+.footer-x1 img{height:18px;width:18px;border-radius:4px;object-fit:cover;opacity:.8}
+@media(max-width:768px){nav{padding:0 1.5rem} .nav-links{display:none} .hero-stats{gap:1.5rem} .packs-grid{grid-template-columns:1fr 1fr} .bridge-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.packs-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">X1 <span>MEME PACKS</span></div>
+  <a href="#home" class="nav-logo">
+    <img src="x1-logo.png" class="x1-mark" alt="X1"/>
+    <div class="nav-logo-div"></div>
+    <span class="nav-logo-text"><span class="m">MEME</span> <span class="p">PACKS</span></span>
+  </a>
   <ul class="nav-links">
     <li><a href="#how-it-works">How It Works</a></li>
     <li><a href="#packs">Pack Tiers</a></li>
     <li><a href="#tokens">Tokens</a></li>
     <li><a href="#bridge">Bridge Guide</a></li>
   </ul>
-  <a href="#bridge" class="nav-cta">Bridge Now</a>
+  <a href="#bridge" class="nav-cta">🌉 Bridge Now</a>
 </nav>
 
-<!-- HERO -->
 <div class="hero" id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-badge">🔥 Live on X1 Blockchain</div>
-  <h1 class="hero-title">
-    BRIDGE.<br>
-    <span class="gold">EARN.</span><br>
-    <span class="cyan">COLLECT.</span>
-  </h1>
-  <p class="hero-sub">
-    Bridge <strong>USDC from Solana to X1</strong> and receive an instant airdrop of the hottest meme coin pack in crypto. The more you bridge, the rarer your pack.
-  </p>
+  <div class="hero-bg"></div><div class="hero-grid"></div>
+  <div class="hero-powered"><img src="x1-logo.png" alt="X1"/> Powered by X1 Blockchain</div>
+  <h1 class="hero-title">BRIDGE.<br><span class="gold">EARN.</span><br><span class="blue">COLLECT.</span></h1>
+  <p class="hero-sub">Bridge <strong>USDC from Solana to X1</strong> and receive an instant airdrop of the hottest meme coin pack in crypto. The more you bridge, the rarer your pack.</p>
   <div class="hero-actions">
     <a href="#bridge" class="btn-primary">🌉 Start Bridging</a>
     <a href="#packs" class="btn-secondary">View Pack Tiers</a>
   </div>
+  <div class="hero-chain-row">
+    <div class="chain-pill"><span style="color:#9945ff;font-weight:700;font-size:1rem;">◎</span> Solana</div>
+    <span class="chain-arrow">→</span>
+    <div class="chain-pill" style="border-color:rgba(77,166,255,.35)"><img src="x1-logo.png" alt="X1"/><span style="color:var(--x1-cyan);font-weight:600">X1 Network</span><span class="chain-dot"></span></div>
+  </div>
   <div class="hero-stats">
-    <div class="hero-stat">
-      <span class="hero-stat-num">10</span>
-      <span class="hero-stat-label">Meme Tokens</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">5</span>
-      <span class="hero-stat-label">Pack Tiers</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">30x</span>
-      <span class="hero-stat-label">Max Multiplier</span>
-    </div>
-    <div class="hero-stat">
-      <span class="hero-stat-num">$100</span>
-      <span class="hero-stat-label">Min Bridge</span>
-    </div>
+    <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Meme Tokens</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">Pack Tiers</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">30x</span><span class="hero-stat-label">Max Multiplier</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">$100</span><span class="hero-stat-label">Min Bridge</span></div>
   </div>
 </div>
 
-<!-- TICKER TAPE -->
-<div class="ticker">
-  <div class="ticker-track" id="ticker-track">
-    <!-- JS duplicated for infinite scroll -->
+<div class="ticker"><div class="ticker-track" id="ticker-track"></div></div>
+
+<div class="x1-brand-bar">
+  <div class="x1-brand-bar-inner">
+    <div class="x1-brand-item"><img src="x1-logo.png" alt="X1"/> X1 Blockchain</div>
+    <div class="x1-brand-sep"></div>
+    <div class="x1-brand-item">⚡ Block Time <span class="val">1 SEC</span></div>
+    <div class="x1-brand-sep"></div>
+    <div class="x1-brand-item">🚀 TPS <span class="val">50,000+</span></div>
+    <div class="x1-brand-sep"></div>
+    <div class="x1-brand-item">🛡️ Consensus <span class="val">PoW / PoS</span></div>
+    <div class="x1-brand-sep"></div>
+    <div class="x1-brand-item">💎 Native Token <span class="val">XNT</span></div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
 <div class="how-wrapper" id="how-it-works">
   <div class="how-inner">
     <span class="section-label">Simple as 1, 2, 3</span>
     <h2 class="section-title">HOW IT WORKS</h2>
-    <p class="section-sub">Bridge your USDC from Solana to X1 in minutes and receive your meme pack instantly.</p>
+    <p class="section-sub">Bridge your USDC from Solana to X1 in minutes using the X1 Warp Bridge and receive your meme pack instantly.</p>
     <div class="how-grid">
-      <div class="how-card">
-        <div class="how-num">01</div>
-        <div class="how-icon">🌉</div>
-        <h3>Bridge Your USDC</h3>
-        <p>Use the <strong>X1 Warp Bridge</strong> to move any amount of USDC from Solana to X1. Minimum bridge is <strong>$100 USDC</strong>. The more you bridge in one transaction, the rarer your pack.</p>
-      </div>
-      <div class="how-card">
-        <div class="how-num">02</div>
-        <div class="how-icon">🎁</div>
-        <h3>Receive Your Pack Instantly</h3>
-        <p>The moment your bridge confirms, an airdrop is automatically sent to your wallet. No waiting, no claiming — just <strong>instant meme coin rewards</strong> delivered straight to you.</p>
-      </div>
-      <div class="how-card">
-        <div class="how-num">03</div>
-        <div class="how-icon">🚀</div>
-        <h3>Hold, Trade or Upgrade</h3>
-        <p>Your pack is filled with a <strong>random selection</strong> of the top meme tokens on X1. Hold for potential gains or trade freely. Bridge again tomorrow for your next pack.</p>
-      </div>
+      <div class="how-card"><div class="how-num">01</div><div class="how-icon">🌉</div><h3>Bridge Your USDC</h3><p>Use the <strong>X1 Warp Bridge</strong> to move USDC from Solana to X1. Minimum is <strong>$100 USDC</strong>. The more you bridge in one transaction, the rarer your pack.</p></div>
+      <div class="how-card"><div class="how-num">02</div><div class="how-icon">🎁</div><h3>Receive Your Pack Instantly</h3><p>The moment your bridge confirms on X1, an airdrop is sent to your wallet automatically. No waiting — just <strong>instant meme coin rewards</strong>.</p></div>
+      <div class="how-card"><div class="how-num">03</div><div class="how-icon">🚀</div><h3>Hold, Trade or Upgrade</h3><p>Your pack has a <strong>random selection</strong> of the top X1 meme tokens. Hold for gains, trade freely, or bridge bigger for a rarer tier today.</p></div>
     </div>
   </div>
 </div>
 
-<!-- PACK TIERS -->
 <section id="packs">
   <span class="section-label">One Bridge. One Pack. Five Rarities.</span>
   <h2 class="section-title">CHOOSE YOUR TIER</h2>
   <p class="section-sub">Every bridge earns you one pack. Bridge more in a single transaction to unlock rarer, higher-multiplier packs with significantly more tokens inside.</p>
   <div class="packs-grid">
-    <div class="pack-card pack-bronze">
-      <span class="pack-emoji">🥉</span>
-      <div class="pack-title">BRONZE</div>
-      <div class="pack-tier-badge">Starter</div>
-      <div class="pack-range">$100 – $499 USDC</div>
-      <div class="pack-divider"></div>
-      <span class="pack-mult">1x</span>
-      <span class="pack-mult-label">Token Multiplier</span>
-      <div class="pack-divider"></div>
-      <div class="pack-feature">Base token amounts<br>Random meme selection<br>1 pack per bridge</div>
-    </div>
-    <div class="pack-card pack-silver">
-      <span class="pack-emoji">🥈</span>
-      <div class="pack-title">SILVER</div>
-      <div class="pack-tier-badge">Enhanced</div>
-      <div class="pack-range">$500 – $999 USDC</div>
-      <div class="pack-divider"></div>
-      <span class="pack-mult">3x</span>
-      <span class="pack-mult-label">Token Multiplier</span>
-      <div class="pack-divider"></div>
-      <div class="pack-feature">3× more tokens<br>Bigger meme positions<br>1 pack per bridge</div>
-    </div>
-    <div class="pack-card pack-gold">
-      <span class="pack-emoji">🥇</span>
-      <div class="pack-title">GOLD</div>
-      <div class="pack-tier-badge">Premium</div>
-      <div class="pack-range">$1,000 – $1,999 USDC</div>
-      <div class="pack-divider"></div>
-      <span class="pack-mult">7x</span>
-      <span class="pack-mult-label">Token Multiplier</span>
-      <div class="pack-divider"></div>
-      <div class="pack-feature">7× token amounts<br>High-value positions<br>1 pack per bridge</div>
-    </div>
-    <div class="pack-card pack-diamond">
-      <span class="pack-emoji">💎</span>
-      <div class="pack-title">DIAMOND</div>
-      <div class="pack-tier-badge">Elite</div>
-      <div class="pack-range">$2,000 – $4,999 USDC</div>
-      <div class="pack-divider"></div>
-      <span class="pack-mult">15x</span>
-      <span class="pack-mult-label">Token Multiplier</span>
-      <div class="pack-divider"></div>
-      <div class="pack-feature">15× token amounts<br>Serious meme stack<br>1 pack per bridge</div>
-    </div>
-    <div class="pack-card pack-legendary">
-      <div class="pack-hot-badge">🔥 Max Reward</div>
-      <span class="pack-emoji">🔥</span>
-      <div class="pack-title">LEGENDARY</div>
-      <div class="pack-tier-badge">Maximum</div>
-      <div class="pack-range">$5,000 USDC</div>
-      <div class="pack-divider"></div>
-      <span class="pack-mult">30x</span>
-      <span class="pack-mult-label">Token Multiplier</span>
-      <div class="pack-divider"></div>
-      <div class="pack-feature">30× token amounts<br>Max daily reward<br>Bragging rights included</div>
-    </div>
+    <div class="pack-card pack-bronze"><span class="pack-emoji">🥉</span><div class="pack-title">BRONZE</div><div class="pack-tier-badge">Starter</div><div class="pack-range">$100 – $499</div><div class="pack-divider"></div><span class="pack-mult">1x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">Base token amounts<br>Random meme selection<br>1 pack per day</div></div>
+    <div class="pack-card pack-silver"><span class="pack-emoji">🥈</span><div class="pack-title">SILVER</div><div class="pack-tier-badge">Enhanced</div><div class="pack-range">$500 – $999</div><div class="pack-divider"></div><span class="pack-mult">3x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">3× more tokens<br>Bigger meme positions<br>1 pack per day</div></div>
+    <div class="pack-card pack-gold"><span class="pack-emoji">🥇</span><div class="pack-title">GOLD</div><div class="pack-tier-badge">Premium</div><div class="pack-range">$1,000 – $1,999</div><div class="pack-divider"></div><span class="pack-mult">7x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">7× token amounts<br>High-value positions<br>1 pack per day</div></div>
+    <div class="pack-card pack-diamond"><span class="pack-emoji">💎</span><div class="pack-title">DIAMOND</div><div class="pack-tier-badge">Elite</div><div class="pack-range">$2,000 – $4,999</div><div class="pack-divider"></div><span class="pack-mult">15x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">15× token amounts<br>Serious meme stack<br>1 pack per day</div></div>
+    <div class="pack-card pack-legendary"><div class="pack-hot">🔥 Max Reward</div><span class="pack-emoji">🔥</span><div class="pack-title">LEGENDARY</div><div class="pack-tier-badge">Maximum</div><div class="pack-range">$5,000 USDC</div><div class="pack-divider"></div><span class="pack-mult">30x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">30× token amounts<br>Max daily reward<br>Bragging rights included</div></div>
   </div>
-
-  <!-- Upgrade Rule Banner -->
   <div class="upgrade-banner">
     <div class="upgrade-icon">⚡</div>
     <div class="upgrade-text">
       <h4>The Upgrade Rule — Bridge Smarter</h4>
-      <p>You earn <strong>one pack per wallet per day</strong>, which resets at midnight UTC. Already bridged Bronze earlier today? Bridge <strong>$5,000 USDC</strong> later and your pack automatically upgrades to <strong>Legendary</strong> — you always keep the best tier you earned today.</p>
+      <p>You earn <strong>one pack per wallet per day</strong>, resetting at midnight UTC. Already bridged Bronze today? Bridge <strong>$5,000 USDC</strong> later and your pack upgrades to <strong>Legendary</strong> — you always keep the best tier you hit that day.</p>
     </div>
   </div>
 </section>
 
-<!-- TOKENS -->
-<div class="tokens-wrapper" id="tokens">
-  <div class="tokens-inner">
-    <span class="section-label">The Pack Contents</span>
-    <h2 class="section-title">10 MEME TOKENS. ONE PACK.</h2>
-    <p class="section-sub">Every pack contains a random assortment of the top meme coins, all duplicated and live on the X1 blockchain. Your pack, your portfolio.</p>
-    <div class="tokens-grid" id="tokens-grid">
-      <!-- Dynamically populated via JS -->
+<div class="x1-features">
+  <div class="x1-features-inner">
+    <div class="x1-features-title"><img src="x1-logo.png" alt="X1"/> Why X1 Blockchain</div>
+    <div class="x1-features-grid">
+      <div class="x1-feature-card"><span class="x1-feature-icon">⚡</span><span class="x1-feature-val">1 SEC</span><span class="x1-feature-label">Block Time</span></div>
+      <div class="x1-feature-card"><span class="x1-feature-icon">🚀</span><span class="x1-feature-val">50K+</span><span class="x1-feature-label">Transactions Per Second</span></div>
+      <div class="x1-feature-card"><span class="x1-feature-icon">💸</span><span class="x1-feature-val">~$0.00</span><span class="x1-feature-label">Near-Zero Gas Fees</span></div>
+      <div class="x1-feature-card"><span class="x1-feature-icon">🛡️</span><span class="x1-feature-val">PoW/PoS</span><span class="x1-feature-label">Hybrid Consensus</span></div>
+      <div class="x1-feature-card"><span class="x1-feature-icon">🔗</span><span class="x1-feature-val">SVM</span><span class="x1-feature-label">Solana VM Compatible</span></div>
     </div>
   </div>
 </div>
 
-<!-- BRIDGE GUIDE -->
+<div class="tokens-wrapper" id="tokens">
+  <div class="tokens-inner">
+    <span class="section-label">The Pack Contents</span>
+    <h2 class="section-title">10 MEME TOKENS. ONE PACK.</h2>
+    <p class="section-sub">Every pack contains a random assortment of the top meme coins, all live on X1 blockchain. Your pack, your portfolio.</p>
+    <div class="tokens-grid" id="tokens-grid"></div>
+  </div>
+</div>
+
 <section id="bridge">
   <span class="section-label">Step-by-Step</span>
   <h2 class="section-title">HOW TO BRIDGE</h2>
   <p class="section-sub">Bridging from Solana to X1 takes just a few minutes using the X1 Warp Bridge. Follow these steps to earn your first pack.</p>
-
   <div class="bridge-grid">
     <div class="bridge-steps">
-      <div class="bridge-step">
-        <div class="step-num-wrap">1</div>
-        <div class="step-content">
-          <h4>Set Up Your X1 Wallet</h4>
-          <p>Add the X1 network to your Phantom or compatible wallet. You'll need to configure the X1 RPC endpoint to interact with the network.</p>
-          <div class="step-note">💡 Phantom and Backpack both support X1. Make sure you have at least $100 USDC on Solana ready to bridge.</div>
-        </div>
-      </div>
-      <div class="bridge-step">
-        <div class="step-num-wrap">2</div>
-        <div class="step-content">
-          <h4>Visit the X1 Warp Bridge</h4>
-          <p>Head to the official <a href="#" target="_blank">X1 Warp Bridge</a>. This is the official Solana-to-X1 bridge. Always verify you are on the official URL before connecting your wallet.</p>
-        </div>
-      </div>
-      <div class="bridge-step">
-        <div class="step-num-wrap">3</div>
-        <div class="step-content">
-          <h4>Connect Both Wallets</h4>
-          <p>Connect your Solana wallet as the source. The bridge will let you select your X1 wallet as the destination — both can be the same Phantom wallet if it supports X1.</p>
-        </div>
-      </div>
-      <div class="bridge-step">
-        <div class="step-num-wrap">4</div>
-        <div class="step-content">
-          <h4>Select USDC and Enter Amount</h4>
-          <p>Choose USDC as the token to bridge. Enter your desired amount — minimum $100. Remember: <strong>higher amounts unlock rarer pack tiers</strong>. Max $5,000 for a Legendary pack.</p>
-          <div class="step-note">🎯 Bridge $5,000 in a single transaction to get the 🔥 Legendary Pack with 30x token multiplier.</div>
-        </div>
-      </div>
-      <div class="bridge-step">
-        <div class="step-num-wrap">5</div>
-        <div class="step-content">
-          <h4>Confirm and Receive Your Pack</h4>
-          <p>Approve the transaction in your wallet. Once the bridge confirms on X1, your meme pack airdrop is sent to your wallet automatically. Check your X1 wallet to see your tokens!</p>
-        </div>
-      </div>
+      <div class="bridge-step"><div class="step-num">1</div><div class="step-content"><h4>Set Up Your X1 Wallet</h4><p>Add the X1 network to your Phantom or compatible wallet. Configure the X1 RPC endpoint to interact with the network.</p><div class="step-note">💡 Phantom and Backpack both support X1. Have at least $100 USDC on Solana ready to bridge.</div></div></div>
+      <div class="bridge-step"><div class="step-num">2</div><div class="step-content"><h4>Visit the X1 Warp Bridge</h4><p>Head to the official <a href="#" target="_blank">X1 Warp Bridge</a>. Always verify you are on the official URL before connecting your wallet.</p></div></div>
+      <div class="bridge-step"><div class="step-num">3</div><div class="step-content"><h4>Connect Both Wallets</h4><p>Connect your Solana wallet as the source and your X1 wallet as the destination — both can be the same Phantom wallet if it supports X1.</p></div></div>
+      <div class="bridge-step"><div class="step-num">4</div><div class="step-content"><h4>Select USDC and Enter Amount</h4><p>Choose USDC as the token. Enter your amount — minimum $100. Higher amounts unlock rarer pack tiers.</p><div class="step-note">🎯 Bridge $5,000 in a single transaction for the 🔥 Legendary Pack with 30x token multiplier.</div></div></div>
+      <div class="bridge-step"><div class="step-num">5</div><div class="step-content"><h4>Confirm and Receive Your Pack</h4><p>Approve the transaction in your wallet. Once confirmed on X1, your meme pack airdrop is sent to your X1 wallet automatically.</p></div></div>
     </div>
-
     <div class="bridge-visual">
       <div class="bridge-visual-title">Bridge Flow</div>
       <div class="bridge-flow">
-        <div class="bridge-chain">
-          <div>
-            <div class="bridge-chain-name">Solana Network</div>
-            <div class="bridge-chain-detail">Your USDC source</div>
-          </div>
-          <div class="bridge-chain-logo" style="background: rgba(148,77,255,0.2); color: #9400d3; font-size: 1rem;">◎</div>
-        </div>
-        <div>
-          <div class="bridge-arrow-wrap">
-            <div class="bridge-arrow-line"></div>
-            <span class="bridge-arrow-icon">⬇</span>
-            <div class="bridge-arrow-line"></div>
-          </div>
-          <span class="bridge-arrow-label">X1 Warp Bridge</span>
-        </div>
-        <div class="bridge-chain">
-          <div>
-            <div class="bridge-chain-name">X1 Network</div>
-            <div class="bridge-chain-detail">Destination wallet</div>
-          </div>
-          <div class="bridge-chain-logo" style="background: rgba(245,200,66,0.15); color: var(--gold); font-family: var(--font-display);">X1</div>
-        </div>
-        <div>
-          <div class="bridge-arrow-wrap">
-            <div class="bridge-arrow-line"></div>
-            <span class="bridge-arrow-icon">⬇</span>
-            <div class="bridge-arrow-line"></div>
-          </div>
-          <span class="bridge-arrow-label">Auto Airdrop Triggered</span>
-        </div>
-        <div class="bridge-reward">
-          <div class="bridge-reward-label">🎁 Your Pack Arrives</div>
-          <div class="bridge-reward-desc">Random meme tokens sent instantly to your X1 wallet</div>
-        </div>
+        <div class="bridge-chain"><div><div class="bridge-chain-name">Solana Network</div><div class="bridge-chain-detail">Your USDC source</div></div><span style="font-size:1.6rem;color:#9945ff;">◎</span></div>
+        <div><div class="bridge-arrow-wrap"><div class="bridge-arrow-line"></div><span style="color:var(--x1-blue);font-size:1.1rem;">⬇</span><div class="bridge-arrow-line"></div></div><span class="bridge-arrow-label">X1 Warp Bridge</span></div>
+        <div class="bridge-chain" style="border-color:rgba(77,166,255,.3)"><div><div class="bridge-chain-name">X1 Network</div><div class="bridge-chain-detail">Destination wallet</div></div><img src="x1-logo.png" alt="X1" style="height:36px;width:36px;border-radius:8px;object-fit:cover"/></div>
+        <div><div class="bridge-arrow-wrap"><div class="bridge-arrow-line"></div><span style="color:var(--x1-blue);font-size:1.1rem;">⬇</span><div class="bridge-arrow-line"></div></div><span class="bridge-arrow-label">Auto Airdrop Triggered</span></div>
+        <div class="bridge-reward"><div class="bridge-reward-label">🎁 Your Pack Arrives</div><div class="bridge-reward-desc">Random meme tokens sent instantly to your X1 wallet</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA BANNER -->
 <div class="cta-banner">
   <h2>READY TO <span>STACK</span> MEMES?</h2>
   <p>One bridge. One pack. One chance to go Legendary. Don't leave tokens on the table.</p>
   <a href="#bridge" class="btn-primary">🔥 Bridge Now & Earn Your Pack</a>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">X1 <span>MEME PACKS</span></div>
+    <a href="#home" class="footer-logo">
+      <img src="x1-logo.png" alt="X1"/>
+      <div class="footer-logo-div"></div>
+      <span class="footer-logo-text"><span class="m">MEME</span> <span class="p">PACKS</span></span>
+    </a>
     <ul class="footer-links">
       <li><a href="#how-it-works">How It Works</a></li>
       <li><a href="#packs">Pack Tiers</a></li>
       <li><a href="#tokens">Tokens</a></li>
       <li><a href="#bridge">Bridge Guide</a></li>
-      <li><a href="#" target="_blank">X1 Blockchain</a></li>
+      <li><a href="https://x1blockchain.net" target="_blank">X1 Blockchain</a></li>
     </ul>
   </div>
   <div class="footer-copy">
-    © 2025 X1 Meme Packs. Built on X1 Blockchain. Bridging powered by X1 Warp Bridge.<br>
-    <span style="font-size:0.7rem; opacity:0.5;">Meme packs are promotional rewards and not financial instruments. Bridge amounts and rewards are subject to availability.</span>
+    © 2025 X1 Meme Packs. Built on X1 Blockchain. Bridging powered by X1 Warp Bridge.
+    <div class="footer-x1"><img src="x1-logo.png" alt="X1"/> Powered by X1 Blockchain</div>
+    <br><span style="font-size:.68rem;opacity:.4;">Meme packs are promotional rewards and not financial instruments. Subject to availability.</span>
   </div>
 </footer>
 
 <script>
-// ===== PLACEHOLDER TOKEN DATA =====
-const placeholderTokens = [
-  { name: 'BonkX1', sym: 'BONK', color: '#f5a623', bg: 'rgba(245,166,35,0.15)' },
-  { name: 'DogWifX1', sym: 'WIF', color: '#9b59b6', bg: 'rgba(155,89,182,0.15)' },
-  { name: 'PopcatX1', sym: 'POPCAT', color: '#e74c3c', bg: 'rgba(231,76,60,0.15)' },
-  { name: 'MyroX1', sym: 'MYRO', color: '#1abc9c', bg: 'rgba(26,188,156,0.15)' },
-  { name: 'BookX1', sym: 'BOOK', color: '#3498db', bg: 'rgba(52,152,219,0.15)' },
-  { name: 'SamoX1', sym: 'SAMO', color: '#e67e22', bg: 'rgba(230,126,34,0.15)' },
-  { name: 'ChillX1', sym: 'CHILL', color: '#00e5ff', bg: 'rgba(0,229,255,0.15)' },
-  { name: 'MoonsX1', sym: 'MOONS', color: '#ff2d78', bg: 'rgba(255,45,120,0.15)' },
-  { name: 'PepeX1', sym: 'PEPE', color: '#27ae60', bg: 'rgba(39,174,96,0.15)' },
-  { name: 'XNT', sym: 'XNT', color: '#f5c842', bg: 'rgba(245,200,66,0.15)' },
+const tokens=[
+  {name:'BonkX1',sym:'BONK',color:'#f5a623',bg:'rgba(245,166,35,.18)'},
+  {name:'DogWifX1',sym:'WIF',color:'#9b59b6',bg:'rgba(155,89,182,.18)'},
+  {name:'PopcatX1',sym:'POPCAT',color:'#e74c3c',bg:'rgba(231,76,60,.18)'},
+  {name:'MyroX1',sym:'MYRO',color:'#1abc9c',bg:'rgba(26,188,156,.18)'},
+  {name:'BookX1',sym:'BOOK',color:'#4da6ff',bg:'rgba(77,166,255,.18)'},
+  {name:'SamoX1',sym:'SAMO',color:'#e67e22',bg:'rgba(230,126,34,.18)'},
+  {name:'ChillX1',sym:'CHILL',color:'#00d4ff',bg:'rgba(0,212,255,.15)'},
+  {name:'MoonsX1',sym:'MOONS',color:'#ff2d78',bg:'rgba(255,45,120,.15)'},
+  {name:'PepeX1',sym:'PEPE',color:'#27ae60',bg:'rgba(39,174,96,.18)'},
+  {name:'XNT',sym:'XNT',color:'#f0b90b',bg:'rgba(240,185,11,.15)'},
 ];
-
-// Populate tokens grid
-const grid = document.getElementById('tokens-grid');
-placeholderTokens.forEach(t => {
-  const card = document.createElement('div');
-  card.className = 'token-card';
-  card.innerHTML = `
-    <div class="token-logo" style="background:${t.bg}; color:${t.color};">${t.sym.slice(0,3)}</div>
-    <div class="token-name">${t.name}</div>
-    <div class="token-sym">${t.sym}</div>
-    <div class="token-badge">In Reward Pool</div>
-  `;
-  grid.appendChild(card);
-});
-
-// ===== TICKER TAPE =====
-const tickerData = [
-  ...placeholderTokens,
-  { name: 'XNT Token', sym: 'XNT', color: '#f5c842', bg: 'rgba(245,200,66,0.2)' },
-];
-const track = document.getElementById('ticker-track');
-// Double for infinite
-[...tickerData, ...tickerData].forEach(t => {
-  const item = document.createElement('div');
-  item.className = 'ticker-item';
-  item.innerHTML = `
-    <div class="ticker-icon" style="background:${t.bg}; color:${t.color};">${t.sym.slice(0,3)}</div>
-    <span class="ticker-name">${t.name}</span>
-    <span class="ticker-label">In Pool</span>
-  `;
-  track.appendChild(item);
-});
-
-// ===== SCROLL REVEAL =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.how-card, .pack-card, .token-card, .bridge-step').forEach(el => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  observer.observe(el);
-});
+const grid=document.getElementById('tokens-grid');
+tokens.forEach(t=>{const c=document.createElement('div');c.className='token-card';c.innerHTML=`<div class="token-logo" style="background:${t.bg};color:${t.color};">${t.sym.slice(0,3)}</div><div class="token-name">${t.name}</div><div class="token-sym">${t.sym}</div><div class="token-badge">In Reward Pool</div>`;grid.appendChild(c);});
+const track=document.getElementById('ticker-track');
+[...tokens,...tokens].forEach(t=>{const i=document.createElement('div');i.className='ticker-item';i.innerHTML=`<div class="ticker-icon" style="background:${t.bg};color:${t.color};">${t.sym.slice(0,3)}</div><span class="ticker-name">${t.name}</span><span class="ticker-badge">${t.sym}</span>`;track.appendChild(i);});
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}}),{threshold:.1});
+document.querySelectorAll('.how-card,.pack-card,.token-card,.bridge-step,.x1-feature-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .45s ease,transform .45s ease';obs.observe(el);});
 </script>
 </body>
 </html>
