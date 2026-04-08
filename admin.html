@@ -331,11 +331,25 @@ async function testRpc(){
   }
 }
 
-// ── xDEX TOKEN METADATA FETCH ──
-// Uses the same API as X1 Prism: api.xdex.xyz/api/xendex
-const XDEX_API = 'https://api.xdex.xyz/api/xendex';
+// ── TOKEN METADATA FETCH — Multi-Strategy ──
+// Strategy 1: X1 RPC jsonParsed (Token Extensions embedded metadata)
+// Strategy 2: xDEX direct (works if CORS allows)
+// Strategy 3: xDEX via allorigins CORS proxy
+
+const XDEX_API  = 'https://api.xdex.xyz/api/xendex';
+const CORS_PROXIES = [
+  (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+  (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+];
 let xdexCache = null;
 let xdexCacheTime = 0;
+
+function resolveUri(uri){
+  if(!uri) return null;
+  if(uri.startsWith('ipfs://')) return 'https://cloudflare-ipfs.com/ipfs/' + uri.slice(7);
+  if(uri.startsWith('ar://')) return 'https://arweave.net/' + uri.slice(5);
+  return uri;
+}
 
 function resolveXdexLogo(logo){
   if(!logo) return null;
@@ -343,38 +357,70 @@ function resolveXdexLogo(logo){
   return logo;
 }
 
-async function getXdexPools(){
-  if(xdexCache && Date.now() - xdexCacheTime < 60000) return xdexCache;
-  const res = await fetch(XDEX_API);
-  if(!res.ok) throw new Error('xDEX API error: ' + res.status);
-  const json = await res.json();
-  xdexCache = json;
-  xdexCacheTime = Date.now();
-  return json;
+async function tryFetchJson(url, timeout=7000){
+  const ctrl = new AbortController();
+  const timer = setTimeout(()=>ctrl.abort(), timeout);
+  try{
+    const res = await fetch(url, {signal: ctrl.signal});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } finally { clearTimeout(timer); }
+}
+
+async function searchXdexPools(json, address){
+  const data = json.data || json;
+  if(!Array.isArray(data)) return null;
+  for(const pool of data){
+    if(pool.token1_address === address)
+      return { name: pool.token1_name||pool.token1_symbol, symbol: pool.token1_symbol, image: resolveXdexLogo(pool.token1_logo) };
+    if(pool.token2_address === address)
+      return { name: pool.token2_name||pool.token2_symbol, symbol: pool.token2_symbol, image: resolveXdexLogo(pool.token2_logo) };
+  }
+  return null;
 }
 
 async function fetchTokenMeta(address){
-  const pools = await getXdexPools();
-  const data = pools.data || pools;
-  if(!Array.isArray(data)) throw new Error('Unexpected xDEX response');
+  // ── Strategy 1: X1 RPC — Token Extensions (Token 2022 embedded metadata) ──
+  try{
+    const result = await rpcCall('getAccountInfo', [address, {encoding:'jsonParsed'}]);
+    const parsed = result?.value?.data?.parsed;
+    if(parsed?.info){
+      const extensions = parsed.info.extensions || [];
+      const metaExt = extensions.find(e => e.extension === 'tokenMetadata');
+      if(metaExt?.state?.name && metaExt?.state?.symbol){
+        const {name, symbol, uri} = metaExt.state;
+        let image = null;
+        if(uri){ try{ const m=await tryFetchJson(resolveUri(uri)); image=resolveUri(m.image||m.logo); }catch(e){} }
+        return {name, symbol, image};
+      }
+    }
+  } catch(e){ console.warn('[Strategy 1] RPC Token Extensions failed:', e.message); }
 
-  for(const pool of data){
-    if(pool.token1_address === address){
-      return {
-        name:   pool.token1_name || pool.token1_symbol,
-        symbol: pool.token1_symbol,
-        image:  resolveXdexLogo(pool.token1_logo)
-      };
-    }
-    if(pool.token2_address === address){
-      return {
-        name:   pool.token2_name || pool.token2_symbol,
-        symbol: pool.token2_symbol,
-        image:  resolveXdexLogo(pool.token2_logo)
-      };
-    }
+  // ── Strategy 2: xDEX direct (no proxy) ──
+  if(xdexCache && Date.now()-xdexCacheTime < 60000){
+    const hit = await searchXdexPools(xdexCache, address);
+    if(hit) return hit;
   }
-  throw new Error('Token not found in xDEX pool data');
+  try{
+    const json = await tryFetchJson(XDEX_API, 8000);
+    xdexCache = json; xdexCacheTime = Date.now();
+    const hit = await searchXdexPools(json, address);
+    if(hit) return hit;
+    throw new Error('Token not found in xDEX pools');
+  } catch(e){ console.warn('[Strategy 2] xDEX direct failed:', e.message); }
+
+  // ── Strategy 3: xDEX via CORS proxies ──
+  for(const makeUrl of CORS_PROXIES){
+    try{
+      const json = await tryFetchJson(makeUrl(XDEX_API), 10000);
+      xdexCache = json; xdexCacheTime = Date.now();
+      const hit = await searchXdexPools(json, address);
+      if(hit) return hit;
+      throw new Error('Token not found');
+    } catch(e){ console.warn('[Strategy 3] CORS proxy failed:', e.message); }
+  }
+
+  throw new Error('Token not found. Enter name & symbol manually.');
 }
 
 // ── TOKEN SLOTS ──
@@ -503,7 +549,7 @@ async function triggerFetch(i, address){
     slotData[i].showManual = true;
     rebuildSlot(i);
     document.getElementById('slot-'+i).className='token-slot error-state';
-    showToast('error','Not found on xDEX. Enter name & symbol manually.');
+    showToast('error','Auto-fetch failed. Enter name & symbol manually.');
   }
 }
 
