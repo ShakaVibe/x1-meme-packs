@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>X1 Meme Packs — Bridge. Earn. Collect.</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #07070f;
+  --bg2: #0d0d1a;
+  --bg3: #111124;
+  --gold: #f5c842;
+  --gold2: #e8a820;
+  --cyan: #00e5ff;
+  --pink: #ff2d78;
+  --green: #00ff88;
+  --white: #f0eee8;
+  --muted: #7a7a9a;
+  --border: rgba(245,200,66,0.15);
+  --border2: rgba(0,229,255,0.15);
+  --radius: 12px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 3rem;
+  background: rgba(7,7,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-family: var(--font-cond);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  font-family: var(--font-cond);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gold);
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  text-decoration: none;
+}
+.nav-cta:hover { background: #fff; transform: translateY(-1px); }
+
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(245,200,66,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0,229,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 70%, rgba(255,45,120,0.05) 0%, transparent 60%);
+  animation: bgPulse 8s ease-in-out infinite alternate;
+}
+@keyframes bgPulse {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+.hero-grid {
+  position: absolute; inset: 0; opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(245,200,66,0.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,200,66,0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-badge {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(245,200,66,0.1);
+  border: 1px solid rgba(245,200,66,0.3);
+  padding: 0.4rem 1.2rem;
+  border-radius: 100px;
+  display: inline-block;
+  margin-bottom: 2rem;
+  position: relative;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 11vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  position: relative;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero-title .gold { color: var(--gold); }
+.hero-title .cyan { color: var(--cyan); }
+.hero-sub {
+  font-family: var(--font-cond);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-weight: 400;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.5;
+  margin: 1.5rem auto 2.5rem;
+  position: relative;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.hero-sub strong { color: var(--white); font-weight: 600; }
+.hero-actions {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  position: relative;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+.btn-primary {
+  font-family: var(--font-cond);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--gold);
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+  box-shadow: 0 0 30px rgba(245,200,66,0.3);
+}
+.btn-primary:hover {
+  background: #fff;
+  box-shadow: 0 0 50px rgba(245,200,66,0.5);
+  transform: translateY(-2px);
+}
+.btn-secondary {
+  font-family: var(--font-cond);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  transform: translateY(-2px);
+}
+.hero-stats {
+  display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap;
+  margin-top: 4rem;
+  position: relative;
+  animation: fadeUp 0.7s 0.4s ease both;
+}
+.hero-stat { text-align: center; }
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  color: var(--gold);
+  display: block;
+}
+.hero-stat-label {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* ===== TICKER TAPE ===== */
+.ticker {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.9rem 0;
+  overflow: hidden;
+  position: relative;
+}
+.ticker::before, .ticker::after {
+  content: '';
+  position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2;
+  pointer-events: none;
+}
+.ticker::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg2), transparent);
+}
+.ticker::after {
+  right: 0;
+  background: linear-gradient(-90deg, var(--bg2), transparent);
+}
+.ticker-track {
+  display: flex; gap: 0;
+  animation: tickerScroll 35s linear infinite;
+  width: max-content;
+}
+.ticker-track:hover { animation-play-state: paused; }
+@keyframes tickerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0 2.5rem;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+.ticker-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ticker-name {
+  font-family: var(--font-cond);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--white);
+}
+.ticker-label {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  color: var(--gold);
+  background: rgba(245,200,66,0.12);
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ===== SECTIONS SHARED ===== */
+section {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-label {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  display: block;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.0;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  margin-bottom: 1.2rem;
+}
+.section-sub {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 1.65;
+}
+
+/* ===== HOW IT WORKS ===== */
+.how-wrapper { padding: 6rem 2rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.how-inner { max-width: 1200px; margin: 0 auto; }
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 3.5rem;
+}
+.how-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.2rem;
+  position: relative;
+  transition: border-color 0.3s, transform 0.2s;
+}
+.how-card:hover {
+  border-color: rgba(245,200,66,0.4);
+  transform: translateY(-4px);
+}
+.how-num {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  line-height: 1;
+  color: rgba(245,200,66,0.12);
+  position: absolute;
+  top: 1rem; right: 1.5rem;
+}
+.how-icon {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: rgba(245,200,66,0.1);
+  border: 1px solid rgba(245,200,66,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.how-card h3 {
+  font-family: var(--font-cond);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin-bottom: 0.7rem;
+}
+.how-card p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.how-card p strong { color: var(--gold); font-weight: 600; }
+.how-connector {
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold); font-size: 1.5rem; padding-top: 2rem;
+}
+
+/* ===== PACK TIERS ===== */
+.packs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-top: 3.5rem;
+}
+.pack-card {
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.pack-card:hover { transform: translateY(-8px); }
+.pack-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  opacity: 0.06;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.5) 0px, rgba(255,255,255,0.5) 1px,
+    transparent 1px, transparent 16px
+  );
+}
+/* Bronze */
+.pack-bronze {
+  background: linear-gradient(145deg, #1a1208, #251a0a);
+  border: 1px solid rgba(176,106,55,0.4);
+}
+.pack-bronze:hover { box-shadow: 0 20px 60px rgba(176,106,55,0.2); }
+.pack-bronze .pack-tier-badge { background: rgba(176,106,55,0.2); color: #cd7f32; border-color: rgba(176,106,55,0.4); }
+.pack-bronze .pack-mult { color: #cd7f32; }
+/* Silver */
+.pack-silver {
+  background: linear-gradient(145deg, #131318, #1c1c24);
+  border: 1px solid rgba(180,180,200,0.35);
+}
+.pack-silver:hover { box-shadow: 0 20px 60px rgba(180,180,200,0.15); }
+.pack-silver .pack-tier-badge { background: rgba(180,180,200,0.15); color: #c0c0d8; border-color: rgba(180,180,200,0.3); }
+.pack-silver .pack-mult { color: #c0c0d8; }
+/* Gold */
+.pack-gold {
+  background: linear-gradient(145deg, #1a1500, #23200a);
+  border: 1px solid rgba(245,200,66,0.4);
+}
+.pack-gold:hover { box-shadow: 0 20px 60px rgba(245,200,66,0.2); }
+.pack-gold .pack-tier-badge { background: rgba(245,200,66,0.15); color: var(--gold); border-color: rgba(245,200,66,0.35); }
+.pack-gold .pack-mult { color: var(--gold); }
+/* Diamond */
+.pack-diamond {
+  background: linear-gradient(145deg, #050e1a, #0a1628);
+  border: 1px solid rgba(0,229,255,0.35);
+}
+.pack-diamond:hover { box-shadow: 0 20px 60px rgba(0,229,255,0.15); }
+.pack-diamond .pack-tier-badge { background: rgba(0,229,255,0.1); color: var(--cyan); border-color: rgba(0,229,255,0.3); }
+.pack-diamond .pack-mult { color: var(--cyan); }
+/* Legendary */
+.pack-legendary {
+  background: linear-gradient(145deg, #1a0510, #25071a);
+  border: 1px solid rgba(255,45,120,0.4);
+  position: relative;
+}
+.pack-legendary:hover { box-shadow: 0 20px 60px rgba(255,45,120,0.25); }
+.pack-legendary .pack-tier-badge { background: rgba(255,45,120,0.15); color: var(--pink); border-color: rgba(255,45,120,0.35); }
+.pack-legendary .pack-mult { color: var(--pink); }
+.pack-legendary .pack-hot-badge {
+  position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  background: var(--pink); color: #fff;
+  font-family: var(--font-cond);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.8rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.pack-emoji { font-size: 2.8rem; display: block; margin-bottom: 1rem; }
+.pack-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.pack-tier-badge {
+  display: inline-block;
+  font-family: var(--font-cond);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid;
+  padding: 0.2rem 0.7rem;
+  border-radius: 100px;
+  margin-bottom: 1.2rem;
+}
+.pack-range {
+  font-family: var(--font-cond);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  opacity: 0.9;
+  margin-bottom: 0.3rem;
+}
+.pack-mult {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.pack-mult-label {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pack-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 1.2rem 0;
+}
+.pack-feature {
+  font-family: var(--font-cond);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+/* ===== UPGRADE RULE ===== */
+.upgrade-banner {
+  background: var(--bg2);
+  border: 1px solid rgba(0,229,255,0.2);
+  border-radius: var(--radius);
+  padding: 2rem 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.upgrade-icon { font-size: 2.5rem; flex-shrink: 0; }
+.upgrade-text h4 {
+  font-family: var(--font-cond);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+  margin-bottom: 0.4rem;
+}
+.upgrade-text p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.upgrade-text p strong { color: var(--white); font-weight: 600; }
+
+/* ===== TOKEN SHOWCASE ===== */
+.tokens-wrapper { padding: 6rem 2rem; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.tokens-inner { max-width: 1200px; margin: 0 auto; }
+.tokens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.token-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+  transition: border-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+.token-card:hover {
+  border-color: rgba(245,200,66,0.4);
+  transform: translateY(-4px);
+}
+.token-logo {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--bg);
+  font-weight: 900;
+}
+.token-name {
+  font-family: var(--font-cond);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+.token-sym {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.token-badge {
+  margin-top: 0.8rem;
+  display: inline-block;
+  font-family: var(--font-cond);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(0,255,136,0.1);
+  color: var(--green);
+  border: 1px solid rgba(0,255,136,0.2);
+  padding: 0.2rem 0.7rem;
+  border-radius: 100px;
+}
+
+/* ===== BRIDGE GUIDE ===== */
+.bridge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-top: 3.5rem;
+  align-items: start;
+}
+@media (max-width: 768px) { .bridge-grid { grid-template-columns: 1fr; } }
+.bridge-steps { display: flex; flex-direction: column; gap: 0; }
+.bridge-step {
+  display: flex; gap: 1.2rem;
+  padding-bottom: 2rem;
+  position: relative;
+}
+.bridge-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 20px; top: 44px; bottom: 0; width: 1px;
+  background: linear-gradient(to bottom, rgba(245,200,66,0.4), rgba(245,200,66,0.05));
+}
+.step-num-wrap {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: rgba(245,200,66,0.12);
+  border: 1px solid rgba(245,200,66,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  z-index: 1;
+}
+.step-content h4 {
+  font-family: var(--font-cond);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+  padding-top: 0.4rem;
+}
+.step-content p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.step-content p a { color: var(--gold); text-decoration: none; }
+.step-content p a:hover { text-decoration: underline; }
+.step-content .step-note {
+  margin-top: 0.6rem;
+  background: rgba(0,229,255,0.06);
+  border: 1px solid rgba(0,229,255,0.15);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--cyan);
+}
+.bridge-visual {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  position: sticky;
+  top: 100px;
+}
+.bridge-visual-title {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.bridge-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.bridge-chain {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bridge-chain-name {
+  font-family: var(--font-cond);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+.bridge-chain-detail {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
+.bridge-chain-logo {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+}
+.bridge-arrow-wrap {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0;
+}
+.bridge-arrow-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.bridge-arrow-icon {
+  font-size: 1.2rem; color: var(--gold);
+}
+.bridge-arrow-label {
+  font-family: var(--font-cond);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  display: block;
+}
+.bridge-reward {
+  background: rgba(245,200,66,0.08);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.bridge-reward-label {
+  font-family: var(--font-cond);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.bridge-reward-desc {
+  font-family: var(--font-cond);
+  font-size: 0.85rem;
+  color: var(--white);
+}
+
+/* ===== CTA BANNER ===== */
+.cta-banner {
+  padding: 5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 100% at 50% 50%, rgba(245,200,66,0.07) 0%, transparent 70%);
+}
+.cta-banner h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  letter-spacing: 0.03em;
+  color: var(--white);
+  position: relative;
+  margin-bottom: 1rem;
+}
+.cta-banner h2 span { color: var(--gold); }
+.cta-banner p {
+  font-family: var(--font-cond);
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  position: relative;
+  line-height: 1.6;
+}
+.cta-banner .btn-primary { position: relative; font-size: 1.1rem; padding: 1.1rem 3rem; }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+.footer-logo span { color: var(--gold); }
+.footer-links {
+  display: flex; gap: 2rem; list-style: none; flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: var(--font-cond);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-copy {
+  font-family: var(--font-cond);
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  max-width: 1200px;
+  margin-left: auto; margin-right: auto;
+}
+
+/* ===== FULL-WIDTH SECTIONS ===== */
+.full-width { max-width: 100% !important; padding-left: 0; padding-right: 0; }
+.fw-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero-stats { gap: 1.5rem; }
+  .packs-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .packs-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">X1 <span>MEME PACKS</span></div>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#packs">Pack Tiers</a></li>
+    <li><a href="#tokens">Tokens</a></li>
+    <li><a href="#bridge">Bridge Guide</a></li>
+  </ul>
+  <a href="#bridge" class="nav-cta">Bridge Now</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">🔥 Live on X1 Blockchain</div>
+  <h1 class="hero-title">
+    BRIDGE.<br>
+    <span class="gold">EARN.</span><br>
+    <span class="cyan">COLLECT.</span>
+  </h1>
+  <p class="hero-sub">
+    Bridge <strong>USDC from Solana to X1</strong> and receive an instant airdrop of the hottest meme coin pack in crypto. The more you bridge, the rarer your pack.
+  </p>
+  <div class="hero-actions">
+    <a href="#bridge" class="btn-primary">🌉 Start Bridging</a>
+    <a href="#packs" class="btn-secondary">View Pack Tiers</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">10</span>
+      <span class="hero-stat-label">Meme Tokens</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">5</span>
+      <span class="hero-stat-label">Pack Tiers</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">30x</span>
+      <span class="hero-stat-label">Max Multiplier</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">$100</span>
+      <span class="hero-stat-label">Min Bridge</span>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER TAPE -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker-track">
+    <!-- JS duplicated for infinite scroll -->
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-wrapper" id="how-it-works">
+  <div class="how-inner">
+    <span class="section-label">Simple as 1, 2, 3</span>
+    <h2 class="section-title">HOW IT WORKS</h2>
+    <p class="section-sub">Bridge your USDC from Solana to X1 in minutes and receive your meme pack instantly.</p>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <div class="how-icon">🌉</div>
+        <h3>Bridge Your USDC</h3>
+        <p>Use the <strong>X1 Warp Bridge</strong> to move any amount of USDC from Solana to X1. Minimum bridge is <strong>$100 USDC</strong>. The more you bridge in one transaction, the rarer your pack.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <div class="how-icon">🎁</div>
+        <h3>Receive Your Pack Instantly</h3>
+        <p>The moment your bridge confirms, an airdrop is automatically sent to your wallet. No waiting, no claiming — just <strong>instant meme coin rewards</strong> delivered straight to you.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <div class="how-icon">🚀</div>
+        <h3>Hold, Trade or Upgrade</h3>
+        <p>Your pack is filled with a <strong>random selection</strong> of the top meme tokens on X1. Hold for potential gains or trade freely. Bridge again tomorrow for your next pack.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PACK TIERS -->
+<section id="packs">
+  <span class="section-label">One Bridge. One Pack. Five Rarities.</span>
+  <h2 class="section-title">CHOOSE YOUR TIER</h2>
+  <p class="section-sub">Every bridge earns you one pack. Bridge more in a single transaction to unlock rarer, higher-multiplier packs with significantly more tokens inside.</p>
+  <div class="packs-grid">
+    <div class="pack-card pack-bronze">
+      <span class="pack-emoji">🥉</span>
+      <div class="pack-title">BRONZE</div>
+      <div class="pack-tier-badge">Starter</div>
+      <div class="pack-range">$100 – $499 USDC</div>
+      <div class="pack-divider"></div>
+      <span class="pack-mult">1x</span>
+      <span class="pack-mult-label">Token Multiplier</span>
+      <div class="pack-divider"></div>
+      <div class="pack-feature">Base token amounts<br>Random meme selection<br>1 pack per bridge</div>
+    </div>
+    <div class="pack-card pack-silver">
+      <span class="pack-emoji">🥈</span>
+      <div class="pack-title">SILVER</div>
+      <div class="pack-tier-badge">Enhanced</div>
+      <div class="pack-range">$500 – $999 USDC</div>
+      <div class="pack-divider"></div>
+      <span class="pack-mult">3x</span>
+      <span class="pack-mult-label">Token Multiplier</span>
+      <div class="pack-divider"></div>
+      <div class="pack-feature">3× more tokens<br>Bigger meme positions<br>1 pack per bridge</div>
+    </div>
+    <div class="pack-card pack-gold">
+      <span class="pack-emoji">🥇</span>
+      <div class="pack-title">GOLD</div>
+      <div class="pack-tier-badge">Premium</div>
+      <div class="pack-range">$1,000 – $1,999 USDC</div>
+      <div class="pack-divider"></div>
+      <span class="pack-mult">7x</span>
+      <span class="pack-mult-label">Token Multiplier</span>
+      <div class="pack-divider"></div>
+      <div class="pack-feature">7× token amounts<br>High-value positions<br>1 pack per bridge</div>
+    </div>
+    <div class="pack-card pack-diamond">
+      <span class="pack-emoji">💎</span>
+      <div class="pack-title">DIAMOND</div>
+      <div class="pack-tier-badge">Elite</div>
+      <div class="pack-range">$2,000 – $4,999 USDC</div>
+      <div class="pack-divider"></div>
+      <span class="pack-mult">15x</span>
+      <span class="pack-mult-label">Token Multiplier</span>
+      <div class="pack-divider"></div>
+      <div class="pack-feature">15× token amounts<br>Serious meme stack<br>1 pack per bridge</div>
+    </div>
+    <div class="pack-card pack-legendary">
+      <div class="pack-hot-badge">🔥 Max Reward</div>
+      <span class="pack-emoji">🔥</span>
+      <div class="pack-title">LEGENDARY</div>
+      <div class="pack-tier-badge">Maximum</div>
+      <div class="pack-range">$5,000 USDC</div>
+      <div class="pack-divider"></div>
+      <span class="pack-mult">30x</span>
+      <span class="pack-mult-label">Token Multiplier</span>
+      <div class="pack-divider"></div>
+      <div class="pack-feature">30× token amounts<br>Max daily reward<br>Bragging rights included</div>
+    </div>
+  </div>
+
+  <!-- Upgrade Rule Banner -->
+  <div class="upgrade-banner">
+    <div class="upgrade-icon">⚡</div>
+    <div class="upgrade-text">
+      <h4>The Upgrade Rule — Bridge Smarter</h4>
+      <p>You earn <strong>one pack per wallet per day</strong>, which resets at midnight UTC. Already bridged Bronze earlier today? Bridge <strong>$5,000 USDC</strong> later and your pack automatically upgrades to <strong>Legendary</strong> — you always keep the best tier you earned today.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENS -->
+<div class="tokens-wrapper" id="tokens">
+  <div class="tokens-inner">
+    <span class="section-label">The Pack Contents</span>
+    <h2 class="section-title">10 MEME TOKENS. ONE PACK.</h2>
+    <p class="section-sub">Every pack contains a random assortment of the top meme coins, all duplicated and live on the X1 blockchain. Your pack, your portfolio.</p>
+    <div class="tokens-grid" id="tokens-grid">
+      <!-- Dynamically populated via JS -->
+    </div>
+  </div>
+</div>
+
+<!-- BRIDGE GUIDE -->
+<section id="bridge">
+  <span class="section-label">Step-by-Step</span>
+  <h2 class="section-title">HOW TO BRIDGE</h2>
+  <p class="section-sub">Bridging from Solana to X1 takes just a few minutes using the X1 Warp Bridge. Follow these steps to earn your first pack.</p>
+
+  <div class="bridge-grid">
+    <div class="bridge-steps">
+      <div class="bridge-step">
+        <div class="step-num-wrap">1</div>
+        <div class="step-content">
+          <h4>Set Up Your X1 Wallet</h4>
+          <p>Add the X1 network to your Phantom or compatible wallet. You'll need to configure the X1 RPC endpoint to interact with the network.</p>
+          <div class="step-note">💡 Phantom and Backpack both support X1. Make sure you have at least $100 USDC on Solana ready to bridge.</div>
+        </div>
+      </div>
+      <div class="bridge-step">
+        <div class="step-num-wrap">2</div>
+        <div class="step-content">
+          <h4>Visit the X1 Warp Bridge</h4>
+          <p>Head to the official <a href="#" target="_blank">X1 Warp Bridge</a>. This is the official Solana-to-X1 bridge. Always verify you are on the official URL before connecting your wallet.</p>
+        </div>
+      </div>
+      <div class="bridge-step">
+        <div class="step-num-wrap">3</div>
+        <div class="step-content">
+          <h4>Connect Both Wallets</h4>
+          <p>Connect your Solana wallet as the source. The bridge will let you select your X1 wallet as the destination — both can be the same Phantom wallet if it supports X1.</p>
+        </div>
+      </div>
+      <div class="bridge-step">
+        <div class="step-num-wrap">4</div>
+        <div class="step-content">
+          <h4>Select USDC and Enter Amount</h4>
+          <p>Choose USDC as the token to bridge. Enter your desired amount — minimum $100. Remember: <strong>higher amounts unlock rarer pack tiers</strong>. Max $5,000 for a Legendary pack.</p>
+          <div class="step-note">🎯 Bridge $5,000 in a single transaction to get the 🔥 Legendary Pack with 30x token multiplier.</div>
+        </div>
+      </div>
+      <div class="bridge-step">
+        <div class="step-num-wrap">5</div>
+        <div class="step-content">
+          <h4>Confirm and Receive Your Pack</h4>
+          <p>Approve the transaction in your wallet. Once the bridge confirms on X1, your meme pack airdrop is sent to your wallet automatically. Check your X1 wallet to see your tokens!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bridge-visual">
+      <div class="bridge-visual-title">Bridge Flow</div>
+      <div class="bridge-flow">
+        <div class="bridge-chain">
+          <div>
+            <div class="bridge-chain-name">Solana Network</div>
+            <div class="bridge-chain-detail">Your USDC source</div>
+          </div>
+          <div class="bridge-chain-logo" style="background: rgba(148,77,255,0.2); color: #9400d3; font-size: 1rem;">◎</div>
+        </div>
+        <div>
+          <div class="bridge-arrow-wrap">
+            <div class="bridge-arrow-line"></div>
+            <span class="bridge-arrow-icon">⬇</span>
+            <div class="bridge-arrow-line"></div>
+          </div>
+          <span class="bridge-arrow-label">X1 Warp Bridge</span>
+        </div>
+        <div class="bridge-chain">
+          <div>
+            <div class="bridge-chain-name">X1 Network</div>
+            <div class="bridge-chain-detail">Destination wallet</div>
+          </div>
+          <div class="bridge-chain-logo" style="background: rgba(245,200,66,0.15); color: var(--gold); font-family: var(--font-display);">X1</div>
+        </div>
+        <div>
+          <div class="bridge-arrow-wrap">
+            <div class="bridge-arrow-line"></div>
+            <span class="bridge-arrow-icon">⬇</span>
+            <div class="bridge-arrow-line"></div>
+          </div>
+          <span class="bridge-arrow-label">Auto Airdrop Triggered</span>
+        </div>
+        <div class="bridge-reward">
+          <div class="bridge-reward-label">🎁 Your Pack Arrives</div>
+          <div class="bridge-reward-desc">Random meme tokens sent instantly to your X1 wallet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>READY TO <span>STACK</span> MEMES?</h2>
+  <p>One bridge. One pack. One chance to go Legendary. Don't leave tokens on the table.</p>
+  <a href="#bridge" class="btn-primary">🔥 Bridge Now & Earn Your Pack</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">X1 <span>MEME PACKS</span></div>
+    <ul class="footer-links">
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#packs">Pack Tiers</a></li>
+      <li><a href="#tokens">Tokens</a></li>
+      <li><a href="#bridge">Bridge Guide</a></li>
+      <li><a href="#" target="_blank">X1 Blockchain</a></li>
+    </ul>
+  </div>
+  <div class="footer-copy">
+    © 2025 X1 Meme Packs. Built on X1 Blockchain. Bridging powered by X1 Warp Bridge.<br>
+    <span style="font-size:0.7rem; opacity:0.5;">Meme packs are promotional rewards and not financial instruments. Bridge amounts and rewards are subject to availability.</span>
+  </div>
+</footer>
+
+<script>
+// ===== PLACEHOLDER TOKEN DATA =====
+const placeholderTokens = [
+  { name: 'BonkX1', sym: 'BONK', color: '#f5a623', bg: 'rgba(245,166,35,0.15)' },
+  { name: 'DogWifX1', sym: 'WIF', color: '#9b59b6', bg: 'rgba(155,89,182,0.15)' },
+  { name: 'PopcatX1', sym: 'POPCAT', color: '#e74c3c', bg: 'rgba(231,76,60,0.15)' },
+  { name: 'MyroX1', sym: 'MYRO', color: '#1abc9c', bg: 'rgba(26,188,156,0.15)' },
+  { name: 'BookX1', sym: 'BOOK', color: '#3498db', bg: 'rgba(52,152,219,0.15)' },
+  { name: 'SamoX1', sym: 'SAMO', color: '#e67e22', bg: 'rgba(230,126,34,0.15)' },
+  { name: 'ChillX1', sym: 'CHILL', color: '#00e5ff', bg: 'rgba(0,229,255,0.15)' },
+  { name: 'MoonsX1', sym: 'MOONS', color: '#ff2d78', bg: 'rgba(255,45,120,0.15)' },
+  { name: 'PepeX1', sym: 'PEPE', color: '#27ae60', bg: 'rgba(39,174,96,0.15)' },
+  { name: 'XNT', sym: 'XNT', color: '#f5c842', bg: 'rgba(245,200,66,0.15)' },
+];
+
+// Populate tokens grid
+const grid = document.getElementById('tokens-grid');
+placeholderTokens.forEach(t => {
+  const card = document.createElement('div');
+  card.className = 'token-card';
+  card.innerHTML = `
+    <div class="token-logo" style="background:${t.bg}; color:${t.color};">${t.sym.slice(0,3)}</div>
+    <div class="token-name">${t.name}</div>
+    <div class="token-sym">${t.sym}</div>
+    <div class="token-badge">In Reward Pool</div>
+  `;
+  grid.appendChild(card);
+});
+
+// ===== TICKER TAPE =====
+const tickerData = [
+  ...placeholderTokens,
+  { name: 'XNT Token', sym: 'XNT', color: '#f5c842', bg: 'rgba(245,200,66,0.2)' },
+];
+const track = document.getElementById('ticker-track');
+// Double for infinite
+[...tickerData, ...tickerData].forEach(t => {
+  const item = document.createElement('div');
+  item.className = 'ticker-item';
+  item.innerHTML = `
+    <div class="ticker-icon" style="background:${t.bg}; color:${t.color};">${t.sym.slice(0,3)}</div>
+    <span class="ticker-name">${t.name}</span>
+    <span class="ticker-label">In Pool</span>
+  `;
+  track.appendChild(item);
+});
+
+// ===== SCROLL REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.how-card, .pack-card, .token-card, .bridge-step').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
