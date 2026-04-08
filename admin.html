@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>X1 Meme Packs — Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-<script src="https://unpkg.com/@solana/web3.js@1.91.8/lib/index.iife.min.js"></script>
 <style>
 :root {
   --bg:#0a1020; --bg2:#0d1528; --bg-card:#111d32; --bg-card-hover:#162440;
@@ -265,7 +264,6 @@ body{background:var(--bg);color:var(--text-primary);font-family:var(--font-body)
 <script>
 // ── CONSTANTS ──
 const SLOT_COUNT = 10;
-const METADATA_PROGRAM_ID = 'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s';
 const PRESET_COLORS = [
   '#4da6ff','#00d4ff','#f0b90b','#f5c842','#ff2d78',
   '#a855f7','#00ff88','#1abc9c','#e74c3c','#e67e22',
@@ -333,75 +331,50 @@ async function testRpc(){
   }
 }
 
-// ── METAPLEX METADATA FETCH ──
-function resolveUri(uri){
-  if(!uri) return null;
-  if(uri.startsWith('ipfs://')) return 'https://cloudflare-ipfs.com/ipfs/' + uri.slice(7);
-  if(uri.startsWith('ar://')) return 'https://arweave.net/' + uri.slice(5);
-  return uri;
+// ── xDEX TOKEN METADATA FETCH ──
+// Uses the same API as X1 Prism: api.xdex.xyz/api/xendex
+const XDEX_API = 'https://api.xdex.xyz/api/xendex';
+let xdexCache = null;
+let xdexCacheTime = 0;
+
+function resolveXdexLogo(logo){
+  if(!logo) return null;
+  if(logo.startsWith('/')) return 'https://xdex.xyz' + logo;
+  return logo;
 }
 
-function parseMetaplexData(data){
-  // data is Uint8Array of the raw metadata account
-  // Layout: 1(key) + 32(update_auth) + 32(mint) + str(name) + str(symbol) + str(uri)
-  // Strings: 4-byte LE length prefix + bytes (null-padded to max)
-  let offset = 1 + 32 + 32;
-  const view = new DataView(data.buffer, data.byteOffset, data.byteLength);
-  const dec = new TextDecoder();
-
-  function readStr(){
-    const len = view.getUint32(offset, true);
-    offset += 4;
-    const bytes = data.slice(offset, offset + len);
-    offset += len;
-    return dec.decode(bytes).replace(/ /g,'').trim();
-  }
-
-  const name   = readStr();
-  const symbol = readStr();
-  const uri    = readStr();
-  return { name, symbol, uri };
+async function getXdexPools(){
+  if(xdexCache && Date.now() - xdexCacheTime < 60000) return xdexCache;
+  const res = await fetch(XDEX_API);
+  if(!res.ok) throw new Error('xDEX API error: ' + res.status);
+  const json = await res.json();
+  xdexCache = json;
+  xdexCacheTime = Date.now();
+  return json;
 }
 
 async function fetchTokenMeta(address){
-  // Derive Metaplex metadata PDA using @solana/web3.js
-  const { PublicKey } = solanaWeb3;
-  const mint = new PublicKey(address);
-  const metaProgramId = new PublicKey(METADATA_PROGRAM_ID);
+  const pools = await getXdexPools();
+  const data = pools.data || pools;
+  if(!Array.isArray(data)) throw new Error('Unexpected xDEX response');
 
-  const [metaPDA] = await PublicKey.findProgramAddress(
-    [
-      new TextEncoder().encode('metadata'),
-      metaProgramId.toBytes(),
-      mint.toBytes()
-    ],
-    metaProgramId
-  );
-
-  // Fetch the metadata account
-  const result = await rpcCall('getAccountInfo', [
-    metaPDA.toBase58(),
-    { encoding: 'base64' }
-  ]);
-
-  if(!result || !result.value){
-    throw new Error('No metadata account found. Is this an X1 token?');
+  for(const pool of data){
+    if(pool.token1_address === address){
+      return {
+        name:   pool.token1_name || pool.token1_symbol,
+        symbol: pool.token1_symbol,
+        image:  resolveXdexLogo(pool.token1_logo)
+      };
+    }
+    if(pool.token2_address === address){
+      return {
+        name:   pool.token2_name || pool.token2_symbol,
+        symbol: pool.token2_symbol,
+        image:  resolveXdexLogo(pool.token2_logo)
+      };
+    }
   }
-
-  const raw = Uint8Array.from(atob(result.value.data[0]), c => c.charCodeAt(0));
-  const { name, symbol, uri } = parseMetaplexData(raw);
-
-  // Fetch off-chain JSON for logo
-  let image = null;
-  if(uri){
-    try{
-      const jsonUri = resolveUri(uri);
-      const meta = await fetch(jsonUri).then(r=>r.json());
-      image = resolveUri(meta.image || meta.logo || null);
-    } catch(e){ /* no image, that's ok */ }
-  }
-
-  return { name, symbol, image };
+  throw new Error('Token not found in xDEX pool data');
 }
 
 // ── TOKEN SLOTS ──
@@ -530,7 +503,7 @@ async function triggerFetch(i, address){
     slotData[i].showManual = true;
     rebuildSlot(i);
     document.getElementById('slot-'+i).className='token-slot error-state';
-    showToast('error','Could not auto-fetch. Enter details manually.');
+    showToast('error','Not found on xDEX. Enter name & symbol manually.');
   }
 }
 
