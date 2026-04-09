@@ -73,6 +73,8 @@ main{max-width:1100px;margin:0 auto;padding:2rem}
 .preview-edit{font-size:.7rem;font-weight:600;background:rgba(77,166,255,.1);color:var(--x1-blue);border:1px solid rgba(77,166,255,.2);border-radius:var(--radius-sm);padding:.22rem .65rem;cursor:pointer;flex-shrink:0;transition:background .2s}
 .preview-edit:hover{background:rgba(77,166,255,.2)}
 .preview-empty{font-size:.78rem;color:var(--text-dim);font-style:italic}
+.preview-retry{font-size:.7rem;font-weight:600;background:rgba(245,166,35,.1);color:var(--orange);border:1px solid rgba(245,166,35,.25);border-radius:var(--radius-sm);padding:.22rem .65rem;cursor:pointer;flex-shrink:0;transition:background .2s;margin-left:auto}
+.preview-retry:hover{background:rgba(245,166,35,.2)}
 .color-row{margin-top:.9rem}
 .color-label{font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.5rem}
 .color-swatches{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
@@ -308,7 +310,7 @@ function renderGrid() {
         oninput="slots[${i}].address=this.value;if(this.value.length>20)clearTimeout(this._t);this._t=setTimeout(()=>fetchToken(${i}),300)"
         onpaste="setTimeout(()=>{slots[${i}].address=document.querySelectorAll('.addr-input')[${i}].value;fetchToken(${i})},100)"/>
       <div class="token-preview" id="preview-${i}">
-        ${slot.name ? previewHTML(slot) : '<span class="preview-empty">Paste address to auto-fetch</span>'}
+        ${slot.name ? previewHTML(slot) : emptyPreviewHTML(i, slot.address)}
       </div>
       <div class="color-row">
         <div class="color-label">Display Color</div>
@@ -341,10 +343,17 @@ function previewHTML(slot) {
   `;
 }
 
+function emptyPreviewHTML(i, address) {
+  if (address && address.length > 20) {
+    return `<span class="preview-empty">Auto-fetch failed</span><button class="preview-retry" onclick="fetchToken(${i})">↺ Retry</button>`;
+  }
+  return '<span class="preview-empty">Paste address to auto-fetch</span>';
+}
+
 function updatePreview(i) {
   const el = document.getElementById(`preview-${i}`);
   if (!el) return;
-  el.innerHTML = slots[i].name ? previewHTML(slots[i]) : '<span class="preview-empty">Paste address to auto-fetch</span>';
+  el.innerHTML = slots[i].name ? previewHTML(slots[i]) : emptyPreviewHTML(i, slots[i].address);
 }
 
 // ── Paste handler ──
