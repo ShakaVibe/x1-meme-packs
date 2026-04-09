@@ -166,11 +166,11 @@ const FALLBACK_TOKENS = [
   {name:'XNT',      symbol:'XNT',    color:'#f0b90b', address:''},
 ];
 
-function loadPackTokens() {
+async function loadPackTokens() {
   try {
-    const saved = localStorage.getItem('x1mp_tokens');
-    if (saved) {
-      const parsed = JSON.parse(saved);
+    const resp = await fetch('tokens.json?v=' + Date.now());
+    if (resp.ok) {
+      const parsed = await resp.json();
       const filtered = parsed.filter(t => t && (t.name || t.symbol));
       if (filtered.length) return filtered;
     }
@@ -248,8 +248,8 @@ function getSeaTier(balance, supply) {
 }
 
 // Render all tokens faded on page load
-function renderAll(mintMap, supplyMap) {
-  const packTokens = loadPackTokens();
+async function renderAll(mintMap, supplyMap) {
+  const packTokens = await loadPackTokens();
   const memeGrid  = document.getElementById('meme-grid');
   const specGrid  = document.getElementById('special-grid');
   memeGrid.innerHTML = ''; specGrid.innerHTML = '';
@@ -290,7 +290,7 @@ function renderAll(mintMap, supplyMap) {
 }
 
 // Initial render on page load — all faded
-renderAll(null, null);
+(async () => { await renderAll(null, null); })();
 
 async function checkWallet() {
   const input   = document.getElementById('wallet-input').value.trim();
@@ -326,7 +326,7 @@ async function checkWallet() {
     });
 
     // Fetch circulating supply for each meme token
-    const packTokens2 = loadPackTokens();
+    const packTokens2 = await loadPackTokens();
     const memeAddresses = packTokens2
       .filter(t => t.address && !/usdc/i.test(t.symbol||''))
       .map(t => t.address);
