@@ -243,7 +243,18 @@ async function init() {
   const ghToken = getGhToken();
   if (ghToken) document.getElementById('gh-token').value = ghToken;
 
-  // Load current tokens.json from GitHub
+  // Load from localStorage first for instant display
+  try {
+    const local = localStorage.getItem('x1mp_tokens');
+    if (local) {
+      const data = JSON.parse(local);
+      if (Array.isArray(data) && data.length) {
+        data.slice(0,10).forEach((t, i) => { if(t) slots[i] = {...slots[i], ...t}; });
+      }
+    }
+  } catch(e) {}
+
+  // Then load from GitHub (source of truth)
   try {
     const resp = await fetch(`https://raw.githubusercontent.com/${REPO}/${BRANCH}/${FILE}?v=${Date.now()}`);
     if (resp.ok) {
@@ -271,9 +282,8 @@ function renderGrid() {
         <button class="slot-clear" onclick="clearSlot(${i})">✕ Clear</button>
       </div>
       <input type="text" class="addr-input" placeholder="Paste contract address..." value="${slot.address||''}"
-        oninput="slots[${i}].address=this.value"
-        onpaste="handlePaste(event,${i})"
-        onblur="if(this.value.trim()&&!slots[${i}].name)fetchToken(${i})"/>
+        oninput="slots[${i}].address=this.value;if(this.value.length>20)clearTimeout(this._t);this._t=setTimeout(()=>fetchToken(${i}),300)"
+        onpaste="setTimeout(()=>{slots[${i}].address=document.querySelectorAll('.addr-input')[${i}].value;fetchToken(${i})},100)"/>
       <div class="token-preview" id="preview-${i}">
         ${slot.name ? previewHTML(slot) : '<span class="preview-empty">Paste address to auto-fetch</span>'}
       </div>
@@ -513,6 +523,8 @@ async function saveChanges() {
     if (resp.ok) {
       badge.className = 'header-badge badge-live';
       badge.textContent = '● Live';
+      // Also save to localStorage so admin sees changes immediately
+      localStorage.setItem('x1mp_tokens', JSON.stringify(slots.filter(s => s.name || s.address)));
       showToast('✓ Saved — site will update in ~30 seconds', 'success');
     } else {
       const err = await resp.json();
