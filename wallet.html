@@ -34,8 +34,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .page-title{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,4.5rem);line-height:1;letter-spacing:.03em;text-align:center;margin-bottom:.8rem}
 .page-sub{font-size:1rem;color:var(--text-secondary);text-align:center;max-width:500px;margin:0 auto 2.5rem;line-height:1.7}
 
-.search-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.8rem;margin-bottom:2.5rem}
-.search-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:.7rem;display:block}
+.search-wrap{margin-bottom:2rem}
+.search-label{display:none}
 .search-row{display:flex;gap:.75rem}
 .search-input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;font-family:var(--font-mono);font-size:.85rem;color:var(--text-primary);outline:none;transition:border-color .2s}
 .search-input::placeholder{color:var(--text-dim)}
@@ -48,26 +48,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .status.error{display:block;background:rgba(255,45,120,.07);border:1px solid rgba(255,45,120,.2);color:#ff6b9d}
 
 
-.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;margin-top:2.2rem}
+.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;margin-top:1.5rem}
 .section-head h3{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
 .section-line{flex:1;height:1px;background:var(--border)}
 
-.special-grid{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.special-grid{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
 .meme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
 
 /* Cards */
 .token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;position:relative;transition:border-color .25s,transform .2s,opacity .25s}
-.token-card.special{padding:1.6rem;width:220px;flex-shrink:0}
+.token-card.special{padding:.9rem 1.2rem;width:180px;flex-shrink:0;display:flex;flex-direction:row;align-items:center;gap:.85rem;text-align:left}
 .token-card.has-balance:hover{transform:translateY(-3px)}
 .token-card.zero-balance{opacity:.3;filter:grayscale(0.55)}
 
 .token-logo{width:56px;height:56px;border-radius:50%;margin:0 auto .85rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);overflow:hidden;flex-shrink:0}
-.token-card.special .token-logo{width:64px;height:64px}
+.token-card.special .token-logo{width:40px;height:40px;margin:0;flex-shrink:0}
 .token-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .token-name{font-size:.88rem;font-weight:600;color:var(--text-primary);margin-bottom:.18rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .token-sym{font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.65rem}
 .token-balance{font-family:var(--font-display);font-size:1.5rem;line-height:1}
-.token-card.special .token-balance{font-size:1.8rem}
+.token-card.special .token-balance{font-size:1.1rem}
 .token-balance.zero{color:var(--text-dim);font-size:1.1rem}
 .token-balance-label{font-size:.6rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
 
@@ -99,7 +99,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   <p class="page-sub">Paste any X1 wallet address to check your meme pack token balances.</p>
 
   <div class="search-wrap">
-    <span class="search-label">X1 Wallet Address</span>
     <div class="search-row">
       <input type="text" class="search-input" id="wallet-input" placeholder="Paste X1 wallet address..." autocomplete="off" spellcheck="false"/>
       <button class="search-btn" id="search-btn" onclick="checkWallet()">Check Wallet</button>
@@ -250,19 +249,22 @@ async function checkWallet() {
 
   try {
     // 1. Native XNT balance
-    const xntResp = await fetch(RPC, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:[input]})
-    });
-    const xntData = await xntResp.json();
+    const rpcPost = (body, id=1) => {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      return fetch(RPC, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({jsonrpc:'2.0',id,...body}),
+        signal: controller.signal,
+      }).finally(() => clearTimeout(timeout)).then(r => r.json());
+    };
+
+    const xntData = await rpcPost({method:'getBalance', params:[input]});
     const xntBal  = (xntData.result?.value ?? 0) / 1e9;
 
     // 2. Fetch both SPL token program accounts in parallel
-    const fetchTAs = (programId, id) => fetch(RPC, {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({jsonrpc:'2.0',id,method:'getTokenAccountsByOwner',
-        params:[input,{programId},{encoding:'jsonParsed'}]})
-    }).then(r=>r.json()).then(d=>d.result?.value||[]);
+    const fetchTAs = (programId, id) => rpcPost({method:'getTokenAccountsByOwner', params:[input,{programId},{encoding:'jsonParsed'}]}, id).then(d=>d.result?.value||[]);
 
     const [spl, spl22] = await Promise.all([
       fetchTAs('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', 2),
