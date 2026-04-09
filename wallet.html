@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wallet Checker — X1 Meme Packs</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0a1020; --bg2:#0d1528; --bg-card:#111d32; --bg-card-hover:#162440;
+  --x1-blue:#4da6ff; --x1-cyan:#00d4ff; --x1-gold:#f0b90b;
+  --x1-gradient:linear-gradient(135deg,#4da6ff 0%,#00d4ff 100%);
+  --gold:#f5c842;
+  --text-primary:#ffffff; --text-secondary:#8a8f98; --text-dim:#5a5f68;
+  --border:#1e3050; --border-light:#2a3f5f; --border-blue:rgba(77,166,255,0.2);
+  --radius-md:8px; --radius-lg:12px; --radius-xl:16px;
+  --font-display:'Bebas Neue',sans-serif; --font-body:'Space Grotesk',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text-primary);font-family:var(--font-body);overflow-x:hidden;min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(10,16,32,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo img{height:36px;width:36px;border-radius:8px;object-fit:cover}
+.nav-logo-div{width:1px;height:22px;background:var(--border-light)}
+.nav-logo-text{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.06em;color:var(--text-primary)}
+.nav-logo-text .m{color:var(--gold)} .nav-logo-text .p{color:var(--x1-cyan)}
+.nav-back{font-size:.88rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px}
+.nav-back:hover{color:var(--x1-cyan)}
+
+/* PAGE */
+.page{max-width:900px;margin:0 auto;padding:100px 2rem 5rem}
+.page-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--x1-cyan);margin-bottom:.8rem;display:block;text-align:center}
+.page-title{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,4.5rem);line-height:1;letter-spacing:.03em;text-align:center;margin-bottom:.8rem}
+.page-sub{font-size:1rem;color:var(--text-secondary);text-align:center;max-width:500px;margin:0 auto 3rem;line-height:1.7}
+
+/* SEARCH BOX */
+.search-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;margin-bottom:2rem}
+.search-label{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:.75rem;display:block}
+.search-row{display:flex;gap:.75rem}
+.search-input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;font-family:var(--font-mono);font-size:.85rem;color:var(--text-primary);outline:none;transition:border-color .2s}
+.search-input::placeholder{color:var(--text-dim)}
+.search-input:focus{border-color:rgba(77,166,255,.5)}
+.search-btn{font-size:.9rem;font-weight:700;letter-spacing:.04em;color:#0a1020;background:var(--x1-gradient);border:none;padding:.75rem 1.8rem;border-radius:var(--radius-md);cursor:pointer;transition:opacity .2s,transform .15s;white-space:nowrap;box-shadow:0 0 20px rgba(77,166,255,.25)}
+.search-btn:hover{opacity:.9;transform:translateY(-1px)}
+.search-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* STATUS */
+.status{display:none;margin-top:1rem;padding:.7rem 1rem;border-radius:var(--radius-md);font-size:.85rem;font-family:var(--font-mono)}
+.status.loading{display:block;background:rgba(77,166,255,.07);border:1px solid rgba(77,166,255,.2);color:var(--x1-blue)}
+.status.error{display:block;background:rgba(255,45,120,.07);border:1px solid rgba(255,45,120,.2);color:#ff6b9d}
+.status.empty{display:block;background:rgba(240,185,11,.07);border:1px solid rgba(240,185,11,.2);color:var(--x1-gold)}
+
+/* WALLET INFO BAR */
+.wallet-bar{display:none;background:rgba(77,166,255,.05);border:1px solid var(--border-blue);border-radius:var(--radius-lg);padding:1rem 1.4rem;margin-bottom:1.5rem;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.wallet-bar.visible{display:flex}
+.wallet-addr{font-family:var(--font-mono);font-size:.8rem;color:var(--x1-cyan)}
+.wallet-count{font-size:.82rem;font-weight:600;color:var(--text-secondary)}
+.wallet-count span{color:var(--text-primary)}
+
+/* TOKEN GRID */
+.tokens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
+.token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;transition:border-color .3s,transform .2s}
+.token-card:hover{border-color:var(--border-light);transform:translateY(-3px)}
+.token-logo{width:64px;height:64px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.2rem;overflow:hidden}
+.token-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.token-name{font-size:.92rem;font-weight:600;color:var(--text-primary);margin-bottom:.2rem}
+.token-sym{font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem}
+.token-balance{font-family:var(--font-mono);font-size:.85rem;font-weight:600;color:var(--x1-cyan)}
+.token-balance-label{font-size:.65rem;color:var(--text-dim);letter-spacing:.06em;text-transform:uppercase;margin-top:.15rem}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:4rem 2rem;display:none}
+.empty-state.visible{display:block}
+.empty-icon{font-size:3rem;margin-bottom:1rem;display:block}
+.empty-title{font-family:var(--font-display);font-size:2rem;color:var(--text-secondary);margin-bottom:.5rem}
+.empty-sub{font-size:.92rem;color:var(--text-dim)}
+
+/* BG */
+.page-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(77,166,255,.08) 0%,transparent 60%),var(--bg);pointer-events:none}
+
+@media(max-width:600px){nav{padding:0 1.2rem}.search-row{flex-direction:column}.page{padding:90px 1.2rem 4rem}}
+</style>
+</head>
+<body>
+<div class="page-bg"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="x1-logo.png" alt="X1"/>
+    <div class="nav-logo-div"></div>
+    <span class="nav-logo-text"><span class="m">MEME</span> <span class="p">PACKS</span></span>
+  </a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="page">
+  <span class="page-label">X1 Blockchain</span>
+  <h1 class="page-title">WALLET CHECKER</h1>
+  <p class="page-sub">Paste any X1 wallet address to see the meme tokens it holds.</p>
+
+  <div class="search-wrap">
+    <span class="search-label">Wallet Address</span>
+    <div class="search-row">
+      <input type="text" class="search-input" id="wallet-input" placeholder="Paste X1 wallet address..." autocomplete="off" spellcheck="false"/>
+      <button class="search-btn" id="search-btn" onclick="checkWallet()">Check Wallet</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div class="wallet-bar" id="wallet-bar">
+    <span class="wallet-addr" id="wallet-addr-display"></span>
+    <span class="wallet-count">Tokens found: <span id="token-count">0</span></span>
+  </div>
+
+  <div class="tokens-grid" id="tokens-grid"></div>
+
+  <div class="empty-state" id="empty-state">
+    <span class="empty-icon">🔍</span>
+    <div class="empty-title">No Tokens Found</div>
+    <p class="empty-sub">This wallet doesn't appear to hold any meme pack tokens yet.<br>Bridge USDC to earn your first pack!</p>
+  </div>
+</div>
+
+<script>
+const RPC = 'https://rpc.mainnet.x1.xyz';
+
+function shortAddr(addr) {
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status ' + type;
+}
+
+function clearStatus() {
+  const el = document.getElementById('status');
+  el.className = 'status';
+}
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// Load pack tokens from localStorage (set by admin panel)
+function getPackTokens() {
+  try {
+    const saved = localStorage.getItem('x1mp_tokens');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return parsed.filter(t => t && t.address);
+    }
+  } catch(e) {}
+  return [];
+}
+
+async function checkWallet() {
+  const input = document.getElementById('wallet-input').value.trim();
+  if (!input) return;
+
+  const btn = document.getElementById('search-btn');
+  const grid = document.getElementById('tokens-grid');
+  const bar = document.getElementById('wallet-bar');
+  const emptyState = document.getElementById('empty-state');
+
+  btn.disabled = true;
+  btn.textContent = 'Checking...';
+  grid.innerHTML = '';
+  bar.classList.remove('visible');
+  emptyState.classList.remove('visible');
+  setStatus('⏳ Fetching token accounts...', 'loading');
+
+  try {
+    // Get all SPL token accounts for the wallet
+    const resp = await fetch(RPC, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'getTokenAccountsByOwner',
+        params: [
+          input,
+          { programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' },
+          { encoding: 'jsonParsed' }
+        ]
+      })
+    });
+
+    const data = await resp.json();
+
+    if (data.error) {
+      setStatus('❌ RPC error: ' + data.error.message, 'error');
+      btn.disabled = false; btn.textContent = 'Check Wallet';
+      return;
+    }
+
+    const accounts = data.result?.value || [];
+
+    // Also check Token-2022 accounts
+    const resp2022 = await fetch(RPC, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 2,
+        method: 'getTokenAccountsByOwner',
+        params: [
+          input,
+          { programId: 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' },
+          { encoding: 'jsonParsed' }
+        ]
+      })
+    });
+    const data2022 = await resp2022.json();
+    const accounts2022 = data2022.result?.value || [];
+
+    const allAccounts = [...accounts, ...accounts2022];
+
+    // Filter to non-zero balances
+    const nonZero = allAccounts.filter(a => {
+      const amt = a.account?.data?.parsed?.info?.tokenAmount?.uiAmount;
+      return amt && amt > 0;
+    });
+
+    clearStatus();
+
+    if (nonZero.length === 0) {
+      emptyState.classList.add('visible');
+      document.getElementById('token-count').textContent = '0';
+      bar.classList.add('visible');
+      document.getElementById('wallet-addr-display').textContent = shortAddr(input);
+      btn.disabled = false; btn.textContent = 'Check Wallet';
+      return;
+    }
+
+    // Load pack token metadata from admin config
+    const packTokens = getPackTokens();
+    const packMap = {};
+    packTokens.forEach(t => { if (t.address) packMap[t.address] = t; });
+
+    // Render token cards
+    bar.classList.add('visible');
+    document.getElementById('wallet-addr-display').textContent = shortAddr(input);
+    document.getElementById('token-count').textContent = nonZero.length;
+
+    nonZero.forEach(a => {
+      const info = a.account.data.parsed.info;
+      const mint = info.mint;
+      const uiAmount = info.tokenAmount.uiAmount;
+      const decimals = info.tokenAmount.decimals;
+
+      // Try to match against known pack tokens
+      const known = packMap[mint];
+      const color = known?.color || '#4da6ff';
+      const bg = hexToRgba(color, 0.15);
+      const sym = known?.symbol || mint.slice(0,4).toUpperCase();
+      const name = known?.name || 'Unknown Token';
+      const image = known?.image || null;
+
+      const logoHtml = image
+        ? `<img src="${image}" alt="${sym}" onerror="this.parentElement.innerHTML='${sym.slice(0,3)}'"/>`
+        : `<span style="font-family:var(--font-display);font-size:1.1rem;color:${color};">${sym.slice(0,3)}</span>`;
+
+      const formatted = uiAmount >= 1000000
+        ? (uiAmount/1000000).toFixed(2) + 'M'
+        : uiAmount >= 1000
+        ? (uiAmount/1000).toFixed(2) + 'K'
+        : uiAmount.toLocaleString(undefined, {maximumFractionDigits: decimals > 4 ? 4 : decimals});
+
+      const card = document.createElement('div');
+      card.className = 'token-card';
+      card.innerHTML = `
+        <div class="token-logo" style="background:${bg};">${logoHtml}</div>
+        <div class="token-name">${name}</div>
+        <div class="token-sym">${sym}</div>
+        <div class="token-balance">${formatted}</div>
+        <div class="token-balance-label">Balance</div>
+      `;
+      grid.appendChild(card);
+    });
+
+  } catch(err) {
+    setStatus('❌ Connection error. Check your network and try again.', 'error');
+    console.error(err);
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Check Wallet';
+}
+
+// Allow Enter key to trigger search
+document.getElementById('wallet-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkWallet();
+});
+</script>
+</body>
+</html>
