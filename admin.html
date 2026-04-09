@@ -186,7 +186,7 @@ main{max-width:1100px;margin:0 auto;padding:2rem}
     <!-- Solana RPC -->
     <div class="rpc-row">
       <span class="rpc-label">SOL RPC</span>
-      <input type="text" class="rpc-input" id="sol-rpc-input" value="https://api.mainnet-beta.solana.com"/>
+      <input type="text" class="rpc-input" id="sol-rpc-input" value="https://rpc.ankr.com/solana"/>
       <span class="rpc-status rpc-idle" id="sol-rpc-status">Not tested</span>
       <button class="btn btn-ghost" onclick="testSolRpc()" style="font-size:.75rem">Test RPC</button>
     </div>
@@ -223,7 +223,7 @@ const ADMIN_PW = 'JackLevin';
 const COLORS = ['#f5a623','#f0b90b','#e74c3c','#e67e22','#27ae60','#1abc9c','#4da6ff','#00d4ff','#9b59b6','#ff2d78','#e91e8c','#00ff88','#ff6b35','#c0392b','#2ecc71','#3498db','#8e44ad','#f39c12','#16a085','#d35400','#cd7f32'];
 
 const RPC     = () => document.getElementById('rpc-input').value.trim() || 'https://rpc.mainnet.x1.xyz';
-const SOL_RPC = () => document.getElementById('sol-rpc-input').value.trim() || 'https://api.mainnet-beta.solana.com';
+const SOL_RPC = () => document.getElementById('sol-rpc-input').value.trim() || 'https://rpc.ankr.com/solana';
 
 // State: array of 10 slots
 let slots = Array.from({length:10}, () => ({address:'', name:'', symbol:'', image:'', color:'#4da6ff', chain:'x1'}));
