@@ -33,7 +33,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-cta{font-size:.88rem;font-weight:600;color:#0a1020;background:var(--x1-gradient);border:none;padding:.55rem 1.4rem;border-radius:var(--radius-md);cursor:pointer;text-decoration:none;box-shadow:0 0 20px rgba(77,166,255,.3);transition:opacity .2s,transform .15s}
 .nav-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2.5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem 2rem 4rem;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 10%,rgba(77,166,255,.12) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 15% 85%,rgba(0,212,255,.08) 0%,transparent 55%),radial-gradient(ellipse 55% 45% at 85% 70%,rgba(240,185,11,.07) 0%,transparent 55%);animation:bgPulse 9s ease-in-out infinite alternate}
 @keyframes bgPulse{0%{opacity:.7}100%{opacity:1}}
 .hero-grid{position:absolute;inset:0;opacity:.028;background-image:linear-gradient(rgba(77,166,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(77,166,255,.6) 1px,transparent 1px);background-size:60px 60px}
@@ -59,10 +59,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-stat-label{font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-.ticker{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.2rem 0;overflow:hidden;position:relative}
-.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
-.ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
-.ticker::after{right:0;background:linear-gradient(-90deg,var(--bg2),transparent)}
+.ticker{background:var(--bg);border:none;padding:1.2rem 0;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{display:none}
 .ticker-track{display:flex;animation:tickerScroll 35s linear infinite;width:max-content}
 .ticker-track:hover{animation-play-state:paused}
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
@@ -196,7 +194,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 .footer-copy{font-size:.76rem;color:var(--text-dim);text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:1200px;margin-left:auto;margin-right:auto}
 .footer-x1{display:inline-flex;align-items:center;gap:6px;margin-top:.8rem;font-size:.74rem;font-weight:500;color:var(--text-secondary)}
 .footer-x1 img{height:18px;width:18px;border-radius:4px;object-fit:cover;opacity:.8}
-.ticker-top{margin-top:64px;border-top:none;margin-bottom:0}
+.ticker-top{margin-top:74px;border:none;margin-bottom:0}
 @media(max-width:768px){nav{padding:0 1.5rem} .nav-links{display:none} .hero-stats{gap:1.5rem} .packs-grid{grid-template-columns:1fr 1fr} .bridge-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.packs-grid{grid-template-columns:1fr}}
 
