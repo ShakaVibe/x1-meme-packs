@@ -67,7 +67,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .ticker-track:hover{animation-play-state:paused}
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .ticker-item{display:flex;align-items:center;gap:.6rem;padding:0 2rem;border-right:1px solid var(--border);white-space:nowrap}
-.ticker-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.85rem;flex-shrink:0}
+.ticker-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.1rem;flex-shrink:0}
 .ticker-name{font-size:.88rem;font-weight:600;color:var(--text-primary)}
 .ticker-badge{font-family:var(--font-mono);font-size:.68rem;color:var(--x1-cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:.12rem .5rem;border-radius:100px}
 
@@ -198,6 +198,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 .footer-x1 img{height:18px;width:18px;border-radius:4px;object-fit:cover;opacity:.8}
 @media(max-width:768px){nav{padding:0 1.5rem} .nav-links{display:none} .hero-stats{gap:1.5rem} .packs-grid{grid-template-columns:1fr 1fr} .bridge-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.packs-grid{grid-template-columns:1fr}}
+
+.token-strip{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.4rem 2rem;overflow:hidden}
+.token-strip-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.token-strip-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:default}
+.token-strip-logo{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1rem}
+.token-strip-sym{font-family:var(--font-mono);font-size:.62rem;color:var(--text-secondary);letter-spacing:.06em;text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -227,7 +233,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
     <a href="#packs" class="btn-secondary">View Pack Tiers</a>
   </div>
   <div class="hero-chain-row">
-    <div class="chain-pill"><span style="color:#9945ff;font-weight:700;font-size:1rem;">◎</span> Solana</div>
+    <div class="chain-pill"><img src="solana-logo.png" alt="Solana" style="height:22px;width:22px;border-radius:5px;object-fit:cover;"/> Solana</div>
     <span class="chain-arrow">→</span>
     <div class="chain-pill" style="border-color:rgba(77,166,255,.35)"><img src="x1-logo.png" alt="X1"/><span style="color:var(--x1-cyan);font-weight:600">X1 Network</span><span class="chain-dot"></span></div>
   </div>
@@ -239,21 +245,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   </div>
 </div>
 
+<div class="token-strip" id="token-strip"></div>
+
 <div class="ticker"><div class="ticker-track" id="ticker-track"></div></div>
 
-<div class="x1-brand-bar">
-  <div class="x1-brand-bar-inner">
-    <div class="x1-brand-item"><img src="x1-logo.png" alt="X1"/> X1 Blockchain</div>
-    <div class="x1-brand-sep"></div>
-    <div class="x1-brand-item">⚡ Block Time <span class="val">1 SEC</span></div>
-    <div class="x1-brand-sep"></div>
-    <div class="x1-brand-item">🚀 TPS <span class="val">50,000+</span></div>
-    <div class="x1-brand-sep"></div>
-    <div class="x1-brand-item">🛡️ Consensus <span class="val">PoW / PoS</span></div>
-    <div class="x1-brand-sep"></div>
-    <div class="x1-brand-item">💎 Native Token <span class="val">XNT</span></div>
-  </div>
-</div>
 
 <div class="how-wrapper" id="how-it-works">
   <div class="how-inner">
@@ -325,7 +320,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
     <div class="bridge-visual">
       <div class="bridge-visual-title">Bridge Flow</div>
       <div class="bridge-flow">
-        <div class="bridge-chain"><div><div class="bridge-chain-name">Solana Network</div><div class="bridge-chain-detail">Your USDC source</div></div><span style="font-size:1.6rem;color:#9945ff;">◎</span></div>
+        <div class="bridge-chain"><div><div class="bridge-chain-name">Solana Network</div><div class="bridge-chain-detail">Your USDC source</div></div><img src="solana-logo.png" alt="Solana" style="height:36px;width:36px;border-radius:8px;object-fit:cover;"/></div>
         <div><div class="bridge-arrow-wrap"><div class="bridge-arrow-line"></div><span style="color:var(--x1-blue);font-size:1.1rem;">⬇</span><div class="bridge-arrow-line"></div></div><span class="bridge-arrow-label">X1 Warp Bridge</span></div>
         <div class="bridge-chain" style="border-color:rgba(77,166,255,.3)"><div><div class="bridge-chain-name">X1 Network</div><div class="bridge-chain-detail">Destination wallet</div></div><img src="x1-logo.png" alt="X1" style="height:36px;width:36px;border-radius:8px;object-fit:cover"/></div>
         <div><div class="bridge-arrow-wrap"><div class="bridge-arrow-line"></div><span style="color:var(--x1-blue);font-size:1.1rem;">⬇</span><div class="bridge-arrow-line"></div></div><span class="bridge-arrow-label">Auto Airdrop Triggered</span></div>
@@ -419,9 +414,28 @@ tokens.forEach(t=>{
     ? `<img src="${t.image}" alt="${sym}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.innerHTML='${sym.slice(0,3)}'"/>`
     : sym.slice(0,3);
   const c=document.createElement('div');c.className='token-card';
-  c.innerHTML=`<div class="token-logo" style="background:${bg};color:${color};">${logoHtml}</div><div class="token-name">${name}</div><div class="token-sym">${sym}</div><div class="token-badge">In Reward Pool</div>`;
+  c.innerHTML=`<div class="token-logo" style="background:${bg};color:${color};">${logoHtml}</div><div class="token-name">${name}</div><div class="token-sym">${sym}</div>`;
   grid.appendChild(c);
 });
+
+// Token strip at top
+const stripEl = document.getElementById('token-strip');
+const stripInner = document.createElement('div');
+stripInner.className = 'token-strip-inner';
+tokens.forEach(t => {
+  const color = t.color||'#4da6ff';
+  const bg = hexToRgba(color, 0.15);
+  const sym = (t.symbol||t.sym||'???').toUpperCase();
+  const logoHtml2 = t.image
+    ? `<img src="${t.image}" alt="${sym}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.innerHTML='${sym.slice(0,3)}'"/>`
+    : sym.slice(0,3);
+  const item = document.createElement('div');
+  item.className = 'token-strip-item';
+  item.innerHTML = `<div class="token-strip-logo" style="background:${bg};color:${color};">${logoHtml2}</div><div class="token-strip-sym">${sym}</div>`;
+  stripInner.appendChild(item);
+});
+stripEl.appendChild(stripInner);
+
 const track=document.getElementById('ticker-track');
 [...tokens,...tokens].forEach(t=>{
   const color = t.color||'#4da6ff';
@@ -432,7 +446,7 @@ const track=document.getElementById('ticker-track');
     ? `<img src="${t.image}" alt="${sym}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.innerHTML='${sym.slice(0,3)}'"/>`
     : sym.slice(0,3);
   const i=document.createElement('div');i.className='ticker-item';
-  i.innerHTML=`<div class="ticker-icon" style="background:${bg};color:${color};">${tickerLogoHtml}</div><span class="ticker-name">${name}</span><span class="ticker-badge">${sym}</span>`;
+  i.innerHTML=`<div class="ticker-icon" style="background:${bg};color:${color};">${tickerLogoHtml}</div>`;
   track.appendChild(i);
 });
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}}),{threshold:.1});
