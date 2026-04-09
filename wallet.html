@@ -47,11 +47,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .status.loading{display:block;background:rgba(77,166,255,.07);border:1px solid rgba(77,166,255,.2);color:var(--x1-blue)}
 .status.error{display:block;background:rgba(255,45,120,.07);border:1px solid rgba(255,45,120,.2);color:#ff6b9d}
 
-.wallet-bar{background:rgba(77,166,255,.05);border:1px solid var(--border-blue);border-radius:var(--radius-lg);padding:.9rem 1.4rem;margin-bottom:2rem;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
-.wallet-bar.visible{display:flex}
-.wallet-addr{font-family:var(--font-mono);font-size:.78rem;color:var(--x1-cyan)}
-.wallet-meta{font-size:.78rem;color:var(--text-secondary)}
-.wallet-meta span{color:var(--text-primary);font-weight:600}
 
 .section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;margin-top:2.2rem}
 .section-head h3{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
@@ -76,8 +71,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .token-balance.zero{color:var(--text-dim);font-size:1.1rem}
 .token-balance-label{font-size:.6rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
 
-.results{display:none}
-.results.visible{display:block}
+.results{display:block}
 
 .page-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(77,166,255,.08) 0%,transparent 60%),var(--bg);pointer-events:none}
 
@@ -113,12 +107,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <div class="status" id="status"></div>
   </div>
 
-  <div class="wallet-bar" id="wallet-bar">
-    <span class="wallet-addr" id="wallet-addr-display"></span>
-    <span class="wallet-meta">Meme tokens held: <span id="meme-count">0</span> / 10</span>
-  </div>
 
-  <div class="results" id="results">
+  <div class="results visible" id="results">
     <div class="section-head"><div class="section-line"></div><h3>Network Tokens</h3><div class="section-line"></div></div>
     <div class="special-grid" id="special-grid"></div>
 
@@ -206,23 +196,57 @@ function buildCard({name, symbol, color, image, balance, decimals, special}) {
   return card;
 }
 
+// Render all tokens faded on page load
+function renderAll(mintMap) {
+  const packTokens = loadPackTokens();
+  const memeGrid  = document.getElementById('meme-grid');
+  const specGrid  = document.getElementById('special-grid');
+  memeGrid.innerHTML = ''; specGrid.innerHTML = '';
+
+  // XNT
+  const xntBal = mintMap ? (window._xntBal || 0) : 0;
+  specGrid.appendChild(buildCard({
+    name:'XNT', symbol:'XNT', color:'#4da6ff',
+    image:'x1-logo.png', balance:xntBal, decimals:9, special:true,
+  }));
+
+  // USDC.X
+  const USDC_MINT = 'B69chRzqzDCmdB5WYB8NRu5Yv5ZA95ABiZcdzCgGm9Tq';
+  const usdcToken = packTokens.find(t => /usdc/i.test(t.symbol));
+  let usdcBal = 0, usdcDec = 6;
+  if (mintMap) {
+    const usdcMint = usdcToken?.address || USDC_MINT;
+    if (mintMap[usdcMint]) { usdcBal = mintMap[usdcMint].uiAmount; usdcDec = mintMap[usdcMint].decimals; }
+  }
+  specGrid.appendChild(buildCard({
+    name:  usdcToken?.name   || 'USDC.X',
+    symbol:usdcToken?.symbol || 'USDC.X',
+    color: '#2775ca', image: usdcToken?.image || 'usdc-logo.png',
+    balance: usdcBal, decimals: usdcDec, special: true,
+  }));
+
+  // 10 meme slots
+  const memeTokens = packTokens.filter(t => !/usdc/i.test(t.symbol||'')).slice(0,10);
+  while (memeTokens.length < 10) memeTokens.push({name:'Token Slot',symbol:'???',color:'#2a3f5f',address:''});
+  memeTokens.forEach(t => {
+    const sym = (t.symbol||t.sym||'???').toUpperCase();
+    let bal = 0, dec = 0;
+    if (mintMap && t.address && mintMap[t.address]) { bal = mintMap[t.address].uiAmount; dec = mintMap[t.address].decimals; }
+    memeGrid.appendChild(buildCard({ name:t.name||sym, symbol:sym, color:t.color||'#4da6ff', image:t.image||null, balance:bal, decimals:dec }));
+  });
+}
+
+// Initial render on page load — all faded
+renderAll(null);
+
 async function checkWallet() {
   const input   = document.getElementById('wallet-input').value.trim();
   if (!input) return;
 
-  const btn      = document.getElementById('search-btn');
-  const results  = document.getElementById('results');
-  const bar      = document.getElementById('wallet-bar');
-  const memeGrid = document.getElementById('meme-grid');
-  const specGrid = document.getElementById('special-grid');
+  const btn = document.getElementById('search-btn');
 
   btn.disabled = true; btn.textContent = 'Checking...';
-  results.classList.remove('visible');
-  bar.classList.remove('visible');
-  memeGrid.innerHTML = ''; specGrid.innerHTML = '';
   setStatus('⏳ Fetching wallet...', 'loading');
-
-  const packTokens = loadPackTokens();
 
   try {
     // 1. Native XNT balance
