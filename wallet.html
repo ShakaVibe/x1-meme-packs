@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg:#0a1020; --bg2:#0d1528; --bg-card:#111d32; --bg-card-hover:#162440;
+  --bg:#0a1020; --bg2:#0d1528; --bg-card:#111d32;
   --x1-blue:#4da6ff; --x1-cyan:#00d4ff; --x1-gold:#f0b90b;
   --x1-gradient:linear-gradient(135deg,#4da6ff 0%,#00d4ff 100%);
   --gold:#f5c842;
@@ -17,68 +17,68 @@
   --font-display:'Bebas Neue',sans-serif; --font-body:'Space Grotesk',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
 }
-*{margin:0;padding:0;box-sizing:border-box} html{scroll-behavior:smooth}
+*{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text-primary);font-family:var(--font-body);overflow-x:hidden;min-height:100vh}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:64px;background:rgba(10,16,32,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
 .nav-logo img{height:36px;width:36px;border-radius:8px;object-fit:cover}
 .nav-logo-div{width:1px;height:22px;background:var(--border-light)}
 .nav-logo-text{font-family:var(--font-display);font-size:1.5rem;letter-spacing:.06em;color:var(--text-primary)}
 .nav-logo-text .m{color:var(--gold)} .nav-logo-text .p{color:var(--x1-cyan)}
-.nav-back{font-size:.88rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:6px}
+.nav-back{font-size:.88rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:color .2s}
 .nav-back:hover{color:var(--x1-cyan)}
 
-/* PAGE */
-.page{max-width:900px;margin:0 auto;padding:100px 2rem 5rem}
+.page{max-width:960px;margin:0 auto;padding:100px 2rem 5rem}
 .page-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--x1-cyan);margin-bottom:.8rem;display:block;text-align:center}
 .page-title{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,4.5rem);line-height:1;letter-spacing:.03em;text-align:center;margin-bottom:.8rem}
-.page-sub{font-size:1rem;color:var(--text-secondary);text-align:center;max-width:500px;margin:0 auto 3rem;line-height:1.7}
+.page-sub{font-size:1rem;color:var(--text-secondary);text-align:center;max-width:500px;margin:0 auto 2.5rem;line-height:1.7}
 
-/* SEARCH BOX */
-.search-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;margin-bottom:2rem}
-.search-label{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:.75rem;display:block}
+.search-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:1.8rem;margin-bottom:2.5rem}
+.search-label{font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:.7rem;display:block}
 .search-row{display:flex;gap:.75rem}
 .search-input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:var(--radius-md);padding:.75rem 1rem;font-family:var(--font-mono);font-size:.85rem;color:var(--text-primary);outline:none;transition:border-color .2s}
 .search-input::placeholder{color:var(--text-dim)}
-.search-input:focus{border-color:rgba(77,166,255,.5)}
-.search-btn{font-size:.9rem;font-weight:700;letter-spacing:.04em;color:#0a1020;background:var(--x1-gradient);border:none;padding:.75rem 1.8rem;border-radius:var(--radius-md);cursor:pointer;transition:opacity .2s,transform .15s;white-space:nowrap;box-shadow:0 0 20px rgba(77,166,255,.25)}
+.search-input:focus{border-color:rgba(77,166,255,.45)}
+.search-btn{font-size:.88rem;font-weight:700;letter-spacing:.04em;color:#0a1020;background:var(--x1-gradient);border:none;padding:.75rem 1.8rem;border-radius:var(--radius-md);cursor:pointer;transition:opacity .2s,transform .15s;white-space:nowrap;box-shadow:0 0 18px rgba(77,166,255,.25)}
 .search-btn:hover{opacity:.9;transform:translateY(-1px)}
-.search-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
-
-/* STATUS */
-.status{display:none;margin-top:1rem;padding:.7rem 1rem;border-radius:var(--radius-md);font-size:.85rem;font-family:var(--font-mono)}
+.search-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.status{display:none;margin-top:.9rem;padding:.6rem 1rem;border-radius:var(--radius-md);font-size:.82rem;font-family:var(--font-mono)}
 .status.loading{display:block;background:rgba(77,166,255,.07);border:1px solid rgba(77,166,255,.2);color:var(--x1-blue)}
 .status.error{display:block;background:rgba(255,45,120,.07);border:1px solid rgba(255,45,120,.2);color:#ff6b9d}
-.status.empty{display:block;background:rgba(240,185,11,.07);border:1px solid rgba(240,185,11,.2);color:var(--x1-gold)}
 
-/* WALLET INFO BAR */
-.wallet-bar{display:none;background:rgba(77,166,255,.05);border:1px solid var(--border-blue);border-radius:var(--radius-lg);padding:1rem 1.4rem;margin-bottom:1.5rem;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.wallet-bar{background:rgba(77,166,255,.05);border:1px solid var(--border-blue);border-radius:var(--radius-lg);padding:.9rem 1.4rem;margin-bottom:2rem;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
 .wallet-bar.visible{display:flex}
-.wallet-addr{font-family:var(--font-mono);font-size:.8rem;color:var(--x1-cyan)}
-.wallet-count{font-size:.82rem;font-weight:600;color:var(--text-secondary)}
-.wallet-count span{color:var(--text-primary)}
+.wallet-addr{font-family:var(--font-mono);font-size:.78rem;color:var(--x1-cyan)}
+.wallet-meta{font-size:.78rem;color:var(--text-secondary)}
+.wallet-meta span{color:var(--text-primary);font-weight:600}
 
-/* TOKEN GRID */
-.tokens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
-.token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;transition:border-color .3s,transform .2s}
-.token-card:hover{border-color:var(--border-light);transform:translateY(-3px)}
-.token-logo{width:64px;height:64px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.2rem;overflow:hidden}
+.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.2rem;margin-top:2.2rem}
+.section-head h3{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
+.section-line{flex:1;height:1px;background:var(--border)}
+
+.special-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem}
+.meme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
+
+/* Cards */
+.token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;position:relative;transition:border-color .25s,transform .2s,opacity .25s}
+.token-card.special{padding:1.6rem}
+.token-card.has-balance:hover{transform:translateY(-3px)}
+.token-card.zero-balance{opacity:.3;filter:grayscale(0.55)}
+
+.token-logo{width:56px;height:56px;border-radius:50%;margin:0 auto .85rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);overflow:hidden;flex-shrink:0}
+.token-card.special .token-logo{width:64px;height:64px}
 .token-logo img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.token-name{font-size:.92rem;font-weight:600;color:var(--text-primary);margin-bottom:.2rem}
-.token-sym{font-family:var(--font-mono);font-size:.72rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.6rem}
-.token-balance{font-family:var(--font-mono);font-size:.85rem;font-weight:600;color:var(--x1-cyan)}
-.token-balance-label{font-size:.65rem;color:var(--text-dim);letter-spacing:.06em;text-transform:uppercase;margin-top:.15rem}
+.token-name{font-size:.88rem;font-weight:600;color:var(--text-primary);margin-bottom:.18rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.token-sym{font-family:var(--font-mono);font-size:.66rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.65rem}
+.token-balance{font-family:var(--font-display);font-size:1.5rem;line-height:1}
+.token-card.special .token-balance{font-size:1.8rem}
+.token-balance.zero{color:var(--text-dim);font-size:1.1rem}
+.token-balance-label{font-size:.6rem;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-top:.2rem}
 
-/* EMPTY STATE */
-.empty-state{text-align:center;padding:4rem 2rem;display:none}
-.empty-state.visible{display:block}
-.empty-icon{font-size:3rem;margin-bottom:1rem;display:block}
-.empty-title{font-family:var(--font-display);font-size:2rem;color:var(--text-secondary);margin-bottom:.5rem}
-.empty-sub{font-size:.92rem;color:var(--text-dim)}
+.results{display:none}
+.results.visible{display:block}
 
-/* BG */
 .page-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(77,166,255,.08) 0%,transparent 60%),var(--bg);pointer-events:none}
 
 @media(max-width:600px){nav{padding:0 1.2rem}.search-row{flex-direction:column}.page{padding:90px 1.2rem 4rem}}
@@ -99,10 +99,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div class="page">
   <span class="page-label">X1 Blockchain</span>
   <h1 class="page-title">WALLET CHECKER</h1>
-  <p class="page-sub">Paste any X1 wallet address to see the meme tokens it holds.</p>
+  <p class="page-sub">Paste any X1 wallet address to check your meme pack token balances.</p>
 
   <div class="search-wrap">
-    <span class="search-label">Wallet Address</span>
+    <span class="search-label">X1 Wallet Address</span>
     <div class="search-row">
       <input type="text" class="search-input" id="wallet-input" placeholder="Paste X1 wallet address..." autocomplete="off" spellcheck="false"/>
       <button class="search-btn" id="search-btn" onclick="checkWallet()">Check Wallet</button>
@@ -112,34 +112,44 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
   <div class="wallet-bar" id="wallet-bar">
     <span class="wallet-addr" id="wallet-addr-display"></span>
-    <span class="wallet-count">Tokens found: <span id="token-count">0</span></span>
+    <span class="wallet-meta">Meme tokens held: <span id="meme-count">0</span> / 10</span>
   </div>
 
-  <div class="tokens-grid" id="tokens-grid"></div>
+  <div class="results" id="results">
+    <div class="section-head"><div class="section-line"></div><h3>Network Tokens</h3><div class="section-line"></div></div>
+    <div class="special-grid" id="special-grid"></div>
 
-  <div class="empty-state" id="empty-state">
-    <span class="empty-icon">🔍</span>
-    <div class="empty-title">No Tokens Found</div>
-    <p class="empty-sub">This wallet doesn't appear to hold any meme pack tokens yet.<br>Bridge USDC to earn your first pack!</p>
+    <div class="section-head"><div class="section-line"></div><h3>Meme Pack Tokens</h3><div class="section-line"></div></div>
+    <div class="meme-grid" id="meme-grid"></div>
   </div>
 </div>
 
 <script>
 const RPC = 'https://rpc.mainnet.x1.xyz';
 
-function shortAddr(addr) {
-  return addr.slice(0, 6) + '...' + addr.slice(-4);
-}
+const FALLBACK_TOKENS = [
+  {name:'BonkX1',   symbol:'BONK',   color:'#f5a623', address:''},
+  {name:'DogWifX1', symbol:'WIF',    color:'#9b59b6', address:''},
+  {name:'PopcatX1', symbol:'POPCAT', color:'#e74c3c', address:''},
+  {name:'MyroX1',   symbol:'MYRO',   color:'#1abc9c', address:''},
+  {name:'BookX1',   symbol:'BOOK',   color:'#4da6ff', address:''},
+  {name:'SamoX1',   symbol:'SAMO',   color:'#e67e22', address:''},
+  {name:'ChillX1',  symbol:'CHILL',  color:'#00d4ff', address:''},
+  {name:'MoonsX1',  symbol:'MOONS',  color:'#ff2d78', address:''},
+  {name:'PepeX1',   symbol:'PEPE',   color:'#27ae60', address:''},
+  {name:'XNT',      symbol:'XNT',    color:'#f0b90b', address:''},
+];
 
-function setStatus(msg, type) {
-  const el = document.getElementById('status');
-  el.textContent = msg;
-  el.className = 'status ' + type;
-}
-
-function clearStatus() {
-  const el = document.getElementById('status');
-  el.className = 'status';
+function loadPackTokens() {
+  try {
+    const saved = localStorage.getItem('x1mp_tokens');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      const filtered = parsed.filter(t => t && (t.name || t.symbol));
+      if (filtered.length) return filtered;
+    }
+  } catch(e) {}
+  return FALLBACK_TOKENS;
 }
 
 function hexToRgba(hex, alpha) {
@@ -149,154 +159,162 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-// Load pack tokens from localStorage (set by admin panel)
-function getPackTokens() {
-  try {
-    const saved = localStorage.getItem('x1mp_tokens');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      return parsed.filter(t => t && t.address);
-    }
-  } catch(e) {}
-  return [];
+function shortAddr(addr) { return addr.slice(0,6)+'...'+addr.slice(-4); }
+
+function setStatus(msg, type) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status ' + type;
+}
+
+function fmtBalance(n, dec) {
+  if (!n || n === 0) return '0';
+  if (n >= 1_000_000) return (n/1_000_000).toFixed(2)+'M';
+  if (n >= 1_000)     return (n/1_000).toFixed(2)+'K';
+  return n.toLocaleString(undefined, {maximumFractionDigits: Math.min(dec||0, 4)});
+}
+
+function buildCard({name, symbol, color, image, balance, decimals, special}) {
+  const c       = color || '#4da6ff';
+  const hasbal  = balance > 0;
+  const bg      = hexToRgba(c, hasbal ? 0.15 : 0.06);
+  const sym     = (symbol || '???').toUpperCase();
+  const balStr  = fmtBalance(balance, decimals || 0);
+
+  const logoInner = image
+    ? `<img src="${image}" alt="${sym}" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\\'font-family:var(--font-display);color:${c};font-size:1rem;\\'>${sym.slice(0,3)}</span>')" />`
+    : `<span style="font-family:var(--font-display);color:${c};font-size:${special?'1.3':'1rem'};">${sym.slice(0,3)}</span>`;
+
+  const card = document.createElement('div');
+  card.className = ['token-card', special?'special':'', hasbal?'has-balance':'zero-balance'].join(' ').trim();
+  if (hasbal) card.style.borderColor = hexToRgba(c, 0.4);
+
+  card.innerHTML = `
+    <div class="token-logo" style="background:${bg};">${logoInner}</div>
+    <div class="token-name">${name || sym}</div>
+    <div class="token-sym">${sym}</div>
+    <div class="token-balance ${hasbal?'':'zero'}" ${hasbal?`style="color:${c}"`:''}>${hasbal ? balStr : '—'}</div>
+    <div class="token-balance-label">${hasbal ? 'Balance' : 'Not in wallet'}</div>
+  `;
+  return card;
 }
 
 async function checkWallet() {
-  const input = document.getElementById('wallet-input').value.trim();
+  const input   = document.getElementById('wallet-input').value.trim();
   if (!input) return;
 
-  const btn = document.getElementById('search-btn');
-  const grid = document.getElementById('tokens-grid');
-  const bar = document.getElementById('wallet-bar');
-  const emptyState = document.getElementById('empty-state');
+  const btn      = document.getElementById('search-btn');
+  const results  = document.getElementById('results');
+  const bar      = document.getElementById('wallet-bar');
+  const memeGrid = document.getElementById('meme-grid');
+  const specGrid = document.getElementById('special-grid');
 
-  btn.disabled = true;
-  btn.textContent = 'Checking...';
-  grid.innerHTML = '';
+  btn.disabled = true; btn.textContent = 'Checking...';
+  results.classList.remove('visible');
   bar.classList.remove('visible');
-  emptyState.classList.remove('visible');
-  setStatus('⏳ Fetching token accounts...', 'loading');
+  memeGrid.innerHTML = ''; specGrid.innerHTML = '';
+  setStatus('⏳ Fetching wallet...', 'loading');
+
+  const packTokens = loadPackTokens();
 
   try {
-    // Get all SPL token accounts for the wallet
-    const resp = await fetch(RPC, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: 1,
-        method: 'getTokenAccountsByOwner',
-        params: [
-          input,
-          { programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' },
-          { encoding: 'jsonParsed' }
-        ]
-      })
+    // 1. Native XNT balance
+    const xntResp = await fetch(RPC, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getBalance',params:[input]})
+    });
+    const xntData = await xntResp.json();
+    const xntBal  = (xntData.result?.value ?? 0) / 1e9;
+
+    // 2. Fetch both SPL token program accounts in parallel
+    const fetchTAs = (programId, id) => fetch(RPC, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:'2.0',id,method:'getTokenAccountsByOwner',
+        params:[input,{programId},{encoding:'jsonParsed'}]})
+    }).then(r=>r.json()).then(d=>d.result?.value||[]);
+
+    const [spl, spl22] = await Promise.all([
+      fetchTAs('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', 2),
+      fetchTAs('TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb', 3),
+    ]);
+
+    // Build mint → {uiAmount, decimals}
+    const mintMap = {};
+    [...spl, ...spl22].forEach(a => {
+      const info = a.account?.data?.parsed?.info;
+      if (!info) return;
+      mintMap[info.mint] = {
+        uiAmount: info.tokenAmount.uiAmount || 0,
+        decimals: info.tokenAmount.decimals,
+      };
     });
 
-    const data = await resp.json();
+    // 3. XNT native card
+    specGrid.appendChild(buildCard({
+      name:'XNT', symbol:'XNT', color:'#f0b90b',
+      balance:xntBal, decimals:9, special:true,
+    }));
 
-    if (data.error) {
-      setStatus('❌ RPC error: ' + data.error.message, 'error');
-      btn.disabled = false; btn.textContent = 'Check Wallet';
-      return;
+    // 4. USDC.X card — look for admin-configured USDC token first
+    const usdcToken = packTokens.find(t => /usdc/i.test(t.symbol));
+    let usdcBal = 0, usdcDec = 6;
+    if (usdcToken?.address && mintMap[usdcToken.address]) {
+      usdcBal = mintMap[usdcToken.address].uiAmount;
+      usdcDec = mintMap[usdcToken.address].decimals;
+    }
+    specGrid.appendChild(buildCard({
+      name:  usdcToken?.name  || 'USDC.X',
+      symbol:usdcToken?.symbol|| 'USDC.X',
+      color: '#2775ca',
+      image: usdcToken?.image || null,
+      balance: usdcBal, decimals: usdcDec, special: true,
+    }));
+
+    // 5. All 10 meme token slots — always show all, faded if zero
+    let memeCount = 0;
+    // Ensure exactly 10 slots rendered (pad with empties if admin has fewer)
+    const memeTokens = packTokens
+      .filter(t => !/usdc/i.test(t.symbol || ''))
+      .slice(0, 10);
+
+    // Pad to 10
+    while (memeTokens.length < 10) {
+      memeTokens.push({name:'Token Slot', symbol:'???', color:'#2a3f5f', address:''});
     }
 
-    const accounts = data.result?.value || [];
-
-    // Also check Token-2022 accounts
-    const resp2022 = await fetch(RPC, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        jsonrpc: '2.0',
-        id: 2,
-        method: 'getTokenAccountsByOwner',
-        params: [
-          input,
-          { programId: 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb' },
-          { encoding: 'jsonParsed' }
-        ]
-      })
-    });
-    const data2022 = await resp2022.json();
-    const accounts2022 = data2022.result?.value || [];
-
-    const allAccounts = [...accounts, ...accounts2022];
-
-    // Filter to non-zero balances
-    const nonZero = allAccounts.filter(a => {
-      const amt = a.account?.data?.parsed?.info?.tokenAmount?.uiAmount;
-      return amt && amt > 0;
+    memeTokens.forEach(t => {
+      const sym = (t.symbol || t.sym || '???').toUpperCase();
+      let bal = 0, dec = 0;
+      if (t.address && mintMap[t.address]) {
+        bal = mintMap[t.address].uiAmount;
+        dec = mintMap[t.address].decimals;
+      }
+      if (bal > 0) memeCount++;
+      memeGrid.appendChild(buildCard({
+        name:    t.name || sym,
+        symbol:  sym,
+        color:   t.color || '#4da6ff',
+        image:   t.image || null,
+        balance: bal,
+        decimals: dec,
+      }));
     });
 
-    clearStatus();
-
-    if (nonZero.length === 0) {
-      emptyState.classList.add('visible');
-      document.getElementById('token-count').textContent = '0';
-      bar.classList.add('visible');
-      document.getElementById('wallet-addr-display').textContent = shortAddr(input);
-      btn.disabled = false; btn.textContent = 'Check Wallet';
-      return;
-    }
-
-    // Load pack token metadata from admin config
-    const packTokens = getPackTokens();
-    const packMap = {};
-    packTokens.forEach(t => { if (t.address) packMap[t.address] = t; });
-
-    // Render token cards
-    bar.classList.add('visible');
+    // 6. Show results
     document.getElementById('wallet-addr-display').textContent = shortAddr(input);
-    document.getElementById('token-count').textContent = nonZero.length;
-
-    nonZero.forEach(a => {
-      const info = a.account.data.parsed.info;
-      const mint = info.mint;
-      const uiAmount = info.tokenAmount.uiAmount;
-      const decimals = info.tokenAmount.decimals;
-
-      // Try to match against known pack tokens
-      const known = packMap[mint];
-      const color = known?.color || '#4da6ff';
-      const bg = hexToRgba(color, 0.15);
-      const sym = known?.symbol || mint.slice(0,4).toUpperCase();
-      const name = known?.name || 'Unknown Token';
-      const image = known?.image || null;
-
-      const logoHtml = image
-        ? `<img src="${image}" alt="${sym}" onerror="this.parentElement.innerHTML='${sym.slice(0,3)}'"/>`
-        : `<span style="font-family:var(--font-display);font-size:1.1rem;color:${color};">${sym.slice(0,3)}</span>`;
-
-      const formatted = uiAmount >= 1000000
-        ? (uiAmount/1000000).toFixed(2) + 'M'
-        : uiAmount >= 1000
-        ? (uiAmount/1000).toFixed(2) + 'K'
-        : uiAmount.toLocaleString(undefined, {maximumFractionDigits: decimals > 4 ? 4 : decimals});
-
-      const card = document.createElement('div');
-      card.className = 'token-card';
-      card.innerHTML = `
-        <div class="token-logo" style="background:${bg};">${logoHtml}</div>
-        <div class="token-name">${name}</div>
-        <div class="token-sym">${sym}</div>
-        <div class="token-balance">${formatted}</div>
-        <div class="token-balance-label">Balance</div>
-      `;
-      grid.appendChild(card);
-    });
+    document.getElementById('meme-count').textContent = memeCount;
+    bar.classList.add('visible');
+    results.classList.add('visible');
+    document.getElementById('status').className = 'status'; // hide
 
   } catch(err) {
-    setStatus('❌ Connection error. Check your network and try again.', 'error');
+    setStatus('❌ Connection error — check your network and try again.', 'error');
     console.error(err);
   }
 
-  btn.disabled = false;
-  btn.textContent = 'Check Wallet';
+  btn.disabled = false; btn.textContent = 'Check Wallet';
 }
 
-// Allow Enter key to trigger search
 document.getElementById('wallet-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') checkWallet();
 });
