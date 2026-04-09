@@ -183,14 +183,6 @@ main{max-width:1100px;margin:0 auto;padding:2rem}
       <button class="btn btn-ghost" onclick="testRpc()" style="font-size:.75rem">Test RPC</button>
     </div>
 
-    <!-- Solana RPC -->
-    <div class="rpc-row">
-      <span class="rpc-label">SOL RPC</span>
-      <input type="text" class="rpc-input" id="sol-rpc-input" value="https://rpc.ankr.com/solana"/>
-      <span class="rpc-status rpc-idle" id="sol-rpc-status">Not tested</span>
-      <button class="btn btn-ghost" onclick="testSolRpc()" style="font-size:.75rem">Test RPC</button>
-    </div>
-
     <!-- Tokens -->
     <div class="section-title">Token Management</div>
     <div class="section-desc">Paste a contract address to auto-fetch token name, symbol, and logo. Toggle each slot between X1 and Solana chains. Add up to 10 tokens to the reward pool.</div>
@@ -222,8 +214,7 @@ const ADMIN_PW = 'JackLevin';
 
 const COLORS = ['#f5a623','#f0b90b','#e74c3c','#e67e22','#27ae60','#1abc9c','#4da6ff','#00d4ff','#9b59b6','#ff2d78','#e91e8c','#00ff88','#ff6b35','#c0392b','#2ecc71','#3498db','#8e44ad','#f39c12','#16a085','#d35400','#cd7f32'];
 
-const RPC     = () => document.getElementById('rpc-input').value.trim() || 'https://rpc.mainnet.x1.xyz';
-const SOL_RPC = () => document.getElementById('sol-rpc-input').value.trim() || 'https://rpc.ankr.com/solana';
+const RPC = () => document.getElementById('rpc-input').value.trim() || 'https://rpc.mainnet.x1.xyz';
 
 // State: array of 10 slots
 let slots = Array.from({length:10}, () => ({address:'', name:'', symbol:'', image:'', color:'#4da6ff', chain:'x1'}));
@@ -494,22 +485,6 @@ async function fetchTokenSol(i, addr) {
     }
   } catch(e) {}
 
-  // Strategy 3: Solana RPC — getAccountInfo + Metaplex metadata URI
-  try {
-    const r = await fetch(SOL_RPC(), {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getAccountInfo',params:[addr,{encoding:'jsonParsed'}]})
-    });
-    const d = await r.json();
-    const info = d.result?.value?.data?.parsed?.info;
-    if (info?.name) {
-      slots[i].name   = info.name;
-      slots[i].symbol = info.symbol;
-      slots[i].image  = info.uri ? await fetchMetaImage(info.uri) : '';
-      updatePreview(i); return;
-    }
-  } catch(e) {}
-
   slots[i].name = ''; slots[i].symbol = '';
   updatePreview(i);
   showToast('Auto-fetch failed — click Edit to enter name/symbol/logo manually', 'info');
@@ -663,23 +638,6 @@ async function testRpc() {
   }
 }
 
-// ── SOL RPC Test ──
-async function testSolRpc() {
-  const el = document.getElementById('sol-rpc-status');
-  el.className = 'rpc-status rpc-idle'; el.textContent = 'Testing...';
-  try {
-    const r = await fetch(SOL_RPC(), {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getHealth'}),
-    });
-    const d = await r.json();
-    if (d.result === 'ok' || d.result?.status === 'behind' || d.result) {
-      el.className = 'rpc-status rpc-ok'; el.textContent = '✓ Connected';
-    } else { throw new Error(); }
-  } catch(e) {
-    el.className = 'rpc-status rpc-fail'; el.textContent = '✗ Failed';
-  }
-}
 function showToast(msg, type='info') {
   const t = document.getElementById('toast');
   t.textContent = msg;
