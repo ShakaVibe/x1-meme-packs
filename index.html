@@ -349,6 +349,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 </footer>
 
 <script>
+(async () => {
 // ── Load tokens: Admin config (localStorage) → fallback placeholders ──
 const FALLBACK_TOKENS = [
   {name:'BonkX1',symbol:'BONK',color:'#f5a623'},
@@ -370,30 +371,19 @@ function hexToRgba(hex, alpha){
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-function loadTokens(){
-  let tokens = [];
+async function loadTokens(){
   try {
-    const saved = localStorage.getItem('x1mp_tokens');
-    if(saved){
-      const parsed = JSON.parse(saved);
-      tokens = parsed.filter(t => t && (t.name || t.symbol));
+    const resp = await fetch('tokens.json?v=' + Date.now());
+    if(resp.ok){
+      const parsed = await resp.json();
+      const tokens = parsed.filter(t => t && (t.name || t.symbol));
+      if(tokens.length) return tokens;
     }
   } catch(e){}
-  if(!tokens.length) tokens = FALLBACK_TOKENS;
-  return tokens;
+  return FALLBACK_TOKENS;
 }
 
-// Apply saved bridge URL if set
-try {
-  const s = JSON.parse(localStorage.getItem('x1mp_settings')||'{}');
-  if(s.bridgeUrl){
-    document.querySelectorAll('a[href="#"]').forEach(a => {
-      if(a.textContent.includes('Warp Bridge') || a.textContent.includes('Bridge')) a.href = s.bridgeUrl;
-    });
-  }
-} catch(e){}
-
-const tokens = loadTokens();
+const tokens = await loadTokens();
 const grid=document.getElementById('tokens-grid');
 tokens.forEach(t=>{
   const color = t.color||'#4da6ff';
@@ -424,6 +414,7 @@ const track=document.getElementById('ticker-track');
 });
 const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}}),{threshold:.1});
 document.querySelectorAll('.how-card,.pack-card,.token-card,.bridge-step,.x1-feature-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .45s ease,transform .45s ease';obs.observe(el);});
+})();
 </script>
 </body>
 </html>
