@@ -77,9 +77,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .x1-brand-sep{width:1px;height:24px;background:var(--border)}
 
 section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
-.section-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--x1-cyan);margin-bottom:.8rem;display:block}
-.section-title{font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);line-height:1;letter-spacing:.03em;color:var(--text-primary);margin-bottom:1rem}
-.section-sub{font-size:1rem;color:var(--text-secondary);max-width:540px;line-height:1.7}
+.section-label{font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--x1-cyan);margin-bottom:.8rem;display:block;text-align:center}
+.section-title{font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);line-height:1;letter-spacing:.03em;color:var(--text-primary);margin-bottom:1rem;text-align:center}
+.section-sub{font-size:1rem;color:var(--text-secondary);max-width:540px;line-height:1.7;text-align:center;margin:0 auto}
 
 .how-wrapper{padding:6rem 2rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .how-inner{max-width:1200px;margin:0 auto}
@@ -240,7 +240,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   <div class="hero-stats">
     <div class="hero-stat"><span class="hero-stat-num">10</span><span class="hero-stat-label">Meme Tokens</span></div>
     <div class="hero-stat"><span class="hero-stat-num">5</span><span class="hero-stat-label">Pack Tiers</span></div>
-    <div class="hero-stat"><span class="hero-stat-num">30x</span><span class="hero-stat-label">Max Multiplier</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">20x</span><span class="hero-stat-label">Max Multiplier</span></div>
     <div class="hero-stat"><span class="hero-stat-num">$100</span><span class="hero-stat-label">Min Bridge</span></div>
   </div>
 </div>
@@ -260,21 +260,21 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 </div>
 
 <section id="packs">
-  <span class="section-label">1 Pack Per $100 Bridged — Five Token Tiers</span>
+  <span class="section-label">Five Bridge Amounts. Five Token Tiers.</span>
   <h2 class="section-title">CHOOSE YOUR TIER</h2>
-  <p class="section-sub">You earn <strong style="color:var(--text-primary)">1 pack for every $100 USDC bridged</strong>. Bridge a larger amount to unlock a higher token multiplier — every pack in your batch gets boosted.</p>
+  <p class="section-sub">Choose your bridge amount. Each tier gives you a fixed number of packs with a bigger token multiplier. The more you bridge, the more memes you stack.</p>
   <div class="packs-grid">
-    <div class="pack-card pack-bronze"><span class="pack-emoji">🥉</span><div class="pack-title">BRONZE</div><div class="pack-tier-badge">Starter</div><div class="pack-range">$100 – $499</div><div class="pack-divider"></div><span class="pack-mult">1x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>Base token amounts<br>Random meme selection</div></div>
-    <div class="pack-card pack-silver"><span class="pack-emoji">🥈</span><div class="pack-title">SILVER</div><div class="pack-tier-badge">Enhanced</div><div class="pack-range">$500 – $999</div><div class="pack-divider"></div><span class="pack-mult">2x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$500 bridge = 5 packs, each 2x<br>Double token amounts</div></div>
-    <div class="pack-card pack-gold"><span class="pack-emoji">🥇</span><div class="pack-title">GOLD</div><div class="pack-tier-badge">Premium</div><div class="pack-range">$1,000 – $1,999</div><div class="pack-divider"></div><span class="pack-mult">5x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$1,000 bridge = 10 packs, each 5x<br>Serious token stack</div></div>
-    <div class="pack-card pack-diamond"><span class="pack-emoji">💎</span><div class="pack-title">DIAMOND</div><div class="pack-tier-badge">Elite</div><div class="pack-range">$2,000 – $4,999</div><div class="pack-divider"></div><span class="pack-mult">10x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$2,000 bridge = 20 packs, each 10x<br>Elite meme portfolio</div></div>
-    <div class="pack-card pack-legendary"><div class="pack-hot">🔥 Max Reward</div><span class="pack-emoji">🔥</span><div class="pack-title">LEGENDARY</div><div class="pack-tier-badge">Maximum</div><div class="pack-range">$5,000+ USDC</div><div class="pack-divider"></div><span class="pack-mult">20x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$5,000 bridge = 50 packs, each 20x<br>Absolute meme dominance</div></div>
+    <div class="pack-card pack-bronze"><span class="pack-emoji">🥉</span><div class="pack-title">BRONZE</div><div class="pack-tier-badge">Starter</div><div class="pack-range">$100 USDC</div><div class="pack-divider"></div><span class="pack-mult">1x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">1 pack<br>Base token amounts<br>Random meme selection</div></div>
+    <div class="pack-card pack-silver"><span class="pack-emoji">🥈</span><div class="pack-title">SILVER</div><div class="pack-tier-badge">Enhanced</div><div class="pack-range">$200 USDC</div><div class="pack-divider"></div><span class="pack-mult">2x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">2 packs<br>Double token amounts<br>2× per pack</div></div>
+    <div class="pack-card pack-gold"><span class="pack-emoji">🥇</span><div class="pack-title">GOLD</div><div class="pack-tier-badge">Premium</div><div class="pack-range">$300 USDC</div><div class="pack-divider"></div><span class="pack-mult">5x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">3 packs<br>5× token amounts<br>Serious meme stack</div></div>
+    <div class="pack-card pack-diamond"><span class="pack-emoji">💎</span><div class="pack-title">DIAMOND</div><div class="pack-tier-badge">Elite</div><div class="pack-range">$500 USDC</div><div class="pack-divider"></div><span class="pack-mult">10x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">5 packs<br>10× token amounts<br>Elite meme portfolio</div></div>
+    <div class="pack-card pack-legendary"><div class="pack-hot">🔥 Max Reward</div><span class="pack-emoji">🔥</span><div class="pack-title">LEGENDARY</div><div class="pack-tier-badge">Maximum</div><div class="pack-range">$1,000 USDC</div><div class="pack-divider"></div><span class="pack-mult">20x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">10 packs<br>20× token amounts<br>Absolute meme dominance</div></div>
   </div>
   <div class="upgrade-banner">
     <div class="upgrade-icon">⚡</div>
     <div class="upgrade-text">
-      <h4>How Pack Counts Work</h4>
-      <p>Every <strong>$100 USDC bridged = 1 pack</strong>. Bridge <strong>$500 USDC</strong> and you receive <strong>5 packs</strong>, each with the Silver 2x multiplier. Bridge <strong>$5,000</strong> and you get <strong>50 Legendary packs</strong>, each loaded with 20x the base token amount.</p>
+      <h4>How It Works</h4>
+      <p>Each bridge amount unlocks a fixed pack count with a token multiplier. Bridge <strong>$300</strong> and get <strong>3 Gold packs</strong> each with 5× tokens. Go <strong>$1,000 Legendary</strong> and stack <strong>10 packs with 20× tokens</strong> each — the maximum reward available.</p>
     </div>
   </div>
 </section>
@@ -310,7 +310,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
       <div class="bridge-step"><div class="step-num">1</div><div class="step-content"><h4>Set Up Your X1 Wallet</h4><p>Add the X1 network to your Phantom or compatible wallet. Configure the X1 RPC endpoint to interact with the network.</p><div class="step-note">💡 Phantom and Backpack both support X1. Have at least $100 USDC on Solana ready to bridge.</div></div></div>
       <div class="bridge-step"><div class="step-num">2</div><div class="step-content"><h4>Visit the X1 Warp Bridge</h4><p>Head to the official <a href="https://app.bridge.x1.xyz/" target="_blank">X1 Warp Bridge</a>. Always verify you are on the official URL before connecting your wallet.</p></div></div>
       <div class="bridge-step"><div class="step-num">3</div><div class="step-content"><h4>Connect Both Wallets</h4><p>Connect your Solana wallet as the source and your X1 wallet as the destination — both can be the same Phantom wallet if it supports X1.</p></div></div>
-      <div class="bridge-step"><div class="step-num">4</div><div class="step-content"><h4>Select USDC and Enter Amount</h4><p>Choose USDC as the token. Enter your amount — minimum $100. Higher amounts unlock rarer pack tiers.</p><div class="step-note">🎯 Bridge $5,000 in a single transaction for the 🔥 Legendary Pack with 30x token multiplier.</div></div></div>
+      <div class="bridge-step"><div class="step-num">4</div><div class="step-content"><h4>Select USDC and Enter Amount</h4><p>Choose USDC as the token. Enter your amount — minimum $100. Higher amounts unlock rarer pack tiers.</p><div class="step-note">🎯 Bridge $1,000 for the 🔥 Legendary Pack — 10 packs each loaded with 20× tokens.</div></div></div>
       <div class="bridge-step"><div class="step-num">5</div><div class="step-content"><h4>Confirm and Receive Your Pack</h4><p>Approve the transaction in your wallet. Once confirmed on X1, your meme pack airdrop is sent to your X1 wallet automatically.</p></div></div>
     </div>
     <div class="bridge-visual">
