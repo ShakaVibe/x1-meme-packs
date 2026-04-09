@@ -453,13 +453,23 @@ async function fetchTokenX1(i, addr) {
 }
 
 async function fetchTokenSol(i, addr) {
-  // Strategy 1: Jupiter Token List (best coverage for Solana)
+  // Helper: extract name/symbol/image from a DexScreener pair object
+  function parseDexPair(pair, addr) {
+    if (!pair) return null;
+    const isBase = pair.baseToken?.address?.toLowerCase() === addr.toLowerCase();
+    const t = isBase ? pair.baseToken : pair.quoteToken;
+    if (!t?.name) return null;
+    const image = pair.info?.imageUrl || pair.info?.header || t.logoURI || '';
+    return { name: t.name, symbol: t.symbol, image };
+  }
+
+  // Strategy 1: Jupiter Token List — best logo coverage for verified tokens
   try {
     const r = await fetch(`https://tokens.jup.ag/token/${addr}`);
     if (r.ok) {
       const d = await r.json();
       if (d?.symbol) {
-        slots[i].name   = d.name   || d.symbol;
+        slots[i].name   = d.name || d.symbol;
         slots[i].symbol = d.symbol;
         slots[i].image  = d.logoURI || '';
         updatePreview(i); return;
@@ -467,21 +477,39 @@ async function fetchTokenSol(i, addr) {
     }
   } catch(e) {}
 
-  // Strategy 2: DexScreener (prefer solana chain)
+  // Strategy 2: DexScreener new endpoint — returns bare array
+  try {
+    const r = await fetch(`https://api.dexscreener.com/tokens/v1/solana/${addr}`);
+    if (r.ok) {
+      const d = await r.json();
+      const pairs = Array.isArray(d) ? d : (d.pairs || []);
+      const pair = pairs.find(p => p.chainId === 'solana') || pairs[0];
+      const found = parseDexPair(pair, addr);
+      if (found) { Object.assign(slots[i], found); updatePreview(i); return; }
+    }
+  } catch(e) {}
+
+  // Strategy 3: DexScreener legacy endpoint — returns {pairs: [...]}
   try {
     const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addr}`);
     if (r.ok) {
       const d = await r.json();
-      const pair = d.pairs?.find(p => p.chainId === 'solana') || d.pairs?.[0];
-      if (pair) {
-        const t = pair.baseToken?.address?.toLowerCase() === addr.toLowerCase() ? pair.baseToken : pair.quoteToken;
-        if (t?.name) {
-          slots[i].name   = t.name;
-          slots[i].symbol = t.symbol;
-          slots[i].image  = pair.info?.imageUrl || '';
-          updatePreview(i); return;
-        }
-      }
+      const pairs = d.pairs || [];
+      const pair = pairs.find(p => p.chainId === 'solana') || pairs[0];
+      const found = parseDexPair(pair, addr);
+      if (found) { Object.assign(slots[i], found); updatePreview(i); return; }
+    }
+  } catch(e) {}
+
+  // Strategy 4: DexScreener search — catches tokens where address lookup misses
+  try {
+    const r = await fetch(`https://api.dexscreener.com/latest/dex/search?q=${addr}`);
+    if (r.ok) {
+      const d = await r.json();
+      const pairs = d.pairs || [];
+      const pair = pairs.find(p => p.chainId === 'solana') || pairs[0];
+      const found = parseDexPair(pair, addr);
+      if (found) { Object.assign(slots[i], found); updatePreview(i); return; }
     }
   } catch(e) {}
 
