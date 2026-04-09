@@ -131,16 +131,11 @@ section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
 .upgrade-text p{font-size:.92rem;color:var(--text-secondary);line-height:1.65}
 .upgrade-text p strong{color:var(--text-primary);font-weight:600}
 
-.x1-features{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4rem 2rem}
-.x1-features-inner{max-width:1200px;margin:0 auto}
-.x1-features-title{text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:2.5rem;display:flex;align-items:center;justify-content:center;gap:10px}
-.x1-features-title img{height:26px;width:26px;border-radius:6px;object-fit:cover}
-.x1-features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem}
-.x1-feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;transition:border-color .2s}
-.x1-feature-card:hover{border-color:var(--border-light)}
-.x1-feature-icon{font-size:1.5rem;margin-bottom:.8rem;display:block}
-.x1-feature-val{font-family:var(--font-display);font-size:1.8rem;color:var(--x1-cyan);display:block;margin-bottom:.1rem}
-.x1-feature-label{font-size:.82rem;font-weight:500;color:var(--text-secondary)}
+.x1-quote-wrap{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:5rem 2rem;text-align:center;position:relative;overflow:hidden}
+.x1-quote-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(77,166,255,.07) 0%,transparent 65%);pointer-events:none}
+.x1-quote-text{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3.2rem);letter-spacing:.06em;line-height:1.15;color:var(--x1-cyan);text-shadow:0 0 40px rgba(77,166,255,.6),0 0 80px rgba(0,212,255,.25);max-width:860px;margin:0 auto;position:relative}
+.x1-quote-attr{margin-top:1.5rem;font-size:.82rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-secondary);position:relative}
+.x1-quote-attr span{color:var(--x1-blue)}
 
 .tokens-wrapper{padding:6rem 2rem;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .tokens-inner{max-width:1200px;margin:0 auto}
@@ -223,6 +218,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
     <li><a href="#tokens">Tokens</a></li>
     <li><a href="#bridge">Bridge Guide</a></li>
     <li><a href="wallet.html">Check Wallet</a></li>
+    <li><a href="links.html">Links</a></li>
   </ul>
   <a href="https://app.bridge.x1.xyz/" target="_blank" class="nav-cta nav-cta-glow">Bridge Now</a>
 </nav>
@@ -285,17 +281,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   </div>
 </section>
 
-<div class="x1-features">
-  <div class="x1-features-inner">
-    <div class="x1-features-title"><img src="x1-logo.png" alt="X1"/> Why X1 Blockchain</div>
-    <div class="x1-features-grid">
-      <div class="x1-feature-card"><span class="x1-feature-icon">⚡</span><span class="x1-feature-val">1 SEC</span><span class="x1-feature-label">Block Time</span></div>
-      <div class="x1-feature-card"><span class="x1-feature-icon">🚀</span><span class="x1-feature-val">50K+</span><span class="x1-feature-label">Transactions Per Second</span></div>
-      <div class="x1-feature-card"><span class="x1-feature-icon">💸</span><span class="x1-feature-val">~$0.00</span><span class="x1-feature-label">Near-Zero Gas Fees</span></div>
-      <div class="x1-feature-card"><span class="x1-feature-icon">🛡️</span><span class="x1-feature-val">PoW/PoS</span><span class="x1-feature-label">Hybrid Consensus</span></div>
-      <div class="x1-feature-card"><span class="x1-feature-icon">🔗</span><span class="x1-feature-val">SVM</span><span class="x1-feature-label">Solana VM Compatible</span></div>
-    </div>
-  </div>
+<div class="x1-quote-wrap">
+  <div class="x1-quote-text">"X1 is a Blockchain with the Engine of Solana and the Soul of Bitcoin"</div>
+  <div class="x1-quote-attr">— <span>Mr. Jack Levin</span>, Founder of X1</div>
 </div>
 
 <div class="tokens-wrapper" id="tokens">
