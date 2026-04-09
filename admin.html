@@ -81,6 +81,16 @@ main{max-width:1100px;margin:0 auto;padding:2rem}
 .swatch.active{border-color:#fff;transform:scale(1.15)}
 .color-custom{width:24px;height:24px;border-radius:4px;cursor:pointer;border:1px solid var(--border);background:var(--bg-input);padding:0;overflow:hidden}
 
+/* ── CHAIN TOGGLE ── */
+.chain-toggle{display:inline-flex;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;flex-shrink:0}
+.chain-btn{font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.2rem .6rem;border:none;cursor:pointer;background:transparent;color:var(--text-dim);transition:all .15s;line-height:1}
+.chain-btn:hover{color:var(--text-secondary)}
+.chain-btn.active-x1{background:rgba(77,166,255,.18);color:var(--x1-blue)}
+.chain-btn.active-sol{background:rgba(153,69,255,.18);color:#9945FF}
+.chain-badge{font-size:.58rem;font-weight:600;padding:.12rem .48rem;border-radius:100px;flex-shrink:0;border:1px solid transparent}
+.badge-x1-token{background:rgba(77,166,255,.12);color:var(--x1-blue);border-color:rgba(77,166,255,.22)}
+.badge-sol-token{background:rgba(153,69,255,.12);color:#9945FF;border-color:rgba(153,69,255,.22)}
+
 /* ── EDIT MODAL ── */
 .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-backdrop.open{display:flex}
@@ -171,9 +181,17 @@ main{max-width:1100px;margin:0 auto;padding:2rem}
       <button class="btn btn-ghost" onclick="testRpc()" style="font-size:.75rem">Test RPC</button>
     </div>
 
+    <!-- Solana RPC -->
+    <div class="rpc-row">
+      <span class="rpc-label">SOL RPC</span>
+      <input type="text" class="rpc-input" id="sol-rpc-input" value="https://api.mainnet-beta.solana.com"/>
+      <span class="rpc-status rpc-idle" id="sol-rpc-status">Not tested</span>
+      <button class="btn btn-ghost" onclick="testSolRpc()" style="font-size:.75rem">Test RPC</button>
+    </div>
+
     <!-- Tokens -->
     <div class="section-title">Token Management</div>
-    <div class="section-desc">Paste a contract address to auto-fetch token name, symbol, and logo from the X1 blockchain. Add up to 10 tokens to the reward pool.</div>
+    <div class="section-desc">Paste a contract address to auto-fetch token name, symbol, and logo. Toggle each slot between X1 and Solana chains. Add up to 10 tokens to the reward pool.</div>
     <div class="tokens-grid" id="tokens-grid"></div>
   </main>
 </div>
@@ -202,10 +220,11 @@ const ADMIN_PW = 'JackLevin';
 
 const COLORS = ['#f5a623','#f0b90b','#e74c3c','#e67e22','#27ae60','#1abc9c','#4da6ff','#00d4ff','#9b59b6','#ff2d78','#e91e8c','#00ff88','#ff6b35','#c0392b','#2ecc71','#3498db','#8e44ad','#f39c12','#16a085','#d35400','#cd7f32'];
 
-const RPC = () => document.getElementById('rpc-input').value.trim() || 'https://rpc.mainnet.x1.xyz';
+const RPC     = () => document.getElementById('rpc-input').value.trim() || 'https://rpc.mainnet.x1.xyz';
+const SOL_RPC = () => document.getElementById('sol-rpc-input').value.trim() || 'https://api.mainnet-beta.solana.com';
 
 // State: array of 10 slots
-let slots = Array.from({length:10}, () => ({address:'', name:'', symbol:'', image:'', color:'#4da6ff'}));
+let slots = Array.from({length:10}, () => ({address:'', name:'', symbol:'', image:'', color:'#4da6ff', chain:'x1'}));
 let editingSlot = -1;
 
 // ── Auth ──
@@ -279,6 +298,10 @@ function renderGrid() {
     div.innerHTML = `
       <div class="slot-header">
         <span class="slot-num">Token ${i+1}</span>
+        <div class="chain-toggle">
+          <button class="chain-btn ${slot.chain!=='sol'?'active-x1':''}" onclick="setChain(${i},'x1')">X1</button>
+          <button class="chain-btn ${slot.chain==='sol'?'active-sol':''}" onclick="setChain(${i},'sol')">SOL</button>
+        </div>
         <button class="slot-clear" onclick="clearSlot(${i})">✕ Clear</button>
       </div>
       <input type="text" class="addr-input" placeholder="Paste contract address..." value="${slot.address||''}"
@@ -304,6 +327,8 @@ function previewHTML(slot) {
   const logoInner = slot.image
     ? `<img src="${slot.image}" alt="${slot.symbol}" onerror="this.style.display='none'"/>`
     : (slot.symbol||'?').slice(0,3);
+  const chainLabel = slot.chain === 'sol' ? 'SOL' : 'X1';
+  const chainClass = slot.chain === 'sol' ? 'badge-sol-token' : 'badge-x1-token';
   return `
     <div class="preview-logo" style="background:${bg};color:${slot.color||'#4da6ff'}">${logoInner}</div>
     <div class="preview-info">
@@ -311,6 +336,7 @@ function previewHTML(slot) {
       <div class="preview-sym">${slot.symbol}</div>
       <div class="preview-addr">${slot.address.slice(0,18)}...${slot.address.slice(-6)}</div>
     </div>
+    <span class="chain-badge ${chainClass}">${chainLabel}</span>
     <button class="preview-edit" onclick="openModal(${slots.indexOf(slot)})">Edit</button>
   `;
 }
@@ -334,12 +360,17 @@ function handlePaste(e, i) {
 async function fetchToken(i) {
   const addr = slots[i].address.trim();
   if (!addr || addr.length < 20) return;
-
   updatePreviewLoading(i);
+  if (slots[i].chain === 'sol') {
+    await fetchTokenSol(i, addr);
+  } else {
+    await fetchTokenX1(i, addr);
+  }
+}
 
+async function fetchTokenX1(i, addr) {
   const XDEX_URL = 'https://api.xdex.xyz/api/xendex/pool/list?network=X1%20Mainnet';
 
-  // Helper: parse xDEX pool list for a matching token
   function findInPools(pools, addr) {
     for (const pool of (pools || [])) {
       for (const key of ['token0','token1','baseToken','quoteToken']) {
@@ -352,7 +383,7 @@ async function fetchToken(i) {
     return null;
   }
 
-  // Strategy 1: xDEX direct (works if whitelisted)
+  // Strategy 1: xDEX direct
   try {
     const r = await fetch(XDEX_URL);
     if (r.ok) {
@@ -382,7 +413,7 @@ async function fetchToken(i) {
     }
   } catch(e) {}
 
-  // Strategy 4: DexScreener
+  // Strategy 4: DexScreener (prefer x1 chain)
   try {
     const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addr}`);
     if (r.ok) {
@@ -416,9 +447,61 @@ async function fetchToken(i) {
     }
   } catch(e) {}
 
-  // Final fallback: let user fill in manually
-  slots[i].name   = '';
-  slots[i].symbol = '';
+  slots[i].name = ''; slots[i].symbol = '';
+  updatePreview(i);
+  showToast('Auto-fetch failed — click Edit to enter name/symbol/logo manually', 'info');
+}
+
+async function fetchTokenSol(i, addr) {
+  // Strategy 1: Jupiter Token List (best coverage for Solana)
+  try {
+    const r = await fetch(`https://tokens.jup.ag/token/${addr}`);
+    if (r.ok) {
+      const d = await r.json();
+      if (d?.symbol) {
+        slots[i].name   = d.name   || d.symbol;
+        slots[i].symbol = d.symbol;
+        slots[i].image  = d.logoURI || '';
+        updatePreview(i); return;
+      }
+    }
+  } catch(e) {}
+
+  // Strategy 2: DexScreener (prefer solana chain)
+  try {
+    const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addr}`);
+    if (r.ok) {
+      const d = await r.json();
+      const pair = d.pairs?.find(p => p.chainId === 'solana') || d.pairs?.[0];
+      if (pair) {
+        const t = pair.baseToken?.address?.toLowerCase() === addr.toLowerCase() ? pair.baseToken : pair.quoteToken;
+        if (t?.name) {
+          slots[i].name   = t.name;
+          slots[i].symbol = t.symbol;
+          slots[i].image  = pair.info?.imageUrl || '';
+          updatePreview(i); return;
+        }
+      }
+    }
+  } catch(e) {}
+
+  // Strategy 3: Solana RPC — getAccountInfo + Metaplex metadata URI
+  try {
+    const r = await fetch(SOL_RPC(), {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getAccountInfo',params:[addr,{encoding:'jsonParsed'}]})
+    });
+    const d = await r.json();
+    const info = d.result?.value?.data?.parsed?.info;
+    if (info?.name) {
+      slots[i].name   = info.name;
+      slots[i].symbol = info.symbol;
+      slots[i].image  = info.uri ? await fetchMetaImage(info.uri) : '';
+      updatePreview(i); return;
+    }
+  } catch(e) {}
+
+  slots[i].name = ''; slots[i].symbol = '';
   updatePreview(i);
   showToast('Auto-fetch failed — click Edit to enter name/symbol/logo manually', 'info');
 }
@@ -446,9 +529,22 @@ function setColor(i, color) {
   });
 }
 
+// ── Chain toggle ──
+function setChain(i, chain) {
+  slots[i].chain = chain;
+  // Re-render just that slot's toggle buttons
+  const slotEl = document.querySelectorAll('.token-slot')[i];
+  if (!slotEl) return;
+  const btns = slotEl.querySelectorAll('.chain-btn');
+  btns[0].className = 'chain-btn' + (chain !== 'sol' ? ' active-x1' : '');
+  btns[1].className = 'chain-btn' + (chain === 'sol' ? ' active-sol' : '');
+  // If already populated, re-fetch with new chain
+  if (slots[i].address.length > 20) fetchToken(i);
+}
+
 // ── Clear slot ──
 function clearSlot(i) {
-  slots[i] = {address:'', name:'', symbol:'', image:'', color:'#4da6ff'};
+  slots[i] = {address:'', name:'', symbol:'', image:'', color:'#4da6ff', chain:'x1'};
   renderGrid();
 }
 
@@ -558,7 +654,23 @@ async function testRpc() {
   }
 }
 
-// ── Toast ──
+// ── SOL RPC Test ──
+async function testSolRpc() {
+  const el = document.getElementById('sol-rpc-status');
+  el.className = 'rpc-status rpc-idle'; el.textContent = 'Testing...';
+  try {
+    const r = await fetch(SOL_RPC(), {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getHealth'}),
+    });
+    const d = await r.json();
+    if (d.result === 'ok' || d.result?.status === 'behind' || d.result) {
+      el.className = 'rpc-status rpc-ok'; el.textContent = '✓ Connected';
+    } else { throw new Error(); }
+  } catch(e) {
+    el.className = 'rpc-status rpc-fail'; el.textContent = '✗ Failed';
+  }
+}
 function showToast(msg, type='info') {
   const t = document.getElementById('toast');
   t.textContent = msg;
