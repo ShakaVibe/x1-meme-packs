@@ -33,7 +33,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-cta{font-size:.88rem;font-weight:600;color:#0a1020;background:var(--x1-gradient);border:none;padding:.55rem 1.4rem;border-radius:var(--radius-md);cursor:pointer;text-decoration:none;box-shadow:0 0 20px rgba(77,166,255,.3);transition:opacity .2s,transform .15s}
 .nav-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 10%,rgba(77,166,255,.12) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 15% 85%,rgba(0,212,255,.08) 0%,transparent 55%),radial-gradient(ellipse 55% 45% at 85% 70%,rgba(240,185,11,.07) 0%,transparent 55%);animation:bgPulse 9s ease-in-out infinite alternate}
 @keyframes bgPulse{0%{opacity:.7}100%{opacity:1}}
 .hero-grid{position:absolute;inset:0;opacity:.028;background-image:linear-gradient(rgba(77,166,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(77,166,255,.6) 1px,transparent 1px);background-size:60px 60px}
@@ -59,15 +59,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-stat-label{font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-.ticker{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.85rem 0;overflow:hidden;position:relative}
+.ticker{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 0;overflow:hidden;position:relative}
 .ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
 .ticker::before{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
 .ticker::after{right:0;background:linear-gradient(-90deg,var(--bg2),transparent)}
 .ticker-track{display:flex;animation:tickerScroll 35s linear infinite;width:max-content}
 .ticker-track:hover{animation-play-state:paused}
 @keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.ticker-item{display:flex;align-items:center;gap:.6rem;padding:0 2rem;border-right:1px solid var(--border);white-space:nowrap}
-.ticker-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.1rem;flex-shrink:0}
+.ticker-item{display:flex;align-items:center;gap:.6rem;padding:0 1.5rem;white-space:nowrap}
+.ticker-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.3rem;flex-shrink:0}
 .ticker-name{font-size:.88rem;font-weight:600;color:var(--text-primary)}
 .ticker-badge{font-family:var(--font-mono);font-size:.68rem;color:var(--x1-cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);padding:.12rem .5rem;border-radius:100px}
 
@@ -94,8 +94,8 @@ section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
 .how-card p{font-size:.92rem;color:var(--text-secondary);line-height:1.7}
 .how-card p strong{color:var(--x1-cyan);font-weight:600}
 
-.packs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:3.5rem}
-.pack-card{border-radius:var(--radius-xl);padding:2rem 1.4rem;text-align:center;position:relative;overflow:hidden;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid var(--border)}
+.packs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:3.5rem;padding-top:1rem}
+.pack-card{border-radius:var(--radius-xl);padding:2rem 1.4rem;text-align:center;position:relative;overflow:visible;cursor:pointer;transition:transform .25s,box-shadow .25s;border:1px solid var(--border)}
 .pack-card:hover{transform:translateY(-8px)}
 .pack-card::before{content:'';position:absolute;inset:0;opacity:.04;background:repeating-linear-gradient(45deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.5) 1px,transparent 1px,transparent 16px)}
 .pack-bronze{background:linear-gradient(145deg,#120e08,#1c1508);border-color:rgba(176,106,55,.35)}
@@ -118,7 +118,7 @@ section{padding:6rem 2rem;max-width:1200px;margin:0 auto}
 .pack-legendary:hover{box-shadow:0 20px 60px rgba(0,212,255,.2)}
 .pack-legendary .pack-tier-badge{background:rgba(0,212,255,.1);color:var(--x1-cyan);border-color:rgba(0,212,255,.3)}
 .pack-legendary .pack-mult{color:var(--x1-cyan)}
-.pack-legendary .pack-hot{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--x1-gradient);color:#0a1020;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .9rem;border-radius:100px;white-space:nowrap}
+.pack-legendary .pack-hot{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--x1-gradient);color:#0a1020;font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .9rem;border-radius:100px;white-space:nowrap;z-index:2}
 .pack-emoji{font-size:2.6rem;display:block;margin-bottom:.9rem}
 .pack-title{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.05em;color:var(--text-primary);margin-bottom:.4rem}
 .pack-tier-badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border:1px solid;padding:.18rem .65rem;border-radius:100px;margin-bottom:1rem}
@@ -196,14 +196,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 .footer-copy{font-size:.76rem;color:var(--text-dim);text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:1200px;margin-left:auto;margin-right:auto}
 .footer-x1{display:inline-flex;align-items:center;gap:6px;margin-top:.8rem;font-size:.74rem;font-weight:500;color:var(--text-secondary)}
 .footer-x1 img{height:18px;width:18px;border-radius:4px;object-fit:cover;opacity:.8}
+.ticker-top{margin-top:64px;border-top:none}
 @media(max-width:768px){nav{padding:0 1.5rem} .nav-links{display:none} .hero-stats{gap:1.5rem} .packs-grid{grid-template-columns:1fr 1fr} .bridge-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.packs-grid{grid-template-columns:1fr}}
 
-.token-strip{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.4rem 2rem;overflow:hidden}
-.token-strip-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap}
-.token-strip-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;cursor:default}
-.token-strip-logo{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1rem}
-.token-strip-sym{font-family:var(--font-mono);font-size:.62rem;color:var(--text-secondary);letter-spacing:.06em;text-transform:uppercase}
 </style>
 </head>
 <body>
@@ -222,6 +218,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   </ul>
   <a href="#bridge" class="nav-cta">🌉 Bridge Now</a>
 </nav>
+
+<div class="ticker ticker-top"><div class="ticker-track" id="ticker-track"></div></div>
 
 <div class="hero" id="home">
   <div class="hero-bg"></div><div class="hero-grid"></div>
@@ -245,16 +243,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   </div>
 </div>
 
-<div class="token-strip" id="token-strip"></div>
-
-<div class="ticker"><div class="ticker-track" id="ticker-track"></div></div>
-
 
 <div class="how-wrapper" id="how-it-works">
-  <div class="how-inner">
+  <div class="how-inner" style="text-align:center">
     <span class="section-label">Simple as 1, 2, 3</span>
     <h2 class="section-title">HOW IT WORKS</h2>
-    <p class="section-sub">Bridge your USDC from Solana to X1 in minutes using the X1 Warp Bridge and receive your meme pack instantly.</p>
+    <p class="section-sub" style="margin:0 auto 0 auto;">Bridge your USDC from Solana to X1 in minutes using the X1 Warp Bridge and receive your meme pack instantly.</p>
     <div class="how-grid">
       <div class="how-card"><div class="how-num">01</div><div class="how-icon">🌉</div><h3>Bridge Your USDC</h3><p>Use the <strong>X1 Warp Bridge</strong> to move USDC from Solana to X1. Minimum is <strong>$100 USDC</strong>. The more you bridge in one transaction, the rarer your pack.</p></div>
       <div class="how-card"><div class="how-num">02</div><div class="how-icon">🎁</div><h3>Receive Your Pack Instantly</h3><p>The moment your bridge confirms on X1, an airdrop is sent to your wallet automatically. No waiting — just <strong>instant meme coin rewards</strong>.</p></div>
@@ -264,21 +258,21 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 </div>
 
 <section id="packs">
-  <span class="section-label">One Bridge. One Pack. Five Rarities.</span>
+  <span class="section-label">1 Pack Per $100 Bridged — Five Token Tiers</span>
   <h2 class="section-title">CHOOSE YOUR TIER</h2>
-  <p class="section-sub">Every bridge earns you one pack. Bridge more in a single transaction to unlock rarer, higher-multiplier packs with significantly more tokens inside.</p>
+  <p class="section-sub">You earn <strong style="color:var(--text-primary)">1 pack for every $100 USDC bridged</strong>. Bridge a larger amount to unlock a higher token multiplier — every pack in your batch gets boosted.</p>
   <div class="packs-grid">
-    <div class="pack-card pack-bronze"><span class="pack-emoji">🥉</span><div class="pack-title">BRONZE</div><div class="pack-tier-badge">Starter</div><div class="pack-range">$100 – $499</div><div class="pack-divider"></div><span class="pack-mult">1x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">Base token amounts<br>Random meme selection<br>1 pack per day</div></div>
-    <div class="pack-card pack-silver"><span class="pack-emoji">🥈</span><div class="pack-title">SILVER</div><div class="pack-tier-badge">Enhanced</div><div class="pack-range">$500 – $999</div><div class="pack-divider"></div><span class="pack-mult">3x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">3× more tokens<br>Bigger meme positions<br>1 pack per day</div></div>
-    <div class="pack-card pack-gold"><span class="pack-emoji">🥇</span><div class="pack-title">GOLD</div><div class="pack-tier-badge">Premium</div><div class="pack-range">$1,000 – $1,999</div><div class="pack-divider"></div><span class="pack-mult">7x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">7× token amounts<br>High-value positions<br>1 pack per day</div></div>
-    <div class="pack-card pack-diamond"><span class="pack-emoji">💎</span><div class="pack-title">DIAMOND</div><div class="pack-tier-badge">Elite</div><div class="pack-range">$2,000 – $4,999</div><div class="pack-divider"></div><span class="pack-mult">15x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">15× token amounts<br>Serious meme stack<br>1 pack per day</div></div>
-    <div class="pack-card pack-legendary"><div class="pack-hot">🔥 Max Reward</div><span class="pack-emoji">🔥</span><div class="pack-title">LEGENDARY</div><div class="pack-tier-badge">Maximum</div><div class="pack-range">$5,000 USDC</div><div class="pack-divider"></div><span class="pack-mult">30x</span><span class="pack-mult-label">Token Multiplier</span><div class="pack-divider"></div><div class="pack-feature">30× token amounts<br>Max daily reward<br>Bragging rights included</div></div>
+    <div class="pack-card pack-bronze"><span class="pack-emoji">🥉</span><div class="pack-title">BRONZE</div><div class="pack-tier-badge">Starter</div><div class="pack-range">$100 – $499</div><div class="pack-divider"></div><span class="pack-mult">1x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>Base token amounts<br>Random meme selection</div></div>
+    <div class="pack-card pack-silver"><span class="pack-emoji">🥈</span><div class="pack-title">SILVER</div><div class="pack-tier-badge">Enhanced</div><div class="pack-range">$500 – $999</div><div class="pack-divider"></div><span class="pack-mult">2x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$500 bridge = 5 packs, each 2x<br>Double token amounts</div></div>
+    <div class="pack-card pack-gold"><span class="pack-emoji">🥇</span><div class="pack-title">GOLD</div><div class="pack-tier-badge">Premium</div><div class="pack-range">$1,000 – $1,999</div><div class="pack-divider"></div><span class="pack-mult">5x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$1,000 bridge = 10 packs, each 5x<br>Serious token stack</div></div>
+    <div class="pack-card pack-diamond"><span class="pack-emoji">💎</span><div class="pack-title">DIAMOND</div><div class="pack-tier-badge">Elite</div><div class="pack-range">$2,000 – $4,999</div><div class="pack-divider"></div><span class="pack-mult">10x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$2,000 bridge = 20 packs, each 10x<br>Elite meme portfolio</div></div>
+    <div class="pack-card pack-legendary"><div class="pack-hot">🔥 Max Reward</div><span class="pack-emoji">🔥</span><div class="pack-title">LEGENDARY</div><div class="pack-tier-badge">Maximum</div><div class="pack-range">$5,000+ USDC</div><div class="pack-divider"></div><span class="pack-mult">20x</span><span class="pack-mult-label">Token Multiplier Per Pack</span><div class="pack-divider"></div><div class="pack-feature">1 pack per $100 bridged<br>$5,000 bridge = 50 packs, each 20x<br>Absolute meme dominance</div></div>
   </div>
   <div class="upgrade-banner">
     <div class="upgrade-icon">⚡</div>
     <div class="upgrade-text">
-      <h4>The Upgrade Rule — Bridge Smarter</h4>
-      <p>You earn <strong>one pack per wallet per day</strong>, resetting at midnight UTC. Already bridged Bronze today? Bridge <strong>$5,000 USDC</strong> later and your pack upgrades to <strong>Legendary</strong> — you always keep the best tier you hit that day.</p>
+      <h4>How Pack Counts Work</h4>
+      <p>Every <strong>$100 USDC bridged = 1 pack</strong>. Bridge <strong>$500 USDC</strong> and you receive <strong>5 packs</strong>, each with the Silver 2x multiplier. Bridge <strong>$5,000</strong> and you get <strong>50 Legendary packs</strong>, each loaded with 20x the base token amount.</p>
     </div>
   </div>
 </section>
@@ -418,23 +412,6 @@ tokens.forEach(t=>{
   grid.appendChild(c);
 });
 
-// Token strip at top
-const stripEl = document.getElementById('token-strip');
-const stripInner = document.createElement('div');
-stripInner.className = 'token-strip-inner';
-tokens.forEach(t => {
-  const color = t.color||'#4da6ff';
-  const bg = hexToRgba(color, 0.15);
-  const sym = (t.symbol||t.sym||'???').toUpperCase();
-  const logoHtml2 = t.image
-    ? `<img src="${t.image}" alt="${sym}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" onerror="this.parentElement.innerHTML='${sym.slice(0,3)}'"/>`
-    : sym.slice(0,3);
-  const item = document.createElement('div');
-  item.className = 'token-strip-item';
-  item.innerHTML = `<div class="token-strip-logo" style="background:${bg};color:${color};">${logoHtml2}</div><div class="token-strip-sym">${sym}</div>`;
-  stripInner.appendChild(item);
-});
-stripEl.appendChild(stripInner);
 
 const track=document.getElementById('ticker-track');
 [...tokens,...tokens].forEach(t=>{
