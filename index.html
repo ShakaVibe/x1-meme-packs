@@ -33,7 +33,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-cta{font-size:.88rem;font-weight:600;color:#0a1020;background:var(--x1-gradient);border:none;padding:.55rem 1.4rem;border-radius:var(--radius-md);cursor:pointer;text-decoration:none;box-shadow:0 0 20px rgba(77,166,255,.3);transition:opacity .2s,transform .15s}
 .nav-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1rem 2rem 4rem;position:relative;overflow:hidden}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0.2rem 2rem 4rem;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 10%,rgba(77,166,255,.12) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 15% 85%,rgba(0,212,255,.08) 0%,transparent 55%),radial-gradient(ellipse 55% 45% at 85% 70%,rgba(240,185,11,.07) 0%,transparent 55%);animation:bgPulse 9s ease-in-out infinite alternate}
 @keyframes bgPulse{0%{opacity:.7}100%{opacity:1}}
 .hero-grid{position:absolute;inset:0;opacity:.028;background-image:linear-gradient(rgba(77,166,255,.6) 1px,transparent 1px),linear-gradient(90deg,rgba(77,166,255,.6) 1px,transparent 1px);background-size:60px 60px}
@@ -59,7 +59,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .hero-stat-label{font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--text-secondary)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-.ticker{background:var(--bg);border:none;padding:1.2rem 0;overflow:hidden;position:relative}
+.ticker{background:transparent;border:none;padding:1.2rem 0;overflow:hidden;position:relative}
 .ticker::before,.ticker::after{display:none}
 .ticker-track{display:flex;animation:tickerScroll 35s linear infinite;width:max-content}
 .ticker-track:hover{animation-play-state:paused}
@@ -194,10 +194,14 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 .footer-copy{font-size:.76rem;color:var(--text-dim);text-align:center;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border);max-width:1200px;margin-left:auto;margin-right:auto}
 .footer-x1{display:inline-flex;align-items:center;gap:6px;margin-top:.8rem;font-size:.74rem;font-weight:500;color:var(--text-secondary)}
 .footer-x1 img{height:18px;width:18px;border-radius:4px;object-fit:cover;opacity:.8}
-.ticker-top{margin-top:74px;border:none;margin-bottom:0}
+.ticker-top{margin-top:74px;border:none;margin-bottom:0;background:radial-gradient(ellipse 80% 300% at 50% -20%,rgba(77,166,255,.10) 0%,transparent 65%),var(--bg)}
 @media(max-width:768px){nav{padding:0 1.5rem} .nav-links{display:none} .hero-stats{gap:1.5rem} .packs-grid{grid-template-columns:1fr 1fr} .bridge-grid{grid-template-columns:1fr}}
 @media(max-width:480px){.packs-grid{grid-template-columns:1fr}}
 
+
+@keyframes ctaPulse{0%,100%{box-shadow:0 0 18px rgba(77,166,255,.35),0 0 0 0 rgba(77,166,255,.18)}60%{box-shadow:0 0 30px rgba(77,166,255,.6),0 0 18px 6px rgba(0,212,255,.15)}}
+.nav-cta-glow{animation:ctaPulse 2.8s ease-in-out infinite}
+.nav-cta-glow:hover{animation:none;opacity:.92;transform:translateY(-1px)}
 </style>
 </head>
 <body>
@@ -214,7 +218,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
     <li><a href="#tokens">Tokens</a></li>
     <li><a href="#bridge">Bridge Guide</a></li>
   </ul>
-  <a href="#bridge" class="nav-cta">🌉 Bridge Now</a>
+  <a href="https://app.bridge.x1.xyz/" target="_blank" class="nav-cta nav-cta-glow">Bridge Now</a>
 </nav>
 
 <div class="ticker ticker-top"><div class="ticker-track" id="ticker-track"></div></div>
@@ -225,7 +229,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   <h1 class="hero-title">BRIDGE.<br><span class="gold">EARN.</span><br><span class="blue">COLLECT.</span></h1>
   <p class="hero-sub">Bridge <strong>USDC from Solana to X1</strong> and receive an instant airdrop of the hottest meme coin pack in crypto. The more you bridge, the rarer your pack.</p>
   <div class="hero-actions">
-    <a href="#bridge" class="btn-primary">🌉 Start Bridging</a>
+    <a href="https://app.bridge.x1.xyz/" target="_blank" class="btn-primary">Start Bridging</a>
     <a href="#packs" class="btn-secondary">View Pack Tiers</a>
   </div>
   <div class="hero-chain-row">
@@ -304,7 +308,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   <div class="bridge-grid">
     <div class="bridge-steps">
       <div class="bridge-step"><div class="step-num">1</div><div class="step-content"><h4>Set Up Your X1 Wallet</h4><p>Add the X1 network to your Phantom or compatible wallet. Configure the X1 RPC endpoint to interact with the network.</p><div class="step-note">💡 Phantom and Backpack both support X1. Have at least $100 USDC on Solana ready to bridge.</div></div></div>
-      <div class="bridge-step"><div class="step-num">2</div><div class="step-content"><h4>Visit the X1 Warp Bridge</h4><p>Head to the official <a href="#" target="_blank">X1 Warp Bridge</a>. Always verify you are on the official URL before connecting your wallet.</p></div></div>
+      <div class="bridge-step"><div class="step-num">2</div><div class="step-content"><h4>Visit the X1 Warp Bridge</h4><p>Head to the official <a href="https://app.bridge.x1.xyz/" target="_blank">X1 Warp Bridge</a>. Always verify you are on the official URL before connecting your wallet.</p></div></div>
       <div class="bridge-step"><div class="step-num">3</div><div class="step-content"><h4>Connect Both Wallets</h4><p>Connect your Solana wallet as the source and your X1 wallet as the destination — both can be the same Phantom wallet if it supports X1.</p></div></div>
       <div class="bridge-step"><div class="step-num">4</div><div class="step-content"><h4>Select USDC and Enter Amount</h4><p>Choose USDC as the token. Enter your amount — minimum $100. Higher amounts unlock rarer pack tiers.</p><div class="step-note">🎯 Bridge $5,000 in a single transaction for the 🔥 Legendary Pack with 30x token multiplier.</div></div></div>
       <div class="bridge-step"><div class="step-num">5</div><div class="step-content"><h4>Confirm and Receive Your Pack</h4><p>Approve the transaction in your wallet. Once confirmed on X1, your meme pack airdrop is sent to your X1 wallet automatically.</p></div></div>
@@ -325,7 +329,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 <div class="cta-banner">
   <h2>READY TO <span>STACK</span> MEMES?</h2>
   <p>One bridge. One pack. One chance to go Legendary. Don't leave tokens on the table.</p>
-  <a href="#bridge" class="btn-primary">🔥 Bridge Now & Earn Your Pack</a>
+  <a href="https://app.bridge.x1.xyz/" target="_blank" class="btn-primary">Bridge Now & Earn Your Pack</a>
 </div>
 
 <footer>
