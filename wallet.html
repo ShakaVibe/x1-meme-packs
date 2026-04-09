@@ -57,12 +57,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .section-head h3{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
 .section-line{flex:1;height:1px;background:var(--border)}
 
-.special-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem}
+.special-grid{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
 .meme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
 
 /* Cards */
 .token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;position:relative;transition:border-color .25s,transform .2s,opacity .25s}
-.token-card.special{padding:1.6rem}
+.token-card.special{padding:1.6rem;width:220px;flex-shrink:0}
 .token-card.has-balance:hover{transform:translateY(-3px)}
 .token-card.zero-balance{opacity:.3;filter:grayscale(0.55)}
 
@@ -82,6 +82,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .page-bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(77,166,255,.08) 0%,transparent 60%),var(--bg);pointer-events:none}
 
 @media(max-width:600px){nav{padding:0 1.2rem}.search-row{flex-direction:column}.page{padding:90px 1.2rem 4rem}}
+
+.trade-btn{display:inline-flex;align-items:center;gap:.6rem;font-size:.92rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#0a1020;background:var(--x1-gradient);padding:.85rem 2.4rem;border-radius:var(--radius-md);text-decoration:none;box-shadow:0 0 28px rgba(77,166,255,.3);transition:opacity .2s,transform .15s,box-shadow .2s}
+.trade-btn:hover{opacity:.92;transform:translateY(-2px);box-shadow:0 0 45px rgba(77,166,255,.5)}
 </style>
 </head>
 <body>
@@ -121,6 +124,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
     <div class="section-head"><div class="section-line"></div><h3>Meme Pack Tokens</h3><div class="section-line"></div></div>
     <div class="meme-grid" id="meme-grid"></div>
+
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="https://app.xdex.xyz/swap" target="_blank" class="trade-btn">Trade Your Memes →</a>
+    </div>
   </div>
 </div>
 
@@ -251,16 +258,19 @@ async function checkWallet() {
 
     // 3. XNT native card
     specGrid.appendChild(buildCard({
-      name:'XNT', symbol:'XNT', color:'#f0b90b',
+      name:'XNT', symbol:'XNT', color:'#4da6ff',
+      image:'x1-logo.png',
       balance:xntBal, decimals:9, special:true,
     }));
 
     // 4. USDC.X card — look for admin-configured USDC token first
+    const USDC_MINT = 'B69chRzqzDCmdB5WYB8NRu5Yv5ZA95ABiZcdzCgGm9Tq';
     const usdcToken = packTokens.find(t => /usdc/i.test(t.symbol));
     let usdcBal = 0, usdcDec = 6;
-    if (usdcToken?.address && mintMap[usdcToken.address]) {
-      usdcBal = mintMap[usdcToken.address].uiAmount;
-      usdcDec = mintMap[usdcToken.address].decimals;
+    const usdcMint = usdcToken?.address || USDC_MINT;
+    if (mintMap[usdcMint]) {
+      usdcBal = mintMap[usdcMint].uiAmount;
+      usdcDec = mintMap[usdcMint].decimals;
     }
     specGrid.appendChild(buildCard({
       name:  usdcToken?.name  || 'USDC.X',
@@ -269,6 +279,7 @@ async function checkWallet() {
       image: usdcToken?.image || null,
       balance: usdcBal, decimals: usdcDec, special: true,
     }));
+
 
     // 5. All 10 meme token slots — always show all, faded if zero
     let memeCount = 0;
