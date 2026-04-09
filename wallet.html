@@ -48,16 +48,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .status.error{display:block;background:rgba(255,45,120,.07);border:1px solid rgba(255,45,120,.2);color:#ff6b9d}
 
 
-.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;margin-top:1.5rem}
+.section-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;margin-top:1rem}
 .section-head h3{font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--text-secondary);white-space:nowrap}
 .section-line{flex:1;height:1px;background:var(--border)}
 
-.special-grid{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:.5rem}
+.special-grid{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:.25rem}
 .meme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1rem}
 
 /* Cards */
 .token-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.4rem;text-align:center;position:relative;transition:border-color .25s,transform .2s,opacity .25s}
-.token-card.special{padding:.9rem 1.2rem;width:180px;flex-shrink:0;display:flex;flex-direction:row;align-items:center;gap:.85rem;text-align:left}
+.token-card.special{padding:.65rem 1rem;width:175px;flex-shrink:0;display:flex;flex-direction:row;align-items:center;gap:.75rem;text-align:left}
 .token-card.has-balance:hover{transform:translateY(-3px)}
 .token-card.zero-balance{opacity:.3;filter:grayscale(0.55)}
 
@@ -121,7 +121,31 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 </div>
 
 <script>
-const RPC = 'https://rpc.mainnet.x1.xyz';
+const RPC_ENDPOINTS = [
+  'https://rpc.mainnet.x1.xyz',
+  'https://mainnet.x1.xyz/rpc',
+];
+
+async function rpcCall(body, id=1) {
+  for (const rpc of RPC_ENDPOINTS) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      const resp = await fetch(rpc, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', id, ...body }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      if (!resp.ok) continue;
+      const data = await resp.json();
+      if (data.error && data.error.code === -32005) continue; // node behind
+      return data;
+    } catch(e) { /* try next */ }
+  }
+  throw new Error('All RPC endpoints failed — the X1 RPC may be temporarily down or may need to whitelist this domain (shakavibe.github.io). Try again shortly.');
+}
 
 const FALLBACK_TOKENS = [
   {name:'BonkX1',   symbol:'BONK',   color:'#f5a623', address:''},
@@ -249,22 +273,11 @@ async function checkWallet() {
 
   try {
     // 1. Native XNT balance
-    const rpcPost = (body, id=1) => {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 10000);
-      return fetch(RPC, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({jsonrpc:'2.0',id,...body}),
-        signal: controller.signal,
-      }).finally(() => clearTimeout(timeout)).then(r => r.json());
-    };
-
-    const xntData = await rpcPost({method:'getBalance', params:[input]});
+    const xntData = await rpcCall({method:'getBalance', params:[input]});
     const xntBal  = (xntData.result?.value ?? 0) / 1e9;
 
     // 2. Fetch both SPL token program accounts in parallel
-    const fetchTAs = (programId, id) => rpcPost({method:'getTokenAccountsByOwner', params:[input,{programId},{encoding:'jsonParsed'}]}, id).then(d=>d.result?.value||[]);
+    const fetchTAs = (programId, id) => rpcCall({method:'getTokenAccountsByOwner', params:[input,{programId},{encoding:'jsonParsed'}]}, id).then(d=>d.result?.value||[]);
 
     const [spl, spl22] = await Promise.all([
       fetchTAs('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', 2),
@@ -345,7 +358,7 @@ async function checkWallet() {
     document.getElementById('status').className = 'status'; // hide
 
   } catch(err) {
-    setStatus('❌ Connection error — check your network and try again.', 'error');
+    setStatus('❌ ' + (err.message || 'Connection error — try again shortly.'), 'error');
     console.error(err);
   }
 
