@@ -327,43 +327,70 @@ async function fetchToken(i) {
 
   updatePreviewLoading(i);
 
-  // Strategy 1: DexScreener
-  try {
-    const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addr}`);
-    const d = await r.json();
-    const pair = d.pairs?.find(p => p.chainId === 'x1' || p.chainId === 'solana') || d.pairs?.[0];
-    if (pair) {
-      const t = pair.baseToken?.address?.toLowerCase() === addr.toLowerCase() ? pair.baseToken : pair.quoteToken;
-      if (t?.name) {
-        slots[i].name   = t.name;
-        slots[i].symbol = t.symbol;
-        slots[i].image  = pair.info?.imageUrl || '';
-        updatePreview(i);
-        return;
-      }
-    }
-  } catch(e) {}
+  const XDEX_URL = 'https://api.xdex.xyz/api/xendex/pool/list?network=X1%20Mainnet';
 
-  // Strategy 2: xDEX pool list
-  try {
-    const r = await fetch('https://api.xdex.xyz/api/xendex/pool/list?network=X1%20Mainnet');
-    const d = await r.json();
-    const pools = d.data || d.pools || d || [];
-    for (const pool of pools) {
+  // Helper: parse xDEX pool list for a matching token
+  function findInPools(pools, addr) {
+    for (const pool of (pools || [])) {
       for (const key of ['token0','token1','baseToken','quoteToken']) {
         const t = pool[key];
         if (t && t.address?.toLowerCase() === addr.toLowerCase()) {
-          slots[i].name   = t.name  || t.symbol;
+          return { name: t.name || t.symbol, symbol: t.symbol, image: t.logoURI || t.logo || t.icon || '' };
+        }
+      }
+    }
+    return null;
+  }
+
+  // Strategy 1: xDEX direct (works if whitelisted)
+  try {
+    const r = await fetch(XDEX_URL);
+    if (r.ok) {
+      const d = await r.json();
+      const found = findInPools(d.data || d.pools || d, addr);
+      if (found?.name) { Object.assign(slots[i], found); updatePreview(i); return; }
+    }
+  } catch(e) {}
+
+  // Strategy 2: xDEX via allorigins proxy
+  try {
+    const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(XDEX_URL)}`);
+    if (r.ok) {
+      const d = await r.json();
+      const found = findInPools(d.data || d.pools || d, addr);
+      if (found?.name) { Object.assign(slots[i], found); updatePreview(i); return; }
+    }
+  } catch(e) {}
+
+  // Strategy 3: xDEX via corsproxy.io
+  try {
+    const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(XDEX_URL)}`);
+    if (r.ok) {
+      const d = await r.json();
+      const found = findInPools(d.data || d.pools || d, addr);
+      if (found?.name) { Object.assign(slots[i], found); updatePreview(i); return; }
+    }
+  } catch(e) {}
+
+  // Strategy 4: DexScreener
+  try {
+    const r = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${addr}`);
+    if (r.ok) {
+      const d = await r.json();
+      const pair = d.pairs?.find(p => p.chainId === 'x1') || d.pairs?.[0];
+      if (pair) {
+        const t = pair.baseToken?.address?.toLowerCase() === addr.toLowerCase() ? pair.baseToken : pair.quoteToken;
+        if (t?.name) {
+          slots[i].name   = t.name;
           slots[i].symbol = t.symbol;
-          slots[i].image  = t.logoURI || t.logo || '';
-          updatePreview(i);
-          return;
+          slots[i].image  = pair.info?.imageUrl || '';
+          updatePreview(i); return;
         }
       }
     }
   } catch(e) {}
 
-  // Strategy 3: RPC Token-2022 metadata
+  // Strategy 5: X1 RPC Token-2022 metadata
   try {
     const r = await fetch(RPC(), {
       method:'POST', headers:{'Content-Type':'application/json'},
@@ -375,16 +402,15 @@ async function fetchToken(i) {
       slots[i].name   = info.name;
       slots[i].symbol = info.symbol;
       slots[i].image  = info.uri ? await fetchMetaImage(info.uri) : '';
-      updatePreview(i);
-      return;
+      updatePreview(i); return;
     }
   } catch(e) {}
 
-  // Fallback: manual
-  slots[i].name   = 'Unknown';
-  slots[i].symbol = addr.slice(0,4).toUpperCase();
+  // Final fallback: let user fill in manually
+  slots[i].name   = '';
+  slots[i].symbol = '';
   updatePreview(i);
-  showToast('Could not auto-fetch — click Edit to enter manually', 'info');
+  showToast('Auto-fetch failed — click Edit to enter name/symbol/logo manually', 'info');
 }
 
 async function fetchMetaImage(uri) {
