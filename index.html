@@ -202,6 +202,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
 @keyframes ctaPulse{0%,100%{box-shadow:0 0 18px rgba(77,166,255,.35),0 0 0 0 rgba(77,166,255,.18)}60%{box-shadow:0 0 30px rgba(77,166,255,.6),0 0 18px 6px rgba(0,212,255,.15)}}
 .nav-cta-glow{animation:ctaPulse 2.8s ease-in-out infinite}
 .nav-cta-glow:hover{animation:none;opacity:.92;transform:translateY(-1px)}
+
+.step-link{display:inline-flex;align-items:center;gap:6px;margin-top:.75rem;font-size:.8rem;font-weight:600;letter-spacing:.04em;color:#0a1020;background:var(--x1-gradient);padding:.45rem 1.1rem;border-radius:var(--radius-md);text-decoration:none;transition:opacity .2s,transform .15s;box-shadow:0 0 14px rgba(77,166,255,.25)}
+.step-link:hover{opacity:.88;transform:translateY(-1px)}
+.step-link-outline{background:transparent;color:var(--x1-cyan);border:1px solid rgba(0,212,255,.35);box-shadow:none}
+.step-link-outline:hover{background:rgba(0,212,255,.06)}
 </style>
 </head>
 <body>
@@ -307,11 +312,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:3rem 2re
   <p class="section-sub">Bridging from Solana to X1 takes just a few minutes using the X1 Warp Bridge. Follow these steps to earn your first pack.</p>
   <div class="bridge-grid">
     <div class="bridge-steps">
-      <div class="bridge-step"><div class="step-num">1</div><div class="step-content"><h4>Set Up Your X1 Wallet</h4><p>Add the X1 network to your Phantom or compatible wallet. Configure the X1 RPC endpoint to interact with the network.</p><div class="step-note">💡 Phantom and Backpack both support X1. Have at least $100 USDC on Solana ready to bridge.</div></div></div>
-      <div class="bridge-step"><div class="step-num">2</div><div class="step-content"><h4>Visit the X1 Warp Bridge</h4><p>Head to the official <a href="https://app.bridge.x1.xyz/" target="_blank">X1 Warp Bridge</a>. Always verify you are on the official URL before connecting your wallet.</p></div></div>
-      <div class="bridge-step"><div class="step-num">3</div><div class="step-content"><h4>Connect Both Wallets</h4><p>Connect your Solana wallet as the source and your X1 wallet as the destination — both can be the same Phantom wallet if it supports X1.</p></div></div>
+      <div class="bridge-step"><div class="step-num">1</div><div class="step-content"><h4>Set Up Your X1 Wallet</h4><p>You'll need a wallet that supports X1. We recommend the official <strong style="color:var(--text-primary)">X1 Wallet</strong> Chrome extension, or Backpack. Have at least $100 USDC on Solana ready to bridge.</p><div class="step-note">💡 Phantom does not support X1. Use X1 Wallet or Backpack.</div><a href="https://chromewebstore.google.com/detail/x1-wallet/kcfmcpdmlchhbikbogddmgopmjbflnae" target="_blank" class="step-link">⬇ Download X1 Wallet</a></div></div>
+      <div class="bridge-step"><div class="step-num">2</div><div class="step-content"><h4>Visit the X1 Warp Bridge</h4><p>Head to the official X1 Warp Bridge. Always verify you are on the correct URL before connecting your wallet.</p><a href="https://app.bridge.x1.xyz/" target="_blank" class="step-link">🌉 Open X1 Warp Bridge</a></div></div>
+      <div class="bridge-step"><div class="step-num">3</div><div class="step-content"><h4>Connect Your Wallet</h4><p>On the bridge, click <strong style="color:var(--text-primary)">Connect Wallet</strong> and select your X1 Wallet or Backpack. The bridge will handle both the Solana source and X1 destination automatically.</p></div></div>
       <div class="bridge-step"><div class="step-num">4</div><div class="step-content"><h4>Select USDC and Enter Amount</h4><p>Choose USDC as the token. Enter your amount — minimum $100. Higher amounts unlock rarer pack tiers.</p><div class="step-note">🎯 Bridge $1,000 for the 🔥 Legendary Pack — 10 packs each loaded with 20× tokens.</div></div></div>
-      <div class="bridge-step"><div class="step-num">5</div><div class="step-content"><h4>Confirm and Receive Your Pack</h4><p>Approve the transaction in your wallet. Once confirmed on X1, your meme pack airdrop is sent to your X1 wallet automatically.</p></div></div>
+      <div class="bridge-step"><div class="step-num">5</div><div class="step-content"><h4>Confirm and Check Your Wallet</h4><p>Approve the transaction in your wallet. Once confirmed on X1, your meme pack airdrop is sent automatically. Paste your wallet address to see your tokens.</p><a href="wallet.html" class="step-link step-link-outline">🔍 Check Your Wallet</a></div></div>
     </div>
     <div class="bridge-visual">
       <div class="bridge-visual-title">Bridge Flow</div>
